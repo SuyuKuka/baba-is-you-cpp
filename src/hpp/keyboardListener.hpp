@@ -16,9 +16,12 @@ class KeyboardListener {
     ~KeyboardListener() = default;
     KeyboardListener(const KeyboardListener&) = delete;
     KeyboardListener& operator=(const KeyboardListener&) = delete;
-
+    vector<Keyboard::Key> keyPressed;
 
     public:
+    /**
+     * @return L'instance du KeyboardListener.
+     */
     static KeyboardListener& getInstance();
 
     /**
@@ -37,7 +40,14 @@ class KeyboardListener {
      * @param key la touche que l'on veut vérifier.
      * @return true si la touche est bien appuyée.
      */
-    bool isKeyPressed(Keyboard::Key key) const;
+    bool isKeyPressed(const Keyboard::Key key) const;
+
+    /**
+     * @return Le vector des touches appuyées.
+     */
+    const vector<Keyboard::Key>& getKeyPressed() const;
 };
+
+ostream& operator<<(ostream& out, const KeyboardListener& keyboardListener);
 
 #endif
