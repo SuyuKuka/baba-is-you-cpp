@@ -2,7 +2,7 @@ CC = g++
 CFLAGS = -Wall -Wextra --std=c++11 -Iinclude
 LFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 CCO = $(CC) $(CFLAGS) -c $<
-OBJECTS = build/main.o 
+OBJECTS = build/main.o build/mapParser.o
 TARGET = BABA_IS_YOU
 
 all: $(TARGET)
@@ -18,6 +18,9 @@ build:
 
 build/main.o: src/main.cpp | build
 	$(CCO) -o $@ 
+
+build/mapParser.o: src/cpp/mapParser.cpp src/hpp/mapParser.hpp | build
+	$(CCO) -o $@
 
 clean:
 	rm -f $(OBJECTS) $(TARGET)
