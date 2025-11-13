@@ -20,6 +20,7 @@ class MapParser {
     public:
     static MapParser& getInstance();
     void parseConfig(const string path);
+    const json& getMapData() const;
 };
 
 #endif

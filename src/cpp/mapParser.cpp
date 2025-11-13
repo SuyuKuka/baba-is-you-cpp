@@ -22,3 +22,7 @@ void MapParser::parseConfig(const string path) {
         cout << "No walls" << endl;
     }
 }
+
+const json& MapParser::getMapData() const {
+    return mapData;
+}
