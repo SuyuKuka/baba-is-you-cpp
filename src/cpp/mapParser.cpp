@@ -6,11 +6,16 @@ MapParser& MapParser::getInstance() {
 }
 
 void MapParser::parseConfig(const string path) {
-    ifstream file(path);
-    if (!file.is_open()) {
-        throw invalid_argument("File not found.");
+    try {
+        ifstream file(path);
+        if (!file.is_open()) {
+            throw invalid_argument("File not found.");
+        }
+        file >> mapData;
+    } catch (const invalid_argument& ia) {
+        cout << ia.what() << endl;
+        exit(EXIT_FAILURE);
     }
-    file >> mapData;
 
     //TODO : Enlever les prints et créer des fonctions permettant de charger le niveau
     cout << mapData["map_name"] << " width: " << mapData["size"]["width"] << " height: " << mapData["size"]["height"] << endl;
