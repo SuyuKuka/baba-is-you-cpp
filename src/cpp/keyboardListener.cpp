@@ -7,8 +7,10 @@ KeyboardListener& KeyboardListener::getInstance() {
 
 void KeyboardListener::handleKeyPressed(const Event& event) {
     const Keyboard::Key key = event.key.code;
-    if (key == Keyboard::W || key == Keyboard::Z || key == Keyboard::S 
-        || key == Keyboard::A || key == Keyboard::Q || key == Keyboard::D 
+    if (key == Keyboard::Up || key == Keyboard::Z 
+        || key == Keyboard::Down|| key == Keyboard::S 
+        || key == Keyboard::Left || key == Keyboard::Q 
+        || key == Keyboard::Right|| key == Keyboard::D 
         || key == Keyboard::LControl || key == Keyboard::RControl) {
         if (!getInstance().isKeyPressed(event.key.code)) {
             keyPressed.push_back(event.key.code);
@@ -18,8 +20,10 @@ void KeyboardListener::handleKeyPressed(const Event& event) {
 
 void KeyboardListener::handleKeyReleased(const Event& event) {
     const Keyboard::Key key = event.key.code;
-    if (key == Keyboard::W || key == Keyboard::Z || key == Keyboard::S 
-        || key == Keyboard::A || key == Keyboard::Q || key == Keyboard::D 
+    if (key == Keyboard::Up || key == Keyboard::Z 
+        || key == Keyboard::Down|| key == Keyboard::S 
+        || key == Keyboard::Left || key == Keyboard::Q 
+        || key == Keyboard::Right|| key == Keyboard::D 
         || key == Keyboard::LControl || key == Keyboard::RControl) {
         keyPressed.erase(
             remove(keyPressed.begin(), keyPressed.end(), event.key.code), keyPressed.end()

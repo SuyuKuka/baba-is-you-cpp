@@ -22,7 +22,7 @@ int main() {
                 default : break;
             }
         }
-        cout << keyboardListener << endl; 
+        //cout << keyboardListener << endl; 
         app.clear();
         app.display();
     }
