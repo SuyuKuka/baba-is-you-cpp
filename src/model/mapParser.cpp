@@ -1,4 +1,4 @@
-#include "../hpp/mapParser.hpp"
+#include "model/mapParser.hpp"
 
 MapParser& MapParser::getInstance() {
     static MapParser instance;
@@ -18,7 +18,7 @@ void MapParser::parseConfig(const string path) {
     }
 
     //TODO : Enlever les prints et créer des fonctions permettant de charger le niveau
-    cout << mapData["map_name"] << " width: " << mapData["size"]["width"] << " height: " << mapData["size"]["height"] << endl;
+    cout << mapData["map_name"] << " width: " << mapData["width"] << " height: " << mapData["height"] << endl;
     if (mapData.contains("walls") && mapData["walls"].is_array()) {
         for (json& wall : mapData["walls"]) {
             cout << "Wall(x,y) = (" << wall["x"] << "," << wall["y"]  << ")" << endl;

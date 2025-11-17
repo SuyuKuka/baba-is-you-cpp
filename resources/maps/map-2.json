@@ -1,4 +1,5 @@
 {
-    "map_name" : "Level-1",
-    "size" : {"width" : 30, "height" : 30}
+    "map_name" : "Level-2",
+    "width" : 30, 
+    "height" : 30
 }
