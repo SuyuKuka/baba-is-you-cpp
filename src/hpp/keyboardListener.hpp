@@ -7,8 +7,8 @@ using namespace std;
 using namespace sf;
 
 /**
- * @class Keyboard  
- * Classe Singleton permettant l'écoute du clavier pour les contrôles du jeu.
+ * @class KeyboardListener  
+ * @brief Singleton permettant l'écoute du clavier pour les contrôles du jeu.
  */
 class KeyboardListener {
     private:
