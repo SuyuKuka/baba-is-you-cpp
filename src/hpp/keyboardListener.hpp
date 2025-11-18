@@ -1,7 +1,7 @@
 #ifndef _KEYBOARD
 #define _KEYBOARD
 #include <iostream>
-#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 #include <vector>
 using namespace std;
 using namespace sf;
@@ -26,10 +26,9 @@ class KeyboardListener {
 
     /**
      * @param event un événement contenant la touche à ajouter.  
-     * @param isPressed true si la touche est appuyée, false sinon.
      * @brief Ajoute ou supprime une touche du vector des touches appuyées.
      */
-    void handleKeyPressedAndReleased(const Event& event, const bool isPressed);
+    void handleKeyPressedAndReleased(const Event& event);
 
     /**
      * @param key la touche que l'on veut vérifier.
@@ -41,6 +40,11 @@ class KeyboardListener {
      * @return Le vector des touches appuyées.
      */
     const vector<Keyboard::Key>& getKeyPressed() const;
+
+    /**
+     * @return True si la touche est une touche autorisée.
+     */
+    bool isAuthorizedKey(const Keyboard::Key& key) const;
 };
 
 ostream& operator<<(ostream& out, const KeyboardListener& keyboardListener);
