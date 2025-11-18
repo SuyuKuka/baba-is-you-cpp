@@ -26,15 +26,10 @@ class KeyboardListener {
 
     /**
      * @param event un événement contenant la touche à ajouter.  
-     * @brief Ajoute la touche au vector des touches appuyées.
+     * @param isPressed true si la touche est appuyée, false sinon.
+     * @brief Ajoute ou supprime une touche du vector des touches appuyées.
      */
-    void handleKeyPressed(const Event& event);
-
-    /**
-     * @param event un événement contenant la touche appuyée.
-     * @brief Retire la touche appuyée c'est elle est présente dans la liste.
-     */
-    void handleKeyReleased(const Event& event);
+    void handleKeyPressedAndReleased(const Event& event, const bool isPressed);
 
     /**
      * @param key la touche que l'on veut vérifier.

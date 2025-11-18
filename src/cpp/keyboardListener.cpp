@@ -5,29 +5,21 @@ KeyboardListener& KeyboardListener::getInstance() {
     return instance;
 }
 
-void KeyboardListener::handleKeyPressed(const Event& event) {
+void KeyboardListener::handleKeyPressedAndReleased(const Event& event, const bool isPressed) {
     const Keyboard::Key key = event.key.code;
-    if (key == Keyboard::Up || key == Keyboard::Z 
-        || key == Keyboard::Down|| key == Keyboard::S 
-        || key == Keyboard::Left || key == Keyboard::Q 
+    if (key == Keyboard::Up || key == Keyboard::Z || key == Keyboard::W
+        || key == Keyboard::Down|| key == Keyboard::S
+        || key == Keyboard::Left || key == Keyboard::Q || key == Keyboard::A 
         || key == Keyboard::Right|| key == Keyboard::D 
-        || key == Keyboard::LControl || key == Keyboard::RControl) {
-        if (!getInstance().isKeyPressed(event.key.code)) {
+        || key == Keyboard::LControl || key == Keyboard::RControl
+    ) {
+        if (isPressed && !getInstance().isKeyPressed(event.key.code)) {
             keyPressed.push_back(event.key.code);
+        } else {
+            keyPressed.erase(
+                remove(keyPressed.begin(), keyPressed.end(), event.key.code), keyPressed.end()
+            ); 
         }
-    }
-}
-
-void KeyboardListener::handleKeyReleased(const Event& event) {
-    const Keyboard::Key key = event.key.code;
-    if (key == Keyboard::Up || key == Keyboard::Z 
-        || key == Keyboard::Down|| key == Keyboard::S 
-        || key == Keyboard::Left || key == Keyboard::Q 
-        || key == Keyboard::Right|| key == Keyboard::D 
-        || key == Keyboard::LControl || key == Keyboard::RControl) {
-        keyPressed.erase(
-            remove(keyPressed.begin(), keyPressed.end(), event.key.code), keyPressed.end()
-        ); 
     }
 }
 

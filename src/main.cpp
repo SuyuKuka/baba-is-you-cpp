@@ -14,15 +14,15 @@ int main() {
                     app.close(); 
                     break;
                 case Event::KeyPressed:
-                    keyboardListener.handleKeyPressed(event);
+                    keyboardListener.handleKeyPressedAndReleased(event, true);
                     break;
                 case Event::KeyReleased:
-                    keyboardListener.handleKeyReleased(event);
+                    keyboardListener.handleKeyPressedAndReleased(event, false);
                     break;
                 default : break;
             }
         }
-        //cout << keyboardListener << endl; 
+        cout << keyboardListener << endl; 
         app.clear();
         app.display();
     }
