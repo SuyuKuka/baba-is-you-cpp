@@ -8,7 +8,7 @@ KeyboardListener& KeyboardListener::getInstance() {
 void KeyboardListener::handleKeyPressedAndReleased(const Event& event) {
     const Keyboard::Key key = event.key.code;
     if  (isAuthorizedKey(key)) {
-        if (event.type == Event::KeyPressed) {
+        if (event.type == Event::KeyPressed && !isKeyPressed(key)) {
             keyPressed.push_back(event.key.code);
         } else if (event.type == Event::KeyReleased) {
             keyPressed.erase(
