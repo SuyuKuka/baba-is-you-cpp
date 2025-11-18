@@ -9,17 +9,10 @@ int main() {
     while (app.isOpen()) {
         Event event;
         while (app.pollEvent(event)) {
-            switch (event.type) {
-                case Event::Closed:
-                    app.close(); 
-                    break;
-                case Event::KeyPressed:
-                    keyboardListener.handleKeyPressedAndReleased(event, true);
-                    break;
-                case Event::KeyReleased:
-                    keyboardListener.handleKeyPressedAndReleased(event, false);
-                    break;
-                default : break;
+            if (event.type == Event::Closed) {
+                app.close();
+            } else if (event.type == Event::KeyPressed || event.type == Event::KeyReleased) {
+                keyboardListener.handleKeyPressedAndReleased(event);
             }
         }
         cout << keyboardListener << endl; 
