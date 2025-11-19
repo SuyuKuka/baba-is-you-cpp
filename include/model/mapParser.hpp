@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include "json.hpp"
+#include "model/map.hpp"
 using namespace std;
 using json = nlohmann::json;
 
@@ -11,16 +12,11 @@ using json = nlohmann::json;
  * @brief Utiliser pour récupérer la config de la carte depuis un json.
  */
 class MapParser {
-    private:
-    json mapData;
-    MapParser() = default;
-    ~MapParser() = default;
-    MapParser(const MapParser&) = delete;
-    MapParser& operator=(const MapParser&) = delete;
-    public:
-    static MapParser& getInstance();
-    void parseConfig(const string path);
-    const json& getMapData() const;
+private:
+    MapParser() = delete;
+    static json parseJSON(const string path);
+public:
+    static Map loadMap(const std::string& path);
 };
 
 #endif

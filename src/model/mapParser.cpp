@@ -1,11 +1,7 @@
 #include "model/mapParser.hpp"
 
-MapParser& MapParser::getInstance() {
-    static MapParser instance;
-    return instance;
-}
-
-void MapParser::parseConfig(const string path) {
+json MapParser::parseJSON(const string path) {
+    json mapData;
     try {
         ifstream file(path);
         if (!file.is_open()) {
@@ -26,8 +22,11 @@ void MapParser::parseConfig(const string path) {
     } else {
         cout << "No walls" << endl;
     }
+    return mapData;
 }
 
-const json& MapParser::getMapData() const {
-    return mapData;
+
+Map MapParser::loadMap(const std::string& path) {
+    json parser = MapParser::parseJSON(path);
+    return Map(parser["width"], parser["height"]);
 }
