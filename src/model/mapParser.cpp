@@ -12,21 +12,42 @@ json MapParser::parseJSON(const string path) {
         cout << ia.what() << endl;
         exit(EXIT_FAILURE);
     }
-
-    //TODO : Enlever les prints et créer des fonctions permettant de charger le niveau
-    cout << mapData["map_name"] << " width: " << mapData["width"] << " height: " << mapData["height"] << endl;
-    if (mapData.contains("walls") && mapData["walls"].is_array()) {
-        for (json& wall : mapData["walls"]) {
-            cout << "Wall(x,y) = (" << wall["x"] << "," << wall["y"]  << ")" << endl;
-        }
-    } else {
-        cout << "No walls" << endl;
-    }
     return mapData;
 }
 
 
 Map MapParser::loadMap(const std::string& path) {
     json parser = MapParser::parseJSON(path);
-    return Map(parser["width"], parser["height"]);
+    Map map = Map(parser["width"], parser["height"]);
+
+    MapParser::loadEntity(map, parser, "baba");
+    MapParser::loadEntity(map, parser, "flag");
+    MapParser::loadEntity(map, parser, "wall");
+
+    MapParser::loadEntity(map, parser, "text_baba");
+    MapParser::loadEntity(map, parser, "text_is");
+    MapParser::loadEntity(map, parser, "text_you");
+    MapParser::loadEntity(map, parser, "text_flag");
+    MapParser::loadEntity(map, parser, "text_win");
+    MapParser::loadEntity(map, parser, "text_wall");
+    MapParser::loadEntity(map, parser, "text_stop");
+
+    return map;
+}
+
+void MapParser::loadEntity(Map map, json parser, string entity) {
+    if (parser.contains(entity) && parser[entity].is_array()) {
+        for (json& entity : parser[entity]) {
+            int x = entity["x"];
+            int y = entity["y"];
+           
+            if (entity["type"] == "wall") {
+                map.addCell(x, y, new EntityNoun(x, y, NounType::WALL));
+            } else if (entity["type"] == "baba") {
+                map.addCell(x, y, new EntityNoun(x, y, NounType::BABA));
+            } else if (entity["type"] == "flag") {
+                map.addCell(x, y, new EntityNoun(x, y, NounType::FLAG));
+            }
+        }
+    }
 }
