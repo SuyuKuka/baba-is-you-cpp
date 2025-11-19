@@ -17,6 +17,7 @@ public:
     }
 
     void addCell(int x, int y, Entity* entity);
+    void printMap();
 };
 
 #endif

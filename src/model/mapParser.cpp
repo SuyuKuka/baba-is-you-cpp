@@ -20,17 +20,16 @@ Map MapParser::loadMap(const std::string& path) {
     json parser = MapParser::parseJSON(path);
     Map map = Map(parser["width"], parser["height"]);
 
-    MapParser::loadEntity(map, parser, "baba");
-    MapParser::loadEntity(map, parser, "flag");
-    MapParser::loadEntity(map, parser, "wall");
+    for (json::iterator it = parser.begin(); it != parser.end(); ++it) {
+        std::string key = it.key();
+        if (key == "map_name" || key == "width" || key == "height") {
+            continue;
+        }
+        std::cout << "  - " << key << std::endl;
+        loadEntity(map, parser, key);
+    }
 
-    MapParser::loadEntity(map, parser, "text_baba");
-    MapParser::loadEntity(map, parser, "text_is");
-    MapParser::loadEntity(map, parser, "text_you");
-    MapParser::loadEntity(map, parser, "text_flag");
-    MapParser::loadEntity(map, parser, "text_win");
-    MapParser::loadEntity(map, parser, "text_wall");
-    MapParser::loadEntity(map, parser, "text_stop");
+    map.printMap();
 
     return map;
 }
