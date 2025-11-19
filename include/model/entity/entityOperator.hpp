@@ -3,8 +3,16 @@
 #include "model/entity.hpp"
 
 class EntityOperator: public Entity {
+private:
+    OperatorType type;
 public:
-    EntityOperator(int x, int y) : Entity(x, y) {}
+    EntityOperator(OperatorType type) {
+        this->type = type;
+    }
+
+    int getId() const override {
+        return static_cast<int>(type);
+    }
 };
 
 #endif

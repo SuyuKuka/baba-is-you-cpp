@@ -7,12 +7,12 @@ using namespace std;
 
 class Map {
 private: 
-    int height;
     int width;
+    int height;
     vector<vector<Cell>> map;
     friend class MapParser;
 public: 
-    Map(int width, int height) : width(width), height(height) {
+    Map(int width, int height): width(width), height(height) {
         map.resize(height, vector<Cell>(width));
     }
 

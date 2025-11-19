@@ -5,10 +5,18 @@ void Map::addCell(int x, int y, Entity* entity) {
 }
 
 void Map::printMap() {
-    for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
-            std::cout << map[i][j].entities.size() << " ";
+    for (int y = 0; y < height; ++y) {
+    for (int x = 0; x < width; ++x) {
+        Cell& cell = map[y][x]; 
+        
+        if (!cell.entities.empty()) {
+            Entity* entity = cell.entities[0]; 
+            int code = entity->getId();
+            std::cout << code << " "; 
+        } else {
+            std::cout << "00 ";
         }
-        std::cout << std::endl;
     }
+    std::cout << std::endl;
+}
 }

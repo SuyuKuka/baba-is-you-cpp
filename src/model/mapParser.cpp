@@ -34,18 +34,49 @@ Map MapParser::loadMap(const std::string& path) {
     return map;
 }
 
-void MapParser::loadEntity(Map map, json parser, string entity) {
+void MapParser::loadEntity(Map& map, json parser, string entity) {
     if (parser.contains(entity) && parser[entity].is_array()) {
-        for (json& entity : parser[entity]) {
-            int x = entity["x"];
-            int y = entity["y"];
+        for (json& location : parser[entity]) {
+            int x = location["x"];
+            int y = location["y"];
            
-            if (entity["type"] == "wall") {
-                map.addCell(x, y, new EntityNoun(x, y, NounType::WALL));
-            } else if (entity["type"] == "baba") {
-                map.addCell(x, y, new EntityNoun(x, y, NounType::BABA));
-            } else if (entity["type"] == "flag") {
-                map.addCell(x, y, new EntityNoun(x, y, NounType::FLAG));
+            std::cout << "x: " << x << ", y: " << y << std::endl;
+            if (entity == "walls") {
+                map.addCell(x, y, new EntityNoun(NounType::WALL));
+            } else if (entity == "baba") {
+                map.addCell(x, y, new EntityNoun(NounType::BABA));
+            } else if (entity == "flag") {
+                map.addCell(x, y, new EntityNoun(NounType::FLAG));
+            } else if (entity == "rock") {
+                map.addCell(x, y, new EntityNoun(NounType::ROCK));
+            } else if (entity == "is") {
+                map.addCell(x, y, new EntityOperator(OperatorType::IS));
+            } else if (entity == "you") {
+                map.addCell(x, y, new EntityProperty(PropertyType::YOU));
+            } else if (entity == "win") {
+                map.addCell(x, y, new EntityProperty(PropertyType::WIN));
+            } else if (entity == "push") {
+                map.addCell(x, y, new EntityProperty(PropertyType::PUSH));
+            } else if (entity == "stop") {
+                map.addCell(x, y, new EntityProperty(PropertyType::STOP));
+            } else if (entity == "text_baba") {
+                map.addCell(x, y, new EntityRule(RuleType::TEXTBABA));
+            } else if (entity == "text_flag") {
+                map.addCell(x, y, new EntityRule(RuleType::TEXTFLAG));
+            } else if (entity == "text_rock") {
+                map.addCell(x, y, new EntityRule(RuleType::TEXTROCK));
+            } else if (entity == "text_wall") {
+                map.addCell(x, y, new EntityRule(RuleType::TEXTWALL));
+            } else if (entity == "text_is") {
+                map.addCell(x, y, new EntityRule(RuleType::TEXTIS));
+            } else if (entity == "text_you") {
+                map.addCell(x, y, new EntityRule(RuleType::TEXTYOU));
+            } else if (entity == "text_win") {
+                map.addCell(x, y, new EntityRule(RuleType::TEXTWIN));
+            } else if (entity == "text_push") {
+                map.addCell(x, y, new EntityRule(RuleType::TEXTPUSH));
+            } else if (entity == "text_stop") {
+                map.addCell(x, y, new EntityRule(RuleType::TEXTSTOP));
             }
         }
     }

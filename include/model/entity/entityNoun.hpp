@@ -7,8 +7,12 @@ class EntityNoun: public Entity {
 private:
     NounType type;
 public:
-    EntityNoun(int x, int y, NounType type) : Entity(x, y) {
+    EntityNoun(NounType type) {
         this->type = type;
+    }
+
+    int getId() const override {
+        return static_cast<int>(type);
     }
 };
 

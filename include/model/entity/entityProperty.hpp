@@ -3,8 +3,16 @@
 #include "model/entity.hpp"
 
 class EntityProperty: public Entity {
+private:
+    PropertyType type;
 public:
-    EntityProperty(int x, int y) : Entity(x, y) {}
+    EntityProperty(PropertyType type) {
+        this->type = type;
+    }
+
+    int getId() const override {
+        return static_cast<int>(type);
+    }
 };
 
 #endif
