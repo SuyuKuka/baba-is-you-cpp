@@ -1,22 +1,34 @@
 #include "model/map.hpp"
 
 void Map::addCell(int x, int y, Entity* entity) {
-    map[y][x].entities.push_back(entity);
+    map[y][x].addEntity(entity);
+}
+
+void Map::addRule(Rule noun) {
+    rules.push_back(noun);
+}
+
+const Cell& Map::getCell(int x, int y) const {
+    return map[y][x];
+}
+
+const vector<Rule>& Map::getRules() const {
+    return rules;
 }
 
 void Map::printMap() {
     for (int y = 0; y < height; ++y) {
-    for (int x = 0; x < width; ++x) {
-        Cell& cell = map[y][x]; 
-        
-        if (!cell.entities.empty()) {
-            Entity* entity = cell.entities[0]; 
-            int code = entity->getId();
-            std::cout << code << " "; 
-        } else {
-            std::cout << "00 ";
+        for (int x = 0; x < width; ++x) {
+            Cell& cell = map[y][x]; 
+            
+            if (!cell.isEmpty()) {
+                Entity* entity = cell.getEntities()[0]; 
+                int code = entity->getId();
+                std::cout << code << " "; 
+            } else {
+                std::cout << "00 ";
+            }
         }
+        std::cout << std::endl;
     }
-    std::cout << std::endl;
-}
 }

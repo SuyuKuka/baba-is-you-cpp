@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "model/mapParser.hpp"
+#include "model/ruleManager.hpp"
 using namespace sf;
 
 int main() {
