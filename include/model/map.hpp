@@ -18,6 +18,13 @@ public:
 
     void addCell(int x, int y, Entity* entity);
     void printMap();
+
+    /**
+     * @brief Cette fonction crée une copie.
+     * @return Un vector contenant les cellules occupées.
+     */
+    const vector<const Cell*> getOccupiedCells() const;
+
 };
 
 #endif

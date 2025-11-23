@@ -6,9 +6,7 @@ class EntityRule: public Entity {
 private:
     RuleType type;
 public:
-    EntityRule(RuleType type) {
-        this->type = type;
-    }
+    EntityRule(int x, int y, RuleType type) : Entity(x,y), type(type) { }
 
     int getId() const override {
         return static_cast<int>(type);

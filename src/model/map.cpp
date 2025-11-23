@@ -20,3 +20,15 @@ void Map::printMap() {
     std::cout << std::endl;
 }
 }
+
+const vector<const Cell*> Map::getOccupiedCells() const {
+    vector<const Cell*> occupied;
+    for (const vector<Cell>& vCell : map) {
+        for(const Cell& cell : vCell) {
+            if (!cell.entities.empty()) {
+                occupied.push_back(&cell);
+            }
+        }
+    }
+    return occupied;
+}

@@ -6,9 +6,7 @@ class EntityOperator: public Entity {
 private:
     OperatorType type;
 public:
-    EntityOperator(OperatorType type) {
-        this->type = type;
-    }
+    EntityOperator(int x, int y, OperatorType type) : Entity(x,y), type(type) { }
 
     int getId() const override {
         return static_cast<int>(type);
