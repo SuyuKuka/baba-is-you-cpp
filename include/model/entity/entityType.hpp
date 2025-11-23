@@ -19,12 +19,18 @@ enum class PropertyType {
     STOP = 18
 };
 
-enum class RuleType {
+enum class NounText {
     TEXTBABA = 19,
     TEXTFLAG = 20,
     TEXTROCK = 21,
-    TEXTWALL = 22,
-    TEXTIS = 23,
+    TEXTWALL = 22
+};
+
+enum class OperatorText {
+    TEXTIS = 23
+};
+
+enum class PropertyText {
     TEXTYOU = 24,
     TEXTWIN = 25,
     TEXTPUSH = 26,

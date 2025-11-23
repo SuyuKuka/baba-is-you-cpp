@@ -6,12 +6,14 @@ class EntityProperty: public Entity {
 private:
     PropertyType type;
 public:
-    EntityProperty(PropertyType type) {
-        this->type = type;
-    }
+    EntityProperty(int x, int y, PropertyType type): Entity(x, y), type(type) { }
 
     int getId() const override {
         return static_cast<int>(type);
+    }
+
+    bool isPushable() const override {
+        return false;
     }
 };
 
