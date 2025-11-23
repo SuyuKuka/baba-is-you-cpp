@@ -15,6 +15,10 @@ public:
     bool isPushable() const override {
         return true;
     }
+
+    bool isStackable() const override {
+        return false;
+    }
 };
 
 #endif

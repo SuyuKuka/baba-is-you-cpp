@@ -4,15 +4,11 @@ void Map::addCell(int x, int y, Entity* entity) {
     map[y][x].addEntity(entity);
 }
 
-void Map::addRule(Rule noun) {
-    rules.push_back(noun);
-}
-
 const Cell& Map::getCell(int x, int y) const {
     return map[y][x];
 }
 
-const vector<Rule>& Map::getRules() const {
+const Rule& Map::getRules() const {
     return rules;
 }
 

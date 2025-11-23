@@ -19,6 +19,7 @@ json MapParser::parseJSON(const string path) {
 Map MapParser::loadMap(const std::string& path) {
     json parser = MapParser::parseJSON(path);
     Map map = Map(parser["width"], parser["height"]);
+    Rule rules = Rule();
 
     for (json::iterator it = parser.begin(); it != parser.end(); ++it) {
         std::string key = it.key();
@@ -26,15 +27,16 @@ Map MapParser::loadMap(const std::string& path) {
             continue;
         }
         std::cout << "  - " << key << std::endl;
-        loadEntity(map, parser, key);
+        loadEntity(map, rules, parser, key);
     }
 
     map.printMap();
+    rules.printRule();
 
     return map;
 }
 
-void MapParser::loadEntity(Map& map, json parser, string entity) {
+void MapParser::loadEntity(Map& map, Rule& rules, json parser, string entity) {
     if (parser.contains(entity) && parser[entity].is_array()) {
         for (json& location : parser[entity]) {
             int x = location["x"];
@@ -61,26 +63,33 @@ void MapParser::loadEntity(Map& map, json parser, string entity) {
                 map.addCell(x, y, new EntityProperty(x, y, PropertyType::STOP));
             } else if (entity == "text_baba") {
                 map.addCell(x, y, new TextNoun(x, y, NounText::TEXTBABA));
-                map.addRule(Rule(x, y, NounText::TEXTBABA));
+                rules.addNoun(TextNoun(x, y, NounText::TEXTBABA));
             } else if (entity == "text_flag") {
                 map.addCell(x, y, new TextNoun(x, y, NounText::TEXTFLAG));
-                map.addRule(Rule(x, y, NounText::TEXTFLAG));
+                rules.addNoun(TextNoun(x, y, NounText::TEXTFLAG));
             } else if (entity == "text_rock") {
                 map.addCell(x, y, new TextNoun(x, y, NounText::TEXTROCK));
-                map.addRule(Rule(x, y, NounText::TEXTROCK));
+                rules.addNoun(TextNoun(x, y, NounText::TEXTROCK));
             } else if (entity == "text_wall") {
                 map.addCell(x, y, new TextNoun(x, y, NounText::TEXTWALL));
-                map.addRule(Rule(x, y, NounText::TEXTWALL));
+                rules.addNoun(TextNoun(x, y, NounText::TEXTWALL));
             } else if (entity == "text_is") {
                 map.addCell(x, y, new TextOperator(x, y, OperatorText::TEXTIS));
+                rules.addOperator(TextOperator(x, y, OperatorText::TEXTIS));
             } else if (entity == "text_you") {
                 map.addCell(x, y, new TextProperty(x, y, PropertyText::TEXTYOU));
+                rules.addProperty(TextProperty(x, y, PropertyText::TEXTYOU));
             } else if (entity == "text_win") {
                 map.addCell(x, y, new TextProperty(x, y, PropertyText::TEXTWIN));
+                rules.addProperty(TextProperty(x, y, PropertyText::TEXTWIN));
             } else if (entity == "text_push") {
                 map.addCell(x, y, new TextProperty(x, y, PropertyText::TEXTPUSH));
+                rules.addProperty(TextProperty(x, y, PropertyText::TEXTPUSH));
             } else if (entity == "text_stop") {
                 map.addCell(x, y, new TextProperty(x, y, PropertyText::TEXTSTOP));
+                rules.addProperty(TextProperty(x, y, PropertyText::TEXTSTOP));
+            } else {
+                std::cout << "Unknown entity: " << entity << std::endl;
             }
         }
     }

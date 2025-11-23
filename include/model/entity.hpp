@@ -11,7 +11,10 @@ public:
     virtual ~Entity();
 
     virtual int getId() const = 0;
+    int getX() const;
+    int getY() const;
     virtual bool isPushable() const = 0;
+    virtual bool isStackable() const = 0;
 };
 
 #endif
