@@ -2,22 +2,20 @@
 #include <SFML/Graphics.hpp>
 #include "model/mapParser.hpp"
 #include "model/ruleManager.hpp"
+#include "view/mainView.hpp"
 using namespace sf;
 
 int main() {
-    RenderWindow app(VideoMode(1280, 720), "BABA IS YOU");
+    MainView view;
     Map map = MapParser::loadMap("resources/maps/map-1.json");
-    while (app.isOpen()) {
+    while (view.isOpen()) {
         Event event;
-        while (app.pollEvent(event)) {
-            switch (event.type) {
-                case Event::Closed:
-                    app.close(); break;
-                default : break;
+        while (view.pollEvent(event)) {
+            if (event.type == Event::Closed) {
+                view.close();
             }
         }
-        app.clear();
-        app.display();
+        view.render(map.getOccupiedCells());
     }
     return EXIT_SUCCESS;
 }

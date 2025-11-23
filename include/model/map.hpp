@@ -23,6 +23,13 @@ public:
     const Cell& getCell(int x, int y) const;
     const vector<Rule>& getRules() const;
     void printMap();
+
+    /**
+     * @brief Cette fonction crée une copie.
+     * @return Un vector contenant les cellules occupées.
+     */
+    const vector<const Cell*> getOccupiedCells() const;
+
 };
 
 #endif

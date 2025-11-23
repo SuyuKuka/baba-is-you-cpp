@@ -1,6 +1,7 @@
 #ifndef ENTITY_NOUN_HPP
 #define ENTITY_NOUN_HPP
 #include "model/entity.hpp"
+#include "entityType.hpp"
 
 class EntityNoun: public Entity {
 private:

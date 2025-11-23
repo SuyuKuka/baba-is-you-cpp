@@ -18,7 +18,7 @@ public:
     }
 
     void removeEntity(Entity* entity) {
-        entities.erase(std::remove(entities.begin(), entities.end(), *entity), entities.end());
+        entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
     }
 
     bool isEmpty() const {
