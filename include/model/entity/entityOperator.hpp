@@ -3,22 +3,12 @@
 #include "model/entity.hpp"
 
 class EntityOperator: public Entity {
-private:
-    OperatorType type;
 public:
-    EntityOperator(int x, int y, OperatorType type): Entity(x, y), type(type) { }
+    EntityOperator(int x, int y, int id): Entity(id, x, y) { }
 
-    int getId() const override {
-        return static_cast<int>(type);
-    }
-
-    bool isPushable() const override {
-        return false;
-    }
-
-    bool isStackable() const override {
-        return false;
-    }
+    bool isPushable() const override;
+    bool isStackable() const override;
+    OperatorType getOperatorType() const override;
 };
 
 #endif

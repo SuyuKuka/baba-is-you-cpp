@@ -11,6 +11,7 @@ private:
     int width;
     int height;
     vector<vector<Cell>> map;
+    vector<Entity*> nouns;
     Rule rules;
     friend class MapParser;
 public: 
@@ -18,10 +19,15 @@ public:
         map.resize(height, vector<Cell>(width));
     }
 
+    void updateRules();
+    void checkRule(int x, int y, Entity* nounEntity, bool horizontal);
     void addCell(int x, int y, Entity* entity);
+    void addNoun(Entity* entity);
     const Cell& getCell(int x, int y) const;
     const Rule& getRules() const;
+    void clearNouns();
     void printMap();
+    void printRules() const;
 };
 
 #endif

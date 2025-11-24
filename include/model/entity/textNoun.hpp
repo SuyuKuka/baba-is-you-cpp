@@ -3,14 +3,8 @@
 #include "model/entity.hpp"
 
 class TextNoun: public Entity {
-private:
-    NounText type;
 public:
-    TextNoun(int x, int y, NounText type): Entity(x, y), type(type) { }
-
-    int getId() const override {
-        return static_cast<int>(type);
-    }
+    TextNoun(int x, int y, int id): Entity(id, x, y) { }
 
     bool isPushable() const override {
         return true;
@@ -18,6 +12,10 @@ public:
 
     bool isStackable() const override {
         return false;
+    }
+
+    NounType getNounType() const override {
+        return NounType::NONE;
     }
 };
 

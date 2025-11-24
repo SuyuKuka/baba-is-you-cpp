@@ -3,14 +3,8 @@
 #include "model/entity.hpp"
 
 class TextOperator: public Entity {
-private:
-    OperatorText type;
 public:
-    TextOperator(int x, int y, OperatorText type): Entity(x, y), type(type) { }
-
-    int getId() const override {
-        return static_cast<int>(type);
-    }
+    TextOperator(int x, int y, int id): Entity(id, x, y) { }
 
     bool isPushable() const override {
         return true;
@@ -18,6 +12,10 @@ public:
 
     bool isStackable() const override {
         return false;
+    }
+
+    OperatorType getOperatorType() const override {
+        return OperatorType::NONE;
     }
 };
 

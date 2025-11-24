@@ -3,22 +3,12 @@
 #include "model/entity.hpp"
 
 class EntityProperty: public Entity {
-private:
-    PropertyType type;
 public:
-    EntityProperty(int x, int y, PropertyType type): Entity(x, y), type(type) { }
+    EntityProperty(int x, int y, int id): Entity(id, x, y) { }
 
-    int getId() const override {
-        return static_cast<int>(type);
-    }
-
-    bool isPushable() const override {
-        return false;
-    }
-
-    bool isStackable() const override {
-        return false;
-    }
+    bool isPushable() const override;
+    bool isStackable() const override;
+    PropertyType getPropertyType() const override;
 };
 
 #endif

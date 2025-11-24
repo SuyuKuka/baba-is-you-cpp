@@ -3,14 +3,8 @@
 #include "model/entity.hpp"
 
 class TextProperty: public Entity {
-private:
-    PropertyText type;
 public:
-    TextProperty(int x, int y, PropertyText type): Entity(x, y), type(type) { }
-
-    int getId() const override {
-        return static_cast<int>(type);
-    }
+    TextProperty(int x, int y, int id): Entity(id, x, y) { }
 
     bool isPushable() const override {
         return true;
@@ -18,6 +12,10 @@ public:
 
     bool isStackable() const override {
         return false;
+    }
+
+    PropertyType getPropertyType() const override {
+        return PropertyType::NONE;
     }
 };
 

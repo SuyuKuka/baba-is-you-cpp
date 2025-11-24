@@ -23,7 +23,7 @@ class MapParser {
 private:
     MapParser() = delete;
     static json parseJSON(const string path);
-    static void loadEntity(Map& map, Rule& rules, const json parser, const string entity);
+    static void loadEntity(Map& map, const json parser, const string entity);
 public:
     static Map loadMap(const std::string& path);
 };

@@ -12,9 +12,6 @@ using namespace std;
 
 class Rule {
 private:
-    vector<TextNoun> nouns;
-    vector<TextOperator> operators;
-    vector<TextProperty> properties;
     struct PropertyRules {
         set<PropertyType> properties; 
         set<NounType> transformationTargets; 
@@ -23,15 +20,11 @@ private:
     map<NounType, PropertyRules> activeRules;
 public:
     Rule() = default;
-    
-    void addNoun(TextNoun noun);
-    void addOperator(TextOperator op);
-    void addProperty(TextProperty prop);
-    vector<TextNoun> getNouns() const;
-    vector<TextOperator> getOperators() const;
-    vector<TextProperty> getProperties() const;
-    void clear();
-    void printRule();
+
+    void addActiveRule(NounType nounType, PropertyType propertyType, NounType transformationTarget);
+    map<NounType, PropertyRules> getActiveRules() const;
+    void clearActiveRules();
+    void printActivesRules() const;
 };
 
 #endif

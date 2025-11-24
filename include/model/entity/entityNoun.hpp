@@ -3,22 +3,12 @@
 #include "model/entity.hpp"
 
 class EntityNoun: public Entity {
-private:
-    NounType type;
 public:
-    EntityNoun(int x, int y, NounType type): Entity(x, y), type(type) { }
+    EntityNoun(int x, int y, int id): Entity(id, x, y) { }
 
-    int getId() const override {
-        return static_cast<int>(type);
-    }
-
-    bool isPushable() const override {
-        return false;
-    }
-
-    bool isStackable() const override {
-        return false;
-    }
+    bool isPushable() const override;
+    bool isStackable() const override;
+    NounType getNounType() const override;
 };
 
 #endif

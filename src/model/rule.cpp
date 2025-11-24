@@ -1,50 +1,37 @@
 #include "model/rule.hpp"
 
-void Rule::addNoun(TextNoun noun) {
-    nouns.push_back(noun);
+void Rule::addActiveRule(NounType nounType, PropertyType propertyType, NounType transformationTarget) {
+    activeRules[nounType].properties.insert(propertyType);
+    activeRules[nounType].transformationTargets.insert(transformationTarget);
 }
 
-void Rule::addOperator(TextOperator op) {
-    operators.push_back(op);
+map<NounType, Rule::PropertyRules> Rule::getActiveRules() const {
+    return activeRules;
 }
 
-void Rule::addProperty(TextProperty prop) {
-    properties.push_back(prop);
+void Rule::clearActiveRules() {
+    activeRules.clear();
 }
 
-vector<TextNoun> Rule::getNouns() const {
-    return nouns;
-}
-
-vector<TextOperator> Rule::getOperators() const {
-    return operators;
-}
-
-vector<TextProperty> Rule::getProperties() const {
-    return properties;
-}
-
-void Rule::clear() {
-    nouns.clear();
-    operators.clear();
-    properties.clear();
-}
-
-void Rule::printRule() {
-    cout << "Rule: " << endl;
-    cout << "Nouns: ";
-    for (TextNoun noun : nouns) {
-        cout << noun.getId() << " ";
+void Rule::printActivesRules() const {
+     cout << "\n--- RÈGLES ACTIVES ---" << endl;
+    
+    if (activeRules.empty()) {
+        cout << "Aucune règle active détectée." << endl;
+        return;
     }
-    cout << endl;
-    cout << "Operateurs: ";
-    for (TextOperator op : operators) {
-        cout << op.getId() << " ";
+
+    for (const auto& pair : activeRules) {
+        NounType subject = pair.first;
+        const auto& ruleData = pair.second;
+        
+        for (PropertyType prop : ruleData.properties) {
+            cout << static_cast<int>(subject) << " IS " << static_cast<int>(prop) << endl;
+        }
+
+        for (NounType target : ruleData.transformationTargets) {
+            cout << static_cast<int>(subject) << " IS " << static_cast<int>(target) << " (Noun)" << endl;
+        }
     }
-    cout << endl;
-    cout << "Properties: ";
-    for (TextProperty prop : properties) {
-        cout << prop.getId() << " ";
-    }
-    cout << endl;
+    cout << "----------------------\n" << endl;
 }
