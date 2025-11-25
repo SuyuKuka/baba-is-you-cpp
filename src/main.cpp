@@ -1,11 +1,13 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "model/mapParser.hpp"
+#include "model/keyboardListener.hpp"
 using namespace sf;
 
 int main() {
     RenderWindow app(VideoMode(1280, 720), "BABA IS YOU");
     Map map = MapParser::loadMap("resources/maps/map-1.json");
+    KeyboardListener& keyboardListener = KeyboardListener::getInstance();
     while (app.isOpen()) {
         Event event;
         while (app.pollEvent(event)) {
