@@ -1,28 +1,33 @@
 CC = g++
-CFLAGS = -Wall -Wextra --std=c++11 -Iinclude
+CFLAGS = -Wall -Wextra -std=c++11 -Iinclude
 LFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
-CCO = $(CC) $(CFLAGS) -c $<
-OBJECTS = build/main.o build/keyboardListener.o
 TARGET = BABA_IS_YOU
+
+SRCDIR = src
+BUILDDIR = build
+
+SOURCES = $(shell find $(SRCDIR) -name '*.cpp')
+OBJECTS = $(patsubst $(SRCDIR)/%.cpp, $(BUILDDIR)/%.o, $(SOURCES))
+
+.PHONY: all run clean
 
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS) 
-	$(CC) $(CFLAGS) -o $@ $(OBJECTS) $(LFLAGS)
+	$(CC) $(CFLAGS) -o $@ $^ $(LFLAGS)
 
 run: $(TARGET)
 	./$(TARGET)
 
-build:
-	mkdir -p build
+$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp | $(BUILDDIR)
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-build/main.o: src/main.cpp | build
-	$(CCO) -o $@ 
+$(BUILDDIR):
+	mkdir -p $(BUILDDIR)
 
 build/keyboardListener.o: src/cpp/keyboardListener.cpp src/hpp/keyboardListener.hpp | build
 	$(CCO) -o $@
 
 clean:
-	rm -f $(OBJECTS) $(TARGET)
-
-.PHONY: clean
+	rm -rf $(BUILDDIR) $(TARGET)
