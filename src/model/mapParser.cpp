@@ -43,9 +43,11 @@ void MapParser::loadEntity(Map& map, json parser, string entity) {
            
             std::cout << "x: " << x << ", y: " << y << std::endl;
             if (entity == "walls") {
-                map.addCell(x, y, new EntityNoun(x, y, static_cast<int>(NounType::WALL)));
+                Entity* wall = new EntityNoun(x, y, static_cast<int>(NounType::WALL));
+                map.addCell(x, y, wall);
             } else if (entity == "baba") {
-                map.addCell(x, y, new EntityNoun(x, y, static_cast<int>(NounType::BABA)));
+                Entity* baba = new EntityNoun(x, y, static_cast<int>(NounType::BABA));
+                map.addCell(x, y, baba);
             } else if (entity == "flag") {
                 map.addCell(x, y, new EntityNoun(x, y, static_cast<int>(NounType::FLAG)));
             } else if (entity == "rock") {
