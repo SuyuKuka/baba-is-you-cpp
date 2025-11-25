@@ -56,8 +56,16 @@ void Map::addCell(int x, int y, Entity* entity) {
     map[y][x].addEntity(entity);
 }
 
+void Map::removeCell(int x, int y, Entity* entity) {
+    map[y][x].removeEntity(entity);
+}
+
 void Map::addNoun(Entity* noun) {
     nouns.push_back(noun);
+}
+
+void Map::addNounEntityType(Entity* noun) {
+    nounsEntityType.push_back(noun);
 }
 
 const Cell& Map::getCell(int x, int y) const {
@@ -73,6 +81,7 @@ void Map::clearNouns() {
 }
 
 void Map::printMap() {
+    std::cout << "************************Map************************" << std::endl;
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
             Cell& cell = map[y][x]; 
@@ -96,4 +105,39 @@ void Map::printRules() const {
     }
     cout << endl;
     rules.printActivesRules();
+}
+
+void Map::move(int dx, int dy) {
+    for (const auto& rule : rules.getActiveRules()) {
+        if (rule.properties == PropertyText::TEXTYOU) {
+            int nounType = static_cast<int>(rule.subjects) - 9;
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    Cell& cell = map[i][j];
+                    if (!cell.isEmpty()) {
+                        for (Entity* entity: cell.getEntities()) {
+                            if (entity->getId() == nounType) {
+                                // TODO check si devant c'est un stop ou non
+                                int x = entity->getX();
+                                int y = entity->getY();
+                                int newX = x + dx;
+                                int newY = y + dy;
+                                if (newX >= 0 && newX < width && newY >= 0 && newY < height) {
+                                    removeCell(x, y, entity); 
+                                    entity->setX(newX);
+                                    entity->setY(newY);
+                                    addCell(newX, newY, entity); 
+
+                                    printMap();
+                                    break;
+                                } else {
+                                    std::cout << "Error: Invalid move" << std::endl;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
