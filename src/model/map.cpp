@@ -79,8 +79,8 @@ void Map::printMap() {
             
             if (!cell.isEmpty()) {
                 Entity* entity = cell.getEntities()[0]; 
-                int code = entity->getId();
-                std::cout << code << " "; 
+                int id = entity->getId();
+                std::cout << id << " "; 
             } else {
                 std::cout << "00 ";
             }
