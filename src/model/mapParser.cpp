@@ -19,7 +19,7 @@ json MapParser::parseJSON(const string path) {
 Map MapParser::loadMap(const std::string& path) {
     json parser = MapParser::parseJSON(path);
     Map map = Map(parser["width"], parser["height"]);
-    Rule rules = Rule();
+    RuleEngine& rules = map.getRuleEngine();
 
     for (json::iterator it = parser.begin(); it != parser.end(); ++it) {
         std::string key = it.key();
@@ -30,7 +30,7 @@ Map MapParser::loadMap(const std::string& path) {
         loadEntity(map, parser, key);
     }
     map.printMap();
-    map.updateRules();
+    rules.updateRules();
     map.printRules();
     return map;
 }
@@ -43,47 +43,52 @@ void MapParser::loadEntity(Map& map, json parser, string entity) {
            
             std::cout << "x: " << x << ", y: " << y << std::endl;
             if (entity == "walls") {
-                Entity* wall = new EntityNoun(x, y, static_cast<int>(NounType::WALL));
+                Entity* wall = new EntityGame(x, y, static_cast<int>(GameEntity::WALL));
                 map.addCell(x, y, wall);
+                map.addNounEntityType(wall);
             } else if (entity == "baba") {
-                Entity* baba = new EntityNoun(x, y, static_cast<int>(NounType::BABA));
+                Entity* baba = new EntityGame(x, y, static_cast<int>(GameEntity::BABA));
                 map.addCell(x, y, baba);
+                map.addNounEntityType(baba);
             } else if (entity == "flag") {
-                map.addCell(x, y, new EntityNoun(x, y, static_cast<int>(NounType::FLAG)));
+                Entity* flag = new EntityGame(x, y, static_cast<int>(GameEntity::FLAG));
+                map.addCell(x, y, flag);
+                map.addNounEntityType(flag);
             } else if (entity == "rock") {
-                map.addCell(x, y, new EntityNoun(x, y, static_cast<int>(NounType::ROCK)));
-            } else if (entity == "is") {
-                map.addCell(x, y, new EntityOperator(x, y, static_cast<int>(OperatorType::IS)));
-            } else if (entity == "you") {
-                map.addCell(x, y, new EntityProperty(x, y, static_cast<int>(PropertyType::YOU)));
-            } else if (entity == "win") {
-                map.addCell(x, y, new EntityProperty(x, y, static_cast<int>(PropertyType::WIN)));
-            } else if (entity == "push") {
-                map.addCell(x, y, new EntityProperty(x, y, static_cast<int>(PropertyType::PUSH)));
-            } else if (entity == "stop") {
-                map.addCell(x, y, new EntityProperty(x, y, static_cast<int>(PropertyType::STOP)));
+                Entity* rock = new EntityGame(x, y, static_cast<int>(GameEntity::ROCK));
+                map.addCell(x, y, rock);
+                map.addNounEntityType(rock);
             } else if (entity == "text_baba") {
-                map.addCell(x, y, new TextNoun(x, y, static_cast<int>(NounText::TEXTBABA)));
-                map.addNoun(new TextNoun(x, y, static_cast<int>(NounText::TEXTBABA)));
+                Entity* text_baba = new EntityNoun(x, y, static_cast<int>(NounWordEntity::TEXTBABA));
+                map.addCell(x, y, text_baba);
+                map.addNoun(text_baba);
             } else if (entity == "text_flag") {
-                map.addCell(x, y, new TextNoun(x, y, static_cast<int>(NounText::TEXTFLAG)));
-                map.addNoun(new TextNoun(x, y, static_cast<int>(NounText::TEXTFLAG)));
+                Entity* text_flag = new EntityNoun(x, y, static_cast<int>(NounWordEntity::TEXTFLAG));
+                map.addCell(x, y, text_flag);
+                map.addNoun(text_flag);
             } else if (entity == "text_rock") {
-                map.addCell(x, y, new TextNoun(x, y, static_cast<int>(NounText::TEXTROCK)));
-                map.addNoun(new TextNoun(x, y, static_cast<int>(NounText::TEXTROCK)));
+                Entity* text_rock = new EntityNoun(x, y, static_cast<int>(NounWordEntity::TEXTROCK));
+                map.addCell(x, y, text_rock);
+                map.addNoun(text_rock);
             } else if (entity == "text_wall") {
-                map.addCell(x, y, new TextNoun(x, y, static_cast<int>(NounText::TEXTWALL)));
-                map.addNoun(new TextNoun(x, y, static_cast<int>(NounText::TEXTWALL)));
+                Entity* text_wall = new EntityNoun(x, y, static_cast<int>(NounWordEntity::TEXTWALL));
+                map.addCell(x, y, text_wall);
+                map.addNoun(text_wall);
             } else if (entity == "text_is") {
-                map.addCell(x, y, new TextOperator(x, y, static_cast<int>(OperatorText::TEXTIS)));
+                Entity* text_is = new EntityOperator(x, y, static_cast<int>(OperatorWordEntity::TEXTIS));
+                map.addCell(x, y, text_is);
             } else if (entity == "text_you") {
-                map.addCell(x, y, new TextProperty(x, y, static_cast<int>(PropertyText::TEXTYOU)));
+                Entity* text_you = new EntityProperty(x, y, static_cast<int>(PropertyWordEntity::TEXTYOU));
+                map.addCell(x, y, text_you);
             } else if (entity == "text_win") {
-                map.addCell(x, y, new TextProperty(x, y, static_cast<int>(PropertyText::TEXTWIN)));
+                Entity* text_win = new EntityProperty(x, y, static_cast<int>(PropertyWordEntity::TEXTWIN));
+                map.addCell(x, y, text_win);
             } else if (entity == "text_push") {
-                map.addCell(x, y, new TextProperty(x, y, static_cast<int>(PropertyText::TEXTPUSH)));
+                Entity* text_push = new EntityProperty(x, y, static_cast<int>(PropertyWordEntity::TEXTPUSH));
+                map.addCell(x, y, text_push);
             } else if (entity == "text_stop") {
-                map.addCell(x, y, new TextProperty(x, y, static_cast<int>(PropertyText::TEXTSTOP)));
+                Entity* text_stop = new EntityProperty(x, y, static_cast<int>(PropertyWordEntity::TEXTSTOP));
+                map.addCell(x, y, text_stop);
             } else {
                 std::cout << "Unknown entity: " << entity << std::endl;
             }

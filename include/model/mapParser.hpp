@@ -1,16 +1,15 @@
-#ifndef _MAPPARSER
-#define _MAPPARSER
+#ifndef MAP_PARSER_HPP
+#define MAP_PARSER_HPP
 #include <iostream>
 #include <fstream>
 #include "json.hpp"
 #include "model/map.hpp"
+#include "model/ruleEngine.hpp"
+#include "model/entity/entityGame.hpp"
 #include "model/entity/entityNoun.hpp"
 #include "model/entity/entityOperator.hpp"
 #include "model/entity/entityProperty.hpp"
 #include "model/entity/entityType.hpp"
-#include "model/entity/textNoun.hpp"
-#include "model/entity/textOperator.hpp"
-#include "model/entity/textProperty.hpp"
 
 using namespace std;
 using json = nlohmann::json;

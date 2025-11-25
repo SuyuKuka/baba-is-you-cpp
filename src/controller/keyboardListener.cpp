@@ -5,14 +5,12 @@ KeyboardListener& KeyboardListener::getInstance(Map& map) {
     return instance;
 }
 
-// 73 = up, 71 = left, 74 = down, 72 = right
-// 25 = z, 16 = q, 18 = s, 3 = d
-// 22 = w, 0 = a
 void KeyboardListener::handleKeyPressedAndReleased(const Event& event) {
     const Keyboard::Key key = event.key.code;
     if (isAuthorizedKey(key)) {
         if (event.type == Event::KeyPressed && !isKeyPressed(key)) {
             keyPressed.push_back(event.key.code);
+            handleMove(event);
         } else if (event.type == Event::KeyReleased) {
             keyPressed.erase(
                 remove(keyPressed.begin(), keyPressed.end(), event.key.code), keyPressed.end()
