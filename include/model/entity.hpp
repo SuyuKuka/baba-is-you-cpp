@@ -18,12 +18,12 @@ public:
     void setY(int y) { this->y = y; };
     virtual bool isPushable() const = 0;
     virtual bool isStackable() const = 0;
-    bool isNounText() const;
-    bool isOperatorText() const;
-    bool isPropertyText() const;
-    virtual NounText getNounText() const;
-    virtual OperatorText getOperatorText() const;
-    virtual PropertyText getPropertyText() const;
+    bool isNounWordEntity() const;
+    bool isOperatorWordEntity() const;
+    bool isPropertyWordEntity() const;
+    virtual NounWordEntity getNounWordEntity() const;
+    virtual OperatorWordEntity getOperatorWordEntity() const;
+    virtual PropertyWordEntity getPropertyWordEntity() const;
 };
 
 #endif

@@ -17,7 +17,6 @@ int main() {
                 keyboardListener.handleKeyPressedAndReleased(event);
             }
         }
-        keyboardListener.handleMove(event);
         app.clear();
         app.display();
     }

@@ -1,9 +1,9 @@
-#include "model/entity/entityNoun.hpp"
+#include "model/entity/entityGame.hpp"
 
-bool EntityNoun::isPushable() const {
+bool EntityGame::isPushable() const {
     return false;
 }
 
-bool EntityNoun::isStackable() const {
+bool EntityGame::isStackable() const {
     return false;
 }
