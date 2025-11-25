@@ -26,5 +26,8 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp | $(BUILDDIR)
 $(BUILDDIR):
 	mkdir -p $(BUILDDIR)
 
+build/keyboardListener.o: src/cpp/keyboardListener.cpp src/hpp/keyboardListener.hpp | build
+	$(CCO) -o $@
+
 clean:
 	rm -rf $(BUILDDIR) $(TARGET)
