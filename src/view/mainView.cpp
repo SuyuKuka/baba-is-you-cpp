@@ -5,14 +5,12 @@ MainView::MainView(): app(VideoMode(1280, 720), "BABA IS YOU", Style::Titlebar |
 
 void MainView::render(const vector<const Cell*> occupied) {
     app.clear();
+    BabaTexture& babaTexture = BabaTexture::getInstance();
     for (const Cell* cell : occupied) {
         for (const Entity* entity : cell -> getEntities()) {
             double px = entity -> getX() * cellWidth;
             double py = entity -> getY() * cellHeight;
-            Texture texture;
-            texture.loadFromFile("resources/sprites/Baba.png");
-            Sprite sprite;
-            sprite.setTexture(texture);
+            Sprite sprite(babaTexture.getTexture(entity -> getId()));
             sprite.setScale(cellWidth / sprite.getTextureRect().width,
                 cellHeight / sprite.getTextureRect().height);
             sprite.setPosition(px,py);

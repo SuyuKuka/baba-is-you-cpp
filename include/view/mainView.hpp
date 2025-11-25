@@ -7,6 +7,7 @@
 #include <cmath>
 #include "model/cell.hpp"
 #include "model/entity.hpp"
+#include "view/babaTexture.hpp"
 using namespace std;
 using namespace sf;
 
