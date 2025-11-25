@@ -1,11 +1,15 @@
 #include "model/rule.hpp"
 
-void Rule::addActiveRule(NounType nounType, PropertyType propertyType, NounType transformationTarget) {
-    activeRules[nounType].properties.insert(propertyType);
-    activeRules[nounType].transformationTargets.insert(transformationTarget);
+void Rule::addActiveRule(NounText nounType, OperatorText operatorType, PropertyText propertyType, NounText transformationTarget) {
+    PropertyRules ruleData;
+    ruleData.subjects = nounType;
+    ruleData.operators = operatorType;
+    ruleData.transformationTargets = transformationTarget;
+    ruleData.properties = propertyType;
+    activeRules.push_back(ruleData);
 }
 
-map<NounType, Rule::PropertyRules> Rule::getActiveRules() const {
+vector<Rule::PropertyRules> Rule::getActiveRules() const {
     return activeRules;
 }
 
@@ -14,23 +18,18 @@ void Rule::clearActiveRules() {
 }
 
 void Rule::printActivesRules() const {
-     cout << "\n--- RÈGLES ACTIVES ---" << endl;
-    
+    cout << "\n--- RÈGLES ACTIVES ---" << endl;
     if (activeRules.empty()) {
         cout << "Aucune règle active détectée." << endl;
         return;
     }
 
-    for (const auto& pair : activeRules) {
-        NounType subject = pair.first;
-        const auto& ruleData = pair.second;
-        
-        for (PropertyType prop : ruleData.properties) {
-            cout << static_cast<int>(subject) << " IS " << static_cast<int>(prop) << endl;
-        }
-
-        for (NounType target : ruleData.transformationTargets) {
-            cout << static_cast<int>(subject) << " IS " << static_cast<int>(target) << " (Noun)" << endl;
+    for (const auto& ruleData : activeRules) {
+        if (static_cast<int>(ruleData.properties) != 0) {
+            cout << static_cast<int>(ruleData.subjects) << " " << static_cast<int>(ruleData.operators) << " " << static_cast<int>(ruleData.properties) << endl;
+            continue;
+        } else if (static_cast<int>(ruleData.transformationTargets) != 0) {
+            cout << static_cast<int>(ruleData.subjects) << " " << static_cast<int>(ruleData.operators) << " " << static_cast<int>(ruleData.transformationTargets) << endl;
         }
     }
     cout << "----------------------\n" << endl;

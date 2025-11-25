@@ -4,11 +4,10 @@
 
 class EntityNoun: public Entity {
 public:
-    EntityNoun(int x, int y, int id): Entity(id, x, y) { }
+    EntityNoun(int x, int y, int id): Entity(x, y, id) { }
 
     bool isPushable() const override;
     bool isStackable() const override;
-    NounType getNounType() const override;
 };
 
 #endif

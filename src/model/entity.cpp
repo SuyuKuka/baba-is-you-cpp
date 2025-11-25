@@ -28,14 +28,14 @@ bool Entity::isPropertyText() const {
            id <= static_cast<int>(PropertyText::TEXTSTOP);
 }
 
-NounType Entity::getNounType() const {
-    return NounType::NONE;
+NounText Entity::getNounText() const {
+    return static_cast<NounText>(id);
 }
 
-OperatorType Entity::getOperatorType() const {
-    return OperatorType::NONE;
+OperatorText Entity::getOperatorText() const {
+    return static_cast<OperatorText>(id);
 }
 
-PropertyType Entity::getPropertyType() const {
-    return PropertyType::NONE;
+PropertyText Entity::getPropertyText() const {
+    return static_cast<PropertyText>(id);
 }

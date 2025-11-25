@@ -4,7 +4,7 @@
 
 class TextProperty: public Entity {
 public:
-    TextProperty(int x, int y, int id): Entity(id, x, y) { }
+    TextProperty(int x, int y, int id): Entity(x, y, id) { }
 
     bool isPushable() const override {
         return true;
@@ -14,8 +14,8 @@ public:
         return false;
     }
 
-    PropertyType getPropertyType() const override {
-        return PropertyType::NONE;
+    PropertyText getPropertyText() const {
+        return static_cast<PropertyText>(getId());
     }
 };
 

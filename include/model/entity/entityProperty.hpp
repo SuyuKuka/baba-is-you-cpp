@@ -4,11 +4,10 @@
 
 class EntityProperty: public Entity {
 public:
-    EntityProperty(int x, int y, int id): Entity(id, x, y) { }
+    EntityProperty(int x, int y, int id): Entity(x, y, id) { }
 
     bool isPushable() const override;
     bool isStackable() const override;
-    PropertyType getPropertyType() const override;
 };
 
 #endif

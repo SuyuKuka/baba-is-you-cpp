@@ -7,7 +7,3 @@ bool EntityOperator::isPushable() const {
 bool EntityOperator::isStackable() const {
     return false;
 }
-
-OperatorType EntityOperator::getOperatorType() const {
-    return static_cast<OperatorType>(getId() - 9);
-}

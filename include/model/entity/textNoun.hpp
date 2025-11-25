@@ -4,7 +4,7 @@
 
 class TextNoun: public Entity {
 public:
-    TextNoun(int x, int y, int id): Entity(id, x, y) { }
+    TextNoun(int x, int y, int id): Entity(x, y, id) { }
 
     bool isPushable() const override {
         return true;
@@ -14,8 +14,8 @@ public:
         return false;
     }
 
-    NounType getNounType() const override {
-        return NounType::NONE;
+    NounText getNounText() const {
+        return static_cast<NounText>(getId());
     }
 };
 

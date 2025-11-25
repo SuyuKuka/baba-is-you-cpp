@@ -4,11 +4,10 @@
 
 class EntityOperator: public Entity {
 public:
-    EntityOperator(int x, int y, int id): Entity(id, x, y) { }
+    EntityOperator(int x, int y, int id): Entity(x, y, id) { }
 
     bool isPushable() const override;
     bool isStackable() const override;
-    OperatorType getOperatorType() const override;
 };
 
 #endif

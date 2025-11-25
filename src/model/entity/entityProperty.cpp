@@ -7,7 +7,3 @@ bool EntityProperty::isPushable() const {
 bool EntityProperty::isStackable() const {
     return false;
 }
-
-PropertyType EntityProperty::getPropertyType() const {
-    return static_cast<PropertyType>(getId() - 9);
-}

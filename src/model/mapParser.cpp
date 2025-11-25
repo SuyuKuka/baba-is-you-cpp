@@ -29,8 +29,8 @@ Map MapParser::loadMap(const std::string& path) {
         std::cout << "  - " << key << std::endl;
         loadEntity(map, parser, key);
     }
-
     map.printMap();
+    map.updateRules();
     map.printRules();
     return map;
 }

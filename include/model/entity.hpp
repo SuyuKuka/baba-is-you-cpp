@@ -19,9 +19,9 @@ public:
     bool isNounText() const;
     bool isOperatorText() const;
     bool isPropertyText() const;
-    virtual NounType getNounType() const;
-    virtual OperatorType getOperatorType() const;
-    virtual PropertyType getPropertyType() const;
+    virtual NounText getNounText() const;
+    virtual OperatorText getOperatorText() const;
+    virtual PropertyText getPropertyText() const;
 };
 
 #endif

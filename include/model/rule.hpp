@@ -13,16 +13,18 @@ using namespace std;
 class Rule {
 private:
     struct PropertyRules {
-        set<PropertyType> properties; 
-        set<NounType> transformationTargets; 
+        NounText subjects;
+        OperatorText operators;
+        PropertyText properties; 
+        NounText transformationTargets; 
     };
 
-    map<NounType, PropertyRules> activeRules;
+    vector<PropertyRules> activeRules;
 public:
     Rule() = default;
 
-    void addActiveRule(NounType nounType, PropertyType propertyType, NounType transformationTarget);
-    map<NounType, PropertyRules> getActiveRules() const;
+    void addActiveRule(NounText nounText, OperatorText operatorText, PropertyText propertyText, NounText transformationTarget);
+    vector<PropertyRules> getActiveRules() const;
     void clearActiveRules();
     void printActivesRules() const;
 };

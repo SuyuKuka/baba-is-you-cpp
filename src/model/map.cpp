@@ -25,7 +25,7 @@ void Map::checkRule(int x, int y, Entity* nounEntity, bool isHorizontal) {
     if (entitiesOp.empty() || !entitiesOp[0]->isOperatorText()) {
         return;
     }
-    
+
     // Check si y'a une propriété ou un nom
     int xTarget = x + 2 * dx;
     int yTarget = y + 2 * dy;
@@ -37,15 +37,17 @@ void Map::checkRule(int x, int y, Entity* nounEntity, bool isHorizontal) {
     Entity* targetEntity = entitiesTarget[0];
     if (targetEntity->isPropertyText()) {
         rules.addActiveRule(
-            nounEntity->getNounType(),
-            targetEntity->getPropertyType(),
-            NounType::NONE
+            nounEntity->getNounText(),
+            entitiesOp[0]->getOperatorText(),
+            targetEntity->getPropertyText(),
+            NounText::NONE
         );
     } else if (targetEntity->isNounText()) {
         rules.addActiveRule(
-            nounEntity->getNounType(),
-            PropertyType::NONE,
-            targetEntity->getNounType()
+            nounEntity->getNounText(),
+            entitiesOp[0]->getOperatorText(),
+            PropertyText::NONE,
+            targetEntity->getNounText()
         );
     }
 }
@@ -55,9 +57,7 @@ void Map::addCell(int x, int y, Entity* entity) {
 }
 
 void Map::addNoun(Entity* noun) {
-    if (noun != nullptr) {
-        nouns.push_back(noun);
-    }
+    nouns.push_back(noun);
 }
 
 const Cell& Map::getCell(int x, int y) const {
@@ -91,11 +91,8 @@ void Map::printMap() {
 
 void Map::printRules() const {
     cout << "Nouns: ";
-
     for (Entity* noun : nouns) {
-
         cout << noun->getId() << " ";
-
     }
     cout << endl;
     rules.printActivesRules();

@@ -4,7 +4,7 @@
 
 class TextOperator: public Entity {
 public:
-    TextOperator(int x, int y, int id): Entity(id, x, y) { }
+    TextOperator(int x, int y, int id): Entity(x, y, id) { }
 
     bool isPushable() const override {
         return true;
@@ -14,8 +14,8 @@ public:
         return false;
     }
 
-    OperatorType getOperatorType() const override {
-        return OperatorType::NONE;
+    OperatorText getOperatorText() const {
+        return static_cast<OperatorText>(getId());
     }
 };
 
