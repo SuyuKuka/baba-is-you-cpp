@@ -25,7 +25,7 @@ BabaTexture& BabaTexture::getInstance() {
     return instance;
 }
 
-const Texture& BabaTexture::getTexture(const int id,  Keyboard::Key key) const {
+const Texture& BabaTexture::getTexture(const int id,  const Keyboard::Key key) const {
     switch (id) {
         case 10:
             if (key == Keyboard::Q || key == Keyboard::Key::A) {
