@@ -1,25 +1,14 @@
 #ifndef ENTITY_TYPE_HPP
 #define ENTITY_TYPE_HPP
 
-enum class NounType {
+enum class GameEntity {
     BABA = 10,
     FLAG = 11,
     ROCK = 12,
     WALL = 13
 };
 
-enum class OperatorType {
-    IS = 14,
-};
-
-enum class PropertyType {
-    YOU = 15,
-    WIN = 16,
-    PUSH = 17,
-    STOP = 18
-};
-
-enum class NounText {
+enum class NounWordEntity {
     NONE = 0,
     TEXTBABA = 19,
     TEXTFLAG = 20,
@@ -27,12 +16,12 @@ enum class NounText {
     TEXTWALL = 22
 };
 
-enum class OperatorText {
+enum class OperatorWordEntity {
     NONE = 0,
     TEXTIS = 23
 };
 
-enum class PropertyText {
+enum class PropertyWordEntity {
     NONE = 0,
     TEXTYOU = 24,
     TEXTWIN = 25,

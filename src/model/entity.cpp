@@ -14,28 +14,32 @@ int Entity::getY() const {
     return y;
 }
 
-bool Entity::isNounText() const {
-    return id >= static_cast<int>(NounText::TEXTBABA) && 
-           id <= static_cast<int>(NounText::TEXTWALL);
+bool Entity::isNounWordEntity() const {
+    return id >= static_cast<int>(NounWordEntity::TEXTBABA) && 
+           id <= static_cast<int>(NounWordEntity::TEXTWALL);
 }
 
-bool Entity::isOperatorText() const {
-    return id == static_cast<int>(OperatorText::TEXTIS);
+bool Entity::isOperatorWordEntity() const {
+    return id == static_cast<int>(OperatorWordEntity::TEXTIS);
 }
 
-bool Entity::isPropertyText() const {
-    return id >= static_cast<int>(PropertyText::TEXTYOU) && 
-           id <= static_cast<int>(PropertyText::TEXTSTOP);
+bool Entity::isPropertyWordEntity() const {
+    return id >= static_cast<int>(PropertyWordEntity::TEXTYOU) && 
+           id <= static_cast<int>(PropertyWordEntity::TEXTSTOP);
 }
 
-NounText Entity::getNounText() const {
-    return static_cast<NounText>(id);
+GameEntity Entity::getGameEntity() const {
+    return static_cast<GameEntity>(id);
 }
 
-OperatorText Entity::getOperatorText() const {
-    return static_cast<OperatorText>(id);
+NounWordEntity Entity::getNounWordEntity() const {
+    return static_cast<NounWordEntity>(id);
 }
 
-PropertyText Entity::getPropertyText() const {
-    return static_cast<PropertyText>(id);
+OperatorWordEntity Entity::getOperatorWordEntity() const {
+    return static_cast<OperatorWordEntity>(id);
+}
+
+PropertyWordEntity Entity::getPropertyWordEntity() const {
+    return static_cast<PropertyWordEntity>(id);
 }

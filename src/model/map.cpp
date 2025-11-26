@@ -1,78 +1,31 @@
 #include "model/map.hpp"
 
-void Map::updateRules() {
-    rules.clearActiveRules();
-    for (Entity* nounEntity : nouns) {
-        int x = nounEntity->getX();
-        int y = nounEntity->getY();
-        
-        checkRule(x, y, nounEntity, true);
-        checkRule(x, y, nounEntity, false);
-    }
-}
-
-void Map::checkRule(int x, int y, Entity* nounEntity, bool isHorizontal) {
-    int dx = isHorizontal ? 1 : 0;
-    int dy = isHorizontal ? 0 : 1;
-    if ((x + 2 * dx >= width) || (y + 2 * dy >= height)) {
-        return;
-    }
-    
-    // Check si y'a un opérateur
-    int xOp = x + dx;
-    int yOp = y + dy;
-    const std::vector<Entity*>& entitiesOp = map[yOp][xOp].getEntities();
-    if (entitiesOp.empty() || !entitiesOp[0]->isOperatorText()) {
-        return;
-    }
-
-    // Check si y'a une propriété ou un nom
-    int xTarget = x + 2 * dx;
-    int yTarget = y + 2 * dy;
-    const std::vector<Entity*>& entitiesTarget = map[yTarget][xTarget].getEntities();
-    if (entitiesTarget.empty()) {
-        return;
-    }
-
-    Entity* targetEntity = entitiesTarget[0];
-    if (targetEntity->isPropertyText()) {
-        rules.addActiveRule(
-            nounEntity->getNounText(),
-            entitiesOp[0]->getOperatorText(),
-            targetEntity->getPropertyText(),
-            NounText::NONE
-        );
-    } else if (targetEntity->isNounText()) {
-        rules.addActiveRule(
-            nounEntity->getNounText(),
-            entitiesOp[0]->getOperatorText(),
-            PropertyText::NONE,
-            targetEntity->getNounText()
-        );
-    }
+Map::Map(int width, int height): width(width), height(height), rules(*this) {
+    map.resize(height, std::vector<Cell>(width));
 }
 
 void Map::addCell(int x, int y, Entity* entity) {
     map[y][x].addEntity(entity);
 }
 
-void Map::addNoun(Entity* noun) {
-    nouns.push_back(noun);
+void Map::removeCell(int x, int y, Entity* entity) {
+    map[y][x].removeEntity(entity);
+}
+
+void Map::addNounTextOnMap(Entity* noun) {
+    nounsTextOnMap.push_back(noun);
+}
+
+void Map::addNounEntityOnMap(Entity* noun) {
+    nounsEntityOnMap.push_back(noun);
 }
 
 const Cell& Map::getCell(int x, int y) const {
     return map[y][x];
 }
 
-const Rule& Map::getRules() const {
-    return rules;
-}
-
-void Map::clearNouns() {
-    nouns.clear();
-}
-
 void Map::printMap() {
+    std::cout << "************************Map************************" << std::endl;
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
             Cell& cell = map[y][x]; 
@@ -89,11 +42,53 @@ void Map::printMap() {
     }
 }
 
-void Map::printRules() const {
-    cout << "Nouns: ";
-    for (Entity* noun : nouns) {
-        cout << noun->getId() << " ";
+void Map::move(int dx, int dy) {
+    vector<int> you;
+    vector<int> stop;
+    for (const auto& rule : rules.getActiveRules()) {
+        if (rule.properties == PropertyWordEntity::TEXTYOU) {
+            int gameEntity = static_cast<int>(rule.subjects) - 9;
+            you.push_back(gameEntity);
+        } else if (rule.properties == PropertyWordEntity::TEXTSTOP) {
+            int gameEntity = static_cast<int>(rule.subjects) - 9;
+            stop.push_back(gameEntity);
+        }
     }
-    cout << endl;
-    rules.printActivesRules();
+
+    for (Entity* entity : nounsEntityOnMap) {
+        if (std::find(you.begin(), you.end(), entity->getId()) != you.end()) {
+            int x = entity->getX();
+            int y = entity->getY();
+            int newX = x + dx;
+            int newY = y + dy;
+            if (newX >= 0 && newX < width && newY >= 0 && newY < height) {
+                if (isStop(newX, newY, stop)) {
+                    removeCell(x, y, entity); 
+                    entity->setX(newX);
+                    entity->setY(newY);
+                    addCell(newX, newY, entity);
+
+                    printMap();
+                    return;
+                } else {
+                    std::cout << "STOP" << std::endl;
+                }
+            } else {
+                std::cout << "Error: Invalid move" << std::endl;
+            }
+        }
+    }
+}
+
+bool Map::isStop(int newX, int newY, vector<int> stop) {
+    for (Entity* entity : nounsEntityOnMap) {
+        if (std::find(stop.begin(), stop.end(), entity->getId()) != stop.end()) {
+            int x = entity->getX();
+            int y = entity->getY();
+            if (newX == x && newY == y) {
+                return false;
+            }
+        }
+    }
+    return true;
 }

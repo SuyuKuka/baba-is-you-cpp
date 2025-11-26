@@ -3,6 +3,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "model/map.hpp"
 using namespace std;
 using namespace sf;
 
@@ -11,24 +12,33 @@ using namespace sf;
  * @brief Singleton permettant l'écoute du clavier pour les contrôles du jeu.
  */
 class KeyboardListener {
-    private:
-    KeyboardListener() = default;
+private:
+    Map& map; 
+    KeyboardListener(Map& map) : map(map) {};
     ~KeyboardListener() = default;
     KeyboardListener(const KeyboardListener&) = delete;
     KeyboardListener& operator=(const KeyboardListener&) = delete;
     vector<Keyboard::Key> keyPressed;
+    sf::Clock repeatClock; 
+    sf::Time initialDelay = sf::milliseconds(400); 
+    sf::Time repeatRate = sf::milliseconds(200); 
+    
+    sf::Keyboard::Key lastMovedKey = sf::Keyboard::Key::Unknown;
+    bool firstMoveExecuted = false;
 
-    public:
+public:
     /**
      * @return L'instance du KeyboardListener.
      */
-    static KeyboardListener& getInstance();
+    static KeyboardListener& getInstance(Map& map);
 
     /**
      * @param event un événement contenant la touche à ajouter.  
      * @brief Ajoute ou supprime une touche du vector des touches appuyées.
      */
     void handleKeyPressedAndReleased(const Event& event);
+
+    void handleMove();
 
     /**
      * @param key la touche que l'on veut vérifier.

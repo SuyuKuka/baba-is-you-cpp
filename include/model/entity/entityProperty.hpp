@@ -1,13 +1,26 @@
-#ifndef ENTITY_PROPERTY_HPP
-#define ENTITY_PROPERTY_HPP
+#ifndef TEXT_PROPERTY_HPP
+#define TEXT_PROPERTY_HPP
 #include "model/entity.hpp"
 
 class EntityProperty: public Entity {
 public:
     EntityProperty(int x, int y, int id): Entity(x, y, id) { }
 
-    bool isPushable() const override;
-    bool isStackable() const override;
+    bool isPushable() const override {
+        return true;
+    }
+
+    bool isStackable() const override {
+        return false;
+    }
+
+    bool isDestroyable() const override {
+        return false;
+    }
+
+    PropertyWordEntity getPropertyWordEntity() const {
+        return static_cast<PropertyWordEntity>(getId());
+    }
 };
 
 #endif
