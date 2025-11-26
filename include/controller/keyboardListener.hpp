@@ -19,6 +19,12 @@ private:
     KeyboardListener(const KeyboardListener&) = delete;
     KeyboardListener& operator=(const KeyboardListener&) = delete;
     vector<Keyboard::Key> keyPressed;
+    sf::Clock repeatClock; 
+    sf::Time initialDelay = sf::milliseconds(400); 
+    sf::Time repeatRate = sf::milliseconds(200); 
+    
+    sf::Keyboard::Key lastMovedKey = sf::Keyboard::Key::Unknown;
+    bool firstMoveExecuted = false;
 
 public:
     /**
@@ -32,7 +38,7 @@ public:
      */
     void handleKeyPressedAndReleased(const Event& event);
 
-    void handleMove(const Event& event);
+    void handleMove();
 
     /**
      * @param key la touche que l'on veut vérifier.

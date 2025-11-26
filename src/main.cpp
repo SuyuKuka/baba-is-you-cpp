@@ -17,6 +17,8 @@ int main() {
                 keyboardListener.handleKeyPressedAndReleased(event);
             }
         }
+        keyboardListener.handleMove();
+        map.getRuleEngine().updateRules();
         app.clear();
         app.display();
     }

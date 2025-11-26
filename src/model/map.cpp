@@ -12,20 +12,16 @@ void Map::removeCell(int x, int y, Entity* entity) {
     map[y][x].removeEntity(entity);
 }
 
-void Map::addNoun(Entity* noun) {
-    nouns.push_back(noun);
+void Map::addNounTextOnMap(Entity* noun) {
+    nounsTextOnMap.push_back(noun);
 }
 
-void Map::addNounEntityType(Entity* noun) {
-    nounsEntityType.push_back(noun);
+void Map::addNounEntityOnMap(Entity* noun) {
+    nounsEntityOnMap.push_back(noun);
 }
 
 const Cell& Map::getCell(int x, int y) const {
     return map[y][x];
-}
-
-void Map::clearNouns() {
-    nouns.clear();
 }
 
 void Map::printMap() {
@@ -46,58 +42,51 @@ void Map::printMap() {
     }
 }
 
-void Map::printRules() const {
-    cout << "Nouns: ";
-    for (Entity* noun : nouns) {
-        cout << noun->getId() << " ";
-    }
-    cout << endl;
-    rules.printActivesRules();
-}
-
 void Map::move(int dx, int dy) {
+    vector<int> you;
+    vector<int> stop;
     for (const auto& rule : rules.getActiveRules()) {
         if (rule.properties == PropertyWordEntity::TEXTYOU) {
-            int GameEntity = static_cast<int>(rule.subjects) - 9;
-            for (Entity* entity : nounsEntityType) {
-                if (entity->getId() == GameEntity) {
-                    int x = entity->getX();
-                    int y = entity->getY();
-                    int newX = x + dx;
-                    int newY = y + dy;
-                    if (newX >= 0 && newX < width && newY >= 0 && newY < height) {
-                        if (checkMove(newX, newY)) {
-                            removeCell(x, y, entity); 
-                            entity->setX(newX);
-                            entity->setY(newY);
-                            addCell(newX, newY, entity);
+            int gameEntity = static_cast<int>(rule.subjects) - 9;
+            you.push_back(gameEntity);
+        } else if (rule.properties == PropertyWordEntity::TEXTSTOP) {
+            int gameEntity = static_cast<int>(rule.subjects) - 9;
+            stop.push_back(gameEntity);
+        }
+    }
 
-                            printMap();
-                            return;
-                        } else {
-                            std::cout << "STOP" << std::endl;
-                        }
-                    } else {
-                        std::cout << "Error: Invalid move" << std::endl;
-                    }
+    for (Entity* entity : nounsEntityOnMap) {
+        if (std::find(you.begin(), you.end(), entity->getId()) != you.end()) {
+            int x = entity->getX();
+            int y = entity->getY();
+            int newX = x + dx;
+            int newY = y + dy;
+            if (newX >= 0 && newX < width && newY >= 0 && newY < height) {
+                if (isStop(newX, newY, stop)) {
+                    removeCell(x, y, entity); 
+                    entity->setX(newX);
+                    entity->setY(newY);
+                    addCell(newX, newY, entity);
+
+                    printMap();
+                    return;
+                } else {
+                    std::cout << "STOP" << std::endl;
                 }
+            } else {
+                std::cout << "Error: Invalid move" << std::endl;
             }
         }
     }
 }
 
-bool Map::checkMove(int newX, int newY) {
-    for (const auto& rule : rules.getActiveRules()) {
-        if (rule.properties == PropertyWordEntity::TEXTSTOP) {
-            int GameEntity = static_cast<int>(rule.subjects) - 9;
-            for (Entity* entity : nounsEntityType) {
-                if (entity->getId() == GameEntity) {
-                    int x = entity->getX();
-                    int y = entity->getY();
-                    if (newX == x && newY == y) {
-                        return false;
-                    }
-                }
+bool Map::isStop(int newX, int newY, vector<int> stop) {
+    for (Entity* entity : nounsEntityOnMap) {
+        if (std::find(stop.begin(), stop.end(), entity->getId()) != stop.end()) {
+            int x = entity->getX();
+            int y = entity->getY();
+            if (newX == x && newY == y) {
+                return false;
             }
         }
     }
