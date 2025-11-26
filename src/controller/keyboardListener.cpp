@@ -1,13 +1,13 @@
-#include "model/keyboardListener.hpp"
+#include "controller/keyboardListener.hpp"
 
-KeyboardListener& KeyboardListener::getInstance() {
-    static KeyboardListener instance;
+KeyboardListener& KeyboardListener::getInstance(Map& map) {
+    static KeyboardListener instance(map);
     return instance;
 }
 
 void KeyboardListener::handleKeyPressedAndReleased(const Event& event) {
     const Keyboard::Key key = event.key.code;
-    if  (isAuthorizedKey(key)) {
+    if (isAuthorizedKey(key)) {
         if (event.type == Event::KeyPressed && !isKeyPressed(key)) {
             keyPressed.push_back(event.key.code);
         } else if (event.type == Event::KeyReleased) {
@@ -15,6 +15,47 @@ void KeyboardListener::handleKeyPressedAndReleased(const Event& event) {
                 remove(keyPressed.begin(), keyPressed.end(), event.key.code), keyPressed.end()
             ); 
         }
+    }
+}
+
+void KeyboardListener::handleMove() {
+    if (keyPressed.empty()) {
+        firstMoveExecuted = false;
+        lastMovedKey = sf::Keyboard::Key::Unknown;
+        return;
+    }
+
+    sf::Keyboard::Key currentKey = keyPressed.back(); 
+
+    sf::Time delay = repeatRate;
+    if (!firstMoveExecuted) {
+        delay = sf::Time::Zero;
+    } else if (lastMovedKey != currentKey || repeatClock.getElapsedTime() < initialDelay) {
+        delay = (lastMovedKey != currentKey) ? initialDelay : repeatRate;
+    }
+
+    if (repeatClock.getElapsedTime() < delay) {
+        return;
+    }
+
+    int dx = 0;
+    int dy = 0;
+    if (currentKey == Keyboard::Up || currentKey == Keyboard::Z || currentKey == Keyboard::W) {
+        dy = -1;
+    } else if (currentKey == Keyboard::Down || currentKey == Keyboard::S) {
+        dy = 1;
+    } else if (currentKey == Keyboard::Left || currentKey == Keyboard::Q || currentKey == Keyboard::A) {
+        dx = -1;
+    } else if (currentKey == Keyboard::Right || currentKey == Keyboard::D) {
+        dx = 1;
+    }
+
+    if (dx != 0 || dy != 0) {
+        map.move(dx, dy);
+        
+        repeatClock.restart();
+        firstMoveExecuted = true;
+        lastMovedKey = currentKey;
     }
 }
 
