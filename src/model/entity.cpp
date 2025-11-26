@@ -28,6 +28,10 @@ bool Entity::isPropertyWordEntity() const {
            id <= static_cast<int>(PropertyWordEntity::TEXTSTOP);
 }
 
+GameEntity Entity::getGameEntity() const {
+    return static_cast<GameEntity>(id);
+}
+
 NounWordEntity Entity::getNounWordEntity() const {
     return static_cast<NounWordEntity>(id);
 }

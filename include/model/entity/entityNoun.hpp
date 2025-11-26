@@ -14,6 +14,10 @@ public:
         return false;
     }
 
+    bool isDestroyable() const override {
+        return false;
+    }
+
     NounWordEntity getNounWordEntity() const {
         return static_cast<NounWordEntity>(getId());
     }

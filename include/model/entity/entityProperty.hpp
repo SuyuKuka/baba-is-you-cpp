@@ -14,6 +14,10 @@ public:
         return false;
     }
 
+    bool isDestroyable() const override {
+        return false;
+    }
+
     PropertyWordEntity getPropertyWordEntity() const {
         return static_cast<PropertyWordEntity>(getId());
     }

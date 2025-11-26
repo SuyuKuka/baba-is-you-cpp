@@ -13,8 +13,8 @@ private:
     int width;
     int height;
     vector<vector<Cell>> map;
-    vector<Entity*> nouns;
-    vector<Entity*> nounsEntityType;
+    vector<Entity*> nounsTextOnMap;
+    vector<Entity*> nounsEntityOnMap;
     RuleEngine rules;
     friend class MapParser;
 public: 
@@ -23,19 +23,17 @@ public:
     int getWidth() const { return width; }
     int getHeight() const { return height; }
     vector<vector<Cell>> getMap() const { return map; }
-    vector<Entity*> getNouns() const { return nouns; }
+    vector<Entity*> getNounsTextOnMap() const { return nounsTextOnMap; }
 
     void addCell(int x, int y, Entity* entity);
-    void addNoun(Entity* entity);
-    void addNounEntityType(Entity* entity);
+    void addNounTextOnMap(Entity* entity);
+    void addNounEntityOnMap(Entity* entity);
     void removeCell(int x, int y, Entity* entity);
     const Cell& getCell(int x, int y) const;
     RuleEngine& getRuleEngine() { return rules; }
-    void clearNouns();
     void printMap();
-    void printRules() const;
     void move(int dx, int dy);
-    bool checkMove(int newX, int newY);
+    bool isStop(int newX, int newY, vector<int> stop);
 };
 
 #endif

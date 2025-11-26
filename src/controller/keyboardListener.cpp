@@ -10,7 +10,6 @@ void KeyboardListener::handleKeyPressedAndReleased(const Event& event) {
     if (isAuthorizedKey(key)) {
         if (event.type == Event::KeyPressed && !isKeyPressed(key)) {
             keyPressed.push_back(event.key.code);
-            handleMove(event);
         } else if (event.type == Event::KeyReleased) {
             keyPressed.erase(
                 remove(keyPressed.begin(), keyPressed.end(), event.key.code), keyPressed.end()
@@ -19,17 +18,44 @@ void KeyboardListener::handleKeyPressedAndReleased(const Event& event) {
     }
 }
 
-void KeyboardListener::handleMove(const Event& event) {
-    for (const auto& key : keyPressed) {
-        if (event.key.code == Keyboard::Up || event.key.code == Keyboard::Z || event.key.code == Keyboard::W) {
-            map.move(0, -1);
-        } else if (event.key.code == Keyboard::Down || event.key.code == Keyboard::S) {
-            map.move(0, 1);
-        } else if (event.key.code == Keyboard::Left || event.key.code == Keyboard::Q || event.key.code == Keyboard::A) {
-            map.move(-1, 0);
-        } else if (event.key.code == Keyboard::Right || event.key.code == Keyboard::D) {
-            map.move(1, 0);
-        }
+void KeyboardListener::handleMove() {
+    if (keyPressed.empty()) {
+        firstMoveExecuted = false;
+        lastMovedKey = sf::Keyboard::Key::Unknown;
+        return;
+    }
+
+    sf::Keyboard::Key currentKey = keyPressed.back(); 
+
+    sf::Time delay = repeatRate;
+    if (!firstMoveExecuted) {
+        delay = sf::Time::Zero;
+    } else if (lastMovedKey != currentKey || repeatClock.getElapsedTime() < initialDelay) {
+        delay = (lastMovedKey != currentKey) ? initialDelay : repeatRate;
+    }
+
+    if (repeatClock.getElapsedTime() < delay) {
+        return;
+    }
+
+    int dx = 0;
+    int dy = 0;
+    if (currentKey == Keyboard::Up || currentKey == Keyboard::Z || currentKey == Keyboard::W) {
+        dy = -1;
+    } else if (currentKey == Keyboard::Down || currentKey == Keyboard::S) {
+        dy = 1;
+    } else if (currentKey == Keyboard::Left || currentKey == Keyboard::Q || currentKey == Keyboard::A) {
+        dx = -1;
+    } else if (currentKey == Keyboard::Right || currentKey == Keyboard::D) {
+        dx = 1;
+    }
+
+    if (dx != 0 || dy != 0) {
+        map.move(dx, dy);
+        
+        repeatClock.restart();
+        firstMoveExecuted = true;
+        lastMovedKey = currentKey;
     }
 }
 

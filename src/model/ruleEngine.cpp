@@ -38,7 +38,7 @@ void RuleEngine::printActivesRules() const {
 
 void RuleEngine::updateRules() {
     clearActiveRules();
-    for (Entity* nounEntity : map.getNouns()) {
+    for (Entity* nounEntity: map.getNounsTextOnMap()) {
         int x = nounEntity->getX();
         int y = nounEntity->getY();
         

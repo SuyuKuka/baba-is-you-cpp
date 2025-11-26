@@ -14,6 +14,10 @@ public:
         return false;
     }
 
+    bool isDestroyable() const override {
+        return false;
+    }
+
     OperatorWordEntity getOperatorWordEntity() const {
         return static_cast<OperatorWordEntity>(getId());
     }

@@ -18,9 +18,11 @@ public:
     void setY(int y) { this->y = y; };
     virtual bool isPushable() const = 0;
     virtual bool isStackable() const = 0;
+    virtual bool isDestroyable() const = 0;
     bool isNounWordEntity() const;
     bool isOperatorWordEntity() const;
     bool isPropertyWordEntity() const;
+    virtual GameEntity getGameEntity() const;
     virtual NounWordEntity getNounWordEntity() const;
     virtual OperatorWordEntity getOperatorWordEntity() const;
     virtual PropertyWordEntity getPropertyWordEntity() const;
