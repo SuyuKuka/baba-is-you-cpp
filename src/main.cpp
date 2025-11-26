@@ -2,25 +2,25 @@
 #include <SFML/Graphics.hpp>
 #include "model/mapParser.hpp"
 #include "controller/keyboardListener.hpp"
+#include "view/mainView.hpp"
 using namespace sf;
 
 int main() {
-    RenderWindow app(VideoMode(1280, 720), "BABA IS YOU");
+    MainView view;
     Map map = MapParser::loadMap("resources/maps/map-1.json");
     KeyboardListener& keyboardListener = KeyboardListener::getInstance(map);
-    while (app.isOpen()) {
+    while (view.isOpen()) {
         Event event;
-        while (app.pollEvent(event)) {
+        while (view.pollEvent(event)) {
             if (event.type == Event::Closed) {
-                app.close();
+                view.close();
             } else if (event.type == Event::KeyPressed || event.type == Event::KeyReleased) {
                 keyboardListener.handleKeyPressedAndReleased(event);
             }
+            keyboardListener.handleMove();
+            map.getRuleEngine().updateRules();
+            view.render(map.getOccupiedCells());
         }
-        keyboardListener.handleMove();
-        map.getRuleEngine().updateRules();
-        app.clear();
-        app.display();
     }
     return EXIT_SUCCESS;
 }

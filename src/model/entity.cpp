@@ -6,14 +6,6 @@ int Entity::getId() const {
     return id;
 }
 
-int Entity::getX() const {
-    return x;
-}
-
-int Entity::getY() const {
-    return y;
-}
-
 bool Entity::isNounWordEntity() const {
     return id >= static_cast<int>(NounWordEntity::TEXTBABA) && 
            id <= static_cast<int>(NounWordEntity::TEXTWALL);
@@ -42,4 +34,12 @@ OperatorWordEntity Entity::getOperatorWordEntity() const {
 
 PropertyWordEntity Entity::getPropertyWordEntity() const {
     return static_cast<PropertyWordEntity>(id);
+}
+
+const int& Entity::getX() const {
+    return x;
+}
+
+const int& Entity::getY() const {
+    return y;
 }
