@@ -1,6 +1,7 @@
 #ifndef TEXT_NOUN_HPP
 #define TEXT_NOUN_HPP
 #include "model/entity.hpp"
+#include "entityType.hpp"
 
 class EntityNoun: public Entity {
 public:

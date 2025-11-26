@@ -34,6 +34,13 @@ public:
     void printMap();
     void move(int dx, int dy);
     bool isStop(int newX, int newY, vector<int> stop);
+
+    /**
+     * @brief Cette fonction crée une copie.
+     * @return Un vector contenant les cellules occupées.
+     */
+    const vector<const Cell*> getOccupiedCells() const;
+
 };
 
 #endif

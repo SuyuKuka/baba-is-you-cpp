@@ -3,17 +3,16 @@
 #include "model/entity/entityType.hpp"
 
 class Entity {
-private: 
-    int x;
-    int y;
+    private:
+        int x;
+        int y; 
     int id;
-public: 
-    Entity(int x, int y, int id): x(x), y(y), id(id) { }
-    virtual ~Entity();
-
+    public: 
+    Entity(const int x, const int y, int id) : x(x), y(y), id(id) { }
+    ~Entity();
+    const int& getX() const;
+    const int& getY() const;
     int getId() const;
-    int getX() const;
-    int getY() const;
     void setX(int x) { this->x = x; };
     void setY(int y) { this->y = y; };
     virtual bool isPushable() const = 0;

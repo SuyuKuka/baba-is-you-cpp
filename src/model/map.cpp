@@ -92,3 +92,15 @@ bool Map::isStop(int newX, int newY, vector<int> stop) {
     }
     return true;
 }
+
+const vector<const Cell*> Map::getOccupiedCells() const {
+    vector<const Cell*> occupied;
+    for (const vector<Cell>& vCell : map) {
+        for(const Cell& cell : vCell) {
+            if (!cell.getEntities().empty()) {
+                occupied.push_back(&cell);
+            }
+        }
+    }
+    return occupied;
+}
