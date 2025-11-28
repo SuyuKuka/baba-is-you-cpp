@@ -2,9 +2,9 @@
 #define MAP_PARSER_HPP
 #include <iostream>
 #include <fstream>
-#include "json.hpp"
-#include "model/map.hpp"
-#include "model/ruleEngine.hpp"
+#include "model/map/json.hpp"
+#include "model/map/map.hpp"
+#include "model/rule/ruleEngine.hpp"
 #include "model/entity/entityGame.hpp"
 #include "model/entity/entityNoun.hpp"
 #include "model/entity/entityOperator.hpp"

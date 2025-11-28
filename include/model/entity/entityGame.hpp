@@ -1,7 +1,7 @@
 #ifndef ENTITY_NOUN_HPP
 #define ENTITY_NOUN_HPP
-#include "model/entity.hpp"
-#include "model/map.hpp"
+#include "model/entity/entity.hpp"
+#include "model/map/map.hpp"
 
 class EntityGame: public Entity {
 private:

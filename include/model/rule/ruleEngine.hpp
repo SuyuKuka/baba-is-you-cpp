@@ -1,6 +1,6 @@
 #ifndef RULE_ENGINE_HPP
 #define RULE_ENGINE_HPP
-#include "model/rule.hpp"
+#include "model/rule/rule.hpp"
 using namespace std;
 
 class Map;

@@ -2,8 +2,8 @@
 #define MAP_HPP
 #include <iostream>
 #include <vector>
-#include "model/cell.hpp"
-#include "model/ruleEngine.hpp"
+#include "model/map/cell.hpp"
+#include "model/rule/ruleEngine.hpp"
 using namespace std;
 
 class RuleEngine;

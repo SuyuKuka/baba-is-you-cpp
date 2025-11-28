@@ -1,5 +1,5 @@
-#include "model/ruleEngine.hpp"
-#include "model/map.hpp"
+#include "model/rule/ruleEngine.hpp"
+#include "model/map/map.hpp"
 
 void RuleEngine::addActiveRule(NounWordEntity noun, OperatorWordEntity ope, PropertyWordEntity property, NounWordEntity transform) {
     Rule rule;

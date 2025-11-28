@@ -1,6 +1,6 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "model/mapParser.hpp"
+#include "model/map/mapParser.hpp"
 #include "controller/keyboardListener.hpp"
 #include "view/mainView.hpp"
 using namespace sf;

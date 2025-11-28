@@ -1,6 +1,6 @@
 #ifndef TEXT_OPERATOR_HPP
 #define TEXT_OPERATOR_HPP
-#include "model/entity.hpp"
+#include "model/entity/entity.hpp"
 
 class EntityOperator: public Entity {
 public:

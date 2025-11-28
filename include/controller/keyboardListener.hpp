@@ -3,7 +3,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "model/map.hpp"
+#include "model/map/map.hpp"
 using namespace std;
 using namespace sf;
 
