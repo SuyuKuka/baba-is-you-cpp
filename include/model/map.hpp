@@ -34,6 +34,7 @@ public:
     void printMap();
     void move(int dx, int dy);
     bool isStop(int newX, int newY, vector<int> stop);
+    void clear();
 
     /**
      * @brief Cette fonction crée une copie.

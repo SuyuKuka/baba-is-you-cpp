@@ -93,6 +93,14 @@ bool Map::isStop(int newX, int newY, vector<int> stop) {
     return true;
 }
 
+void Map::clear() {
+    for (vector<Cell>& list : map) {
+        for (Cell& cell : list) {
+            cell.deleteEntities();
+        }
+    }
+}
+
 const vector<const Cell*> Map::getOccupiedCells() const {
     vector<const Cell*> occupied;
     for (const vector<Cell>& vCell : map) {

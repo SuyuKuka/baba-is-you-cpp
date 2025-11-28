@@ -13,7 +13,9 @@ int main() {
         Event event;
         while (view.pollEvent(event)) {
             if (event.type == Event::Closed) {
+                map.clear();
                 view.close();
+                break;
             } else if (event.type == Event::KeyPressed || event.type == Event::KeyReleased) {
                 keyboardListener.handleKeyPressedAndReleased(event);
             }
