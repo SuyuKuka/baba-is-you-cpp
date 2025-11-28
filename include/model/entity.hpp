@@ -9,7 +9,7 @@ class Entity {
     int id;
     public: 
     Entity(const int x, const int y, int id) : x(x), y(y), id(id) { }
-    ~Entity();
+    virtual ~Entity();
     const int& getX() const;
     const int& getY() const;
     int getId() const;

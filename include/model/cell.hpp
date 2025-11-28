@@ -9,8 +9,15 @@ class Cell {
 private :
     vector<Entity*> entities;
 public:
-    vector<Entity*> getEntities() const {
+    const vector<Entity*>& getEntities() const {
         return entities;
+    }
+
+    void deleteEntities() {
+        for (Entity * e : entities) {
+            delete e;
+        }
+        entities.clear();
     }
 
     void addEntity(Entity* entity) {
