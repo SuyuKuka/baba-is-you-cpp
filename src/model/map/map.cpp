@@ -1,4 +1,4 @@
-#include "model/map.hpp"
+#include "model/map/map.hpp"
 
 Map::Map(int width, int height): width(width), height(height), rules(*this) {
     map.resize(height, std::vector<Cell>(width));

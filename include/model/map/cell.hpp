@@ -2,7 +2,7 @@
 #define CELL_HPP
 #include <vector>
 #include <algorithm>
-#include "model/entity.hpp"
+#include "model/entity/entity.hpp"
 using namespace std;
 
 class Cell {

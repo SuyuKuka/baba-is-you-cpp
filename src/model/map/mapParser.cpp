@@ -1,4 +1,4 @@
-#include "model/mapParser.hpp"
+#include "model/map/mapParser.hpp"
 
 json MapParser::parseJSON(const string path) {
     json mapData;
