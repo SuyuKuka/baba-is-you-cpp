@@ -20,8 +20,8 @@ private:
     KeyboardListener& operator=(const KeyboardListener&) = delete;
     vector<Keyboard::Key> keyPressed;
     sf::Clock repeatClock; 
-    sf::Time initialDelay = sf::milliseconds(400); 
-    sf::Time repeatRate = sf::milliseconds(200); 
+    sf::Time initialDelay = sf::milliseconds(100); 
+    sf::Time repeatRate = sf::milliseconds(100); 
     
     sf::Keyboard::Key lastMovedKey = sf::Keyboard::Key::Unknown;
     bool firstMoveExecuted = false;

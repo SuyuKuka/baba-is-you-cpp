@@ -25,7 +25,7 @@ void RuleEngine::printActivesRules() const {
         return;
     }
 
-    for (const auto& rule : activeRules) {
+    for (const Rule& rule : activeRules) {
         if (static_cast<int>(rule.properties) != 0) {
             cout << static_cast<int>(rule.subjects) << " " << static_cast<int>(rule.operators) << " " << static_cast<int>(rule.properties) << endl;
             continue;

@@ -31,9 +31,11 @@ public:
     void removeCell(int x, int y, Entity* entity);
     const Cell& getCell(int x, int y) const;
     RuleEngine& getRuleEngine() { return rules; }
-    void printMap();
-    void move(int dx, int dy);
-    bool isStop(int newX, int newY, vector<int> stop);
+    void initIds(vector<int>& youId, vector<int>& stopId, vector<int>& winId);
+    void move(const int dx, const int dy);
+    void executePush(const int x, const int y, int& newX, int& newY, const int dx, const int dy);
+    bool isStop(const int newX, const int newY, const vector<int> stop) const;
+    bool isPushable(const int newX, const int newY) const;
     void clear();
 
     /**

@@ -11,7 +11,7 @@ int main() {
     KeyboardListener& keyboardListener = KeyboardListener::getInstance(map);
     while (view.isOpen()) {
         Event event;
-        while (view.pollEvent(event)) {
+        if (view.pollEvent(event)) {
             if (event.type == Event::Closed) {
                 map.clear();
                 view.close();
