@@ -51,7 +51,11 @@ bool RuleProcessor::isNextPushable(const int newX, const int newY) const {
     const Cell& cell = map.getCell(newX, newY);
     for (size_t i = 0; i < cell.getEntities().size(); i++) {
         Entity* pushed = cell.getEntities()[i];
+        if (pushed->isPushable()) {
+            return true;
+        }
         if (std::find(entityPushableRules.begin(), entityPushableRules.end(), pushed->getId()) != entityPushableRules.end()) {
+            pushed->setIsPushable(true);
             return true;
         } 
     }

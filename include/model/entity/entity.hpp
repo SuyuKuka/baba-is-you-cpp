@@ -7,8 +7,9 @@ private:
     int x;
     int y; 
     int id;
+    bool pushable;
 public: 
-    Entity(const int x, const int y, int id) : x(x), y(y), id(id) { }
+    Entity(const int x, const int y, int id, bool pushable) : x(x), y(y), id(id), pushable(pushable) { }
     virtual ~Entity();
     const int& getX() const;
     const int& getY() const;
@@ -16,7 +17,8 @@ public:
     void setX(int x) { this->x = x; };
     void setY(int y) { this->y = y; };
     void setId(int id) { this->id = id; };
-    virtual bool isPushable() const = 0;
+    bool isPushable() const { return this->pushable; };
+    void setIsPushable(const bool pushable) { this->pushable = pushable; };
     bool isNounWordEntity() const;
     bool isOperatorWordEntity() const;
     bool isPropertyWordEntity() const;
