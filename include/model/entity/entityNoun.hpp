@@ -11,10 +11,6 @@ public:
         return true;
     }
 
-    bool isStackable() const override {
-        return false;
-    }
-
     bool isDestroyable() const override {
         return false;
     }

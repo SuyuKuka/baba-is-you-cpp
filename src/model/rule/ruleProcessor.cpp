@@ -16,7 +16,7 @@ void RuleProcessor::initIds(vector<int>& youId, vector<int>& stopId, vector<int>
     }
 }
 
-vector<Entity*> RuleProcessor::isYou(const vector<int> youId) {
+const vector<Entity*> RuleProcessor::isYou(const vector<int> youId) {
     vector<Entity*> entities;
     for (Entity* entity : map.getNounsEntityOnMap()) {
         if (std::find(youId.begin(), youId.end(), entity->getId()) != youId.end()) {
@@ -63,7 +63,7 @@ bool RuleProcessor::isWin(const int newX, const int newY, const vector<int> winI
     return false;
 }
 
-vector<Rule> RuleProcessor::isTransformation() {
+const vector<Rule> RuleProcessor::isTransformation() {
     const vector<Rule>& activeRules = map.getRuleEngine().getActiveRules();
     vector<Rule> transformationRules;
     for (const Rule& rule : activeRules) {

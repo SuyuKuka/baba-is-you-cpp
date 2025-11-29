@@ -7,11 +7,17 @@ class EntityGame: public Entity {
 public:
     EntityGame(int x, int y, int id): Entity(x, y, id) { }
 
-    void update();
-    bool isPushable() const override;
-    bool isStackable() const override;
-    bool isDestroyable() const override;
-    GameEntity getGameEntity() const override;
+    bool isPushable() const override { 
+        return false; 
+    }
+    
+    bool isDestroyable() const override { 
+        return false; 
+    }
+
+    GameEntity getGameEntity() const override {
+        return static_cast<GameEntity>(getId());
+    }
 };
 
 #endif

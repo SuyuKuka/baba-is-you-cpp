@@ -14,7 +14,7 @@ public:
     ~RuleEngine() = default;
 
     void addActiveRule(NounWordEntity noun, OperatorWordEntity ope, PropertyWordEntity property, NounWordEntity transform);
-    vector<Rule> getActiveRules() const;
+    const vector<Rule> getActiveRules() const;
     void clearActiveRules();
     void printActivesRules() const;
 
