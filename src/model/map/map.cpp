@@ -45,29 +45,27 @@ void Map::move(const int dx, const int dy) {
     vector<int> youId;
     vector<int> stopId;
     vector<int> winId;
-
     ruleProcessor->initIds(youId, stopId, winId);
 
-    for (Entity* entity : nounsEntityOnMap) {
-        if (std::find(youId.begin(), youId.end(), entity->getId()) != youId.end()) {
-            int x = entity->getX();
-            int y = entity->getY();
-            int newX = x + dx;
-            int newY = y + dy;
-            if (newX >= 0 && newX < width && newY >= 0 && newY < height) {
-                if (!ruleProcessor->isStop(newX, newY, stopId)) {
-                    if (ruleProcessor->isNextPushable(newX, newY)) {
-                        executePush(x, y, newX, newY, dx, dy);
-                    }
-                    removeCell(x, y, entity); 
-                    entity->setX(newX);
-                    entity->setY(newY);
-                    addCell(newX, newY, entity);
-                    if (ruleProcessor->isWin(newX, newY, winId)) {
-                        cout << "You win !" << endl;
-                    }
-                } 
-            }
+    Entity* entity = ruleProcessor->isYou(youId);
+    if (entity != nullptr) {
+        int x = entity->getX();
+        int y = entity->getY();
+        int newX = x + dx;
+        int newY = y + dy;
+        if (newX >= 0 && newX < width && newY >= 0 && newY < height) {
+            if (!ruleProcessor->isStop(newX, newY, stopId)) {
+                if (ruleProcessor->isNextPushable(newX, newY)) {
+                    executePush(x, y, newX, newY, dx, dy);
+                }
+                removeCell(x, y, entity); 
+                entity->setX(newX);
+                entity->setY(newY);
+                addCell(newX, newY, entity);
+                if (ruleProcessor->isWin(newX, newY, winId)) {
+                    cout << "You win !" << endl;
+                }
+            } 
         }
     }
 }

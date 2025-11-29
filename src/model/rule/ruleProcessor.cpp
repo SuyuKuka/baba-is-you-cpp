@@ -1,7 +1,7 @@
 #include "model/rule/ruleProcessor.hpp"
 #include "model/map/map.hpp"
 
-void RuleProcessor::initIds(vector<int>& youId, vector<int>& stopId, vector<int>& winId) {
+void RuleProcessor::initIds(vector<int>& youId, vector<int>& stopId, vector<int>& winId) const {
     for (const Rule& rule : map.getRuleEngine().getActiveRules()) {
         if (rule.properties == PropertyWordEntity::TEXTYOU) {
             int gameEntity = static_cast<int>(rule.subjects) - 4;
@@ -14,6 +14,15 @@ void RuleProcessor::initIds(vector<int>& youId, vector<int>& stopId, vector<int>
             winId.push_back(gameEntity);
         }
     }
+}
+
+Entity* RuleProcessor::isYou(const vector<int> youId) const {
+    for (Entity* entity : map.getNounsEntityOnMap()) {
+        if (std::find(youId.begin(), youId.end(), entity->getId()) != youId.end()) {
+            return entity;
+        }
+    }
+    return nullptr;
 }
 
 bool RuleProcessor::isStop(const int newX, const int newY, const vector<int> stopId) const {
