@@ -6,6 +6,10 @@ class EntityOperator: public Entity {
 public:
     EntityOperator(int x, int y, int id): Entity(x, y, id) { }
 
+    bool isPushable() const override {
+        return true;
+    }
+
     OperatorWordEntity getOperatorWordEntity() const {
         return static_cast<OperatorWordEntity>(getId());
     }
