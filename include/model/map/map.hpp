@@ -34,11 +34,11 @@ public:
     void removeCell(int x, int y, Entity* entity);
     const Cell& getCell(int x, int y) const;
     const vector<Entity*> getNounsEntityOnMap() const { return nounsEntityOnMap; }
-    RuleEngine& getRuleEngine() { return *rules; }
-    RuleProcessor& getRuleProcessor() { return *ruleProcessor; }
+    RuleEngine& getRuleEngine() const { return *rules; }
+    RuleProcessor& getRuleProcessor() const { return *ruleProcessor; }
     void update(const int dx, const int dy);
     void move(const int dx, const int dy);
-    void executePush(const int x, const int y, int& newX, int& newY, const int dx, const int dy);
+    void applyPush(const int x, const int y, int& newX, int& newY, const int dx, const int dy);
     void applyTransformations(Rule rule);
     void clear();
 

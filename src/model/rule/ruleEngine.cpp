@@ -10,7 +10,7 @@ void RuleEngine::addActiveRule(NounWordEntity noun, OperatorWordEntity ope, Prop
     activeRules.push_back(rule);
 }
 
-vector<Rule> RuleEngine::getActiveRules() const {
+const vector<Rule> RuleEngine::getActiveRules() const {
     return activeRules;
 }
 

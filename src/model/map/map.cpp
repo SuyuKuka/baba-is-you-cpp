@@ -64,7 +64,7 @@ void Map::move(const int dx, const int dy) {
             if (newX >= 0 && newX < width && newY >= 0 && newY < height) {
                 if (!ruleProcessor->isStop(newX, newY, stopId)) {
                     if (ruleProcessor->isNextPushable(newX, newY)) {
-                        executePush(x, y, newX, newY, dx, dy);
+                        applyPush(x, y, newX, newY, dx, dy);
                     }
                     removeCell(x, y, entity); 
                     entity->setX(newX);
@@ -79,7 +79,7 @@ void Map::move(const int dx, const int dy) {
     }
 }
 
-void Map::executePush(const int x, const int y, int& newX, int& newY, const int dx, const int dy) {
+void Map::applyPush(const int x, const int y, int& newX, int& newY, const int dx, const int dy) {
     while (ruleProcessor->isNextPushable(newX, newY)) {
         if (newX < 0 || newX >= width || newY < 0 || newY >= height) {
             break;
