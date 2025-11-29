@@ -7,6 +7,10 @@ class EntityGame: public Entity {
 public:
     EntityGame(int x, int y, int id): Entity(x, y, id) { }
 
+    bool isPushable() const override { 
+        return false; 
+    }
+
     GameEntity getGameEntity() const override {
         return static_cast<GameEntity>(getId());
     }
