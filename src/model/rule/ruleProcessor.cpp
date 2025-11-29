@@ -61,3 +61,14 @@ bool RuleProcessor::isWin(const int newX, const int newY, const vector<int> winI
     }
     return false;
 }
+
+vector<Rule> RuleProcessor::isTransformation() {
+    const vector<Rule>& activeRules = map.getRuleEngine().getActiveRules();
+    vector<Rule> transformationRules;
+    for (const Rule& rule : activeRules) {
+        if (rule.transformation != NounWordEntity::NONE) {
+            transformationRules.push_back(rule);
+        }
+    }
+    return transformationRules;
+}

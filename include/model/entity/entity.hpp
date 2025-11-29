@@ -15,6 +15,7 @@ public:
     int getId() const;
     void setX(int x) { this->x = x; };
     void setY(int y) { this->y = y; };
+    void setId(int id) { this->id = id; };
     virtual bool isPushable() const = 0;
     virtual bool isStackable() const = 0;
     virtual bool isDestroyable() const = 0;

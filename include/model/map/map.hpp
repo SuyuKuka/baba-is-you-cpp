@@ -39,6 +39,7 @@ public:
     void update(const int dx, const int dy);
     void move(const int dx, const int dy);
     void executePush(const int x, const int y, int& newX, int& newY, const int dx, const int dy);
+    void applyTransformations(Rule rule);
     void clear();
 
     /**
