@@ -2,6 +2,7 @@
 #define RULE_PROCESSOR_HPP
 #include <iostream>
 #include <vector>
+#include "model/entity/entity.hpp"
 using namespace std;
 
 class Map;
@@ -13,7 +14,8 @@ public:
     RuleProcessor(Map& map): map(map) {}
     ~RuleProcessor() = default;
 
-    void initIds(vector<int>& youId, vector<int>& stopId, vector<int>& winId);
+    void initIds(vector<int>& youId, vector<int>& stopId, vector<int>& winId) const;
+    Entity* isYou(const vector<int> youId) const;
     bool isStop(const int newX, const int newY, const vector<int> stopId) const;
     bool isNextPushable(const int newX, const int newY) const;
     bool isWin(const int newX, const int newY, const vector<int> winId) const;
