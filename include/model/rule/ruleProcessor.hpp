@@ -16,7 +16,7 @@ public:
     ~RuleProcessor() = default;
 
     void initIds(vector<int>& youId, vector<int>& stopId, vector<int>& winId) const;
-    Entity* isYou(const vector<int> youId) const;
+    vector<Entity*> isYou(const vector<int> youId);
     bool isStop(const int newX, const int newY, const vector<int> stopId) const;
     bool isNextPushable(const int newX, const int newY) const;
     bool isWin(const int newX, const int newY, const vector<int> winId) const;

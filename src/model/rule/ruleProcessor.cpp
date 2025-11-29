@@ -16,13 +16,14 @@ void RuleProcessor::initIds(vector<int>& youId, vector<int>& stopId, vector<int>
     }
 }
 
-Entity* RuleProcessor::isYou(const vector<int> youId) const {
+vector<Entity*> RuleProcessor::isYou(const vector<int> youId) {
+    vector<Entity*> entities;
     for (Entity* entity : map.getNounsEntityOnMap()) {
         if (std::find(youId.begin(), youId.end(), entity->getId()) != youId.end()) {
-            return entity;
+            entities.push_back(entity);
         }
     }
-    return nullptr;
+    return entities;
 }
 
 bool RuleProcessor::isStop(const int newX, const int newY, const vector<int> stopId) const {
