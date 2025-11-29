@@ -20,7 +20,6 @@ Map MapParser::loadMap(const std::string& path) {
     json parser = MapParser::parseJSON(path);
     Map map = Map(parser["width"], parser["height"]);
     RuleEngine& rules = map.getRuleEngine();
-    RuleProcessor& ruleProcessor = map.getRuleProcessor();
 
     for (json::iterator it = parser.begin(); it != parser.end(); ++it) {
         std::string key = it.key();

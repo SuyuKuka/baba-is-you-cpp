@@ -39,3 +39,16 @@ bool RuleProcessor::isNextPushable(const int newX, const int newY) const {
     }
     return false;
 }
+
+bool RuleProcessor::isWin(const int newX, const int newY, const vector<int> winId) const {
+    for (Entity* entity : map.getNounsEntityOnMap()) {
+        if (std::find(winId.begin(), winId.end(), entity->getId()) != winId.end()) {
+            int x = entity->getX();
+            int y = entity->getY();
+            if (newX == x && newY == y) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
