@@ -39,6 +39,12 @@ const Cell& Map::getCell(int x, int y) const {
 void Map::update(const int dx, const int dy) {
     move(dx, dy);
     rules->updateRules();
+    
+    vector<Rule> transformationRules = ruleProcessor->isTransformation();
+    if (transformationRules.size() > 0) {
+        for (Rule rule : transformationRules) {
+        }
+    }
 }
 
 void Map::move(const int dx, const int dy) {
@@ -91,6 +97,16 @@ void Map::executePush(const int x, const int y, int& newX, int& newY, const int 
                 newX -= dx;
                 newY -= dy;
             }
+        }
+    }
+}
+
+void Map::applyTransformations(Rule rule) {
+    int subject = static_cast<int>(rule.subjects) - 4;
+    int transformation = static_cast<int>(rule.transformation) - 4;
+    for (Entity* entity : nounsEntityOnMap) {
+        if (entity->getId() == subject) {
+            entity->setId(transformation);
         }
     }
 }

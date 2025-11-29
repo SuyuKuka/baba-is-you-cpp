@@ -2,6 +2,7 @@
 #define RULE_PROCESSOR_HPP
 #include <iostream>
 #include <vector>
+#include "model/rule/rule.hpp"
 #include "model/entity/entity.hpp"
 using namespace std;
 
@@ -19,6 +20,7 @@ public:
     bool isStop(const int newX, const int newY, const vector<int> stopId) const;
     bool isNextPushable(const int newX, const int newY) const;
     bool isWin(const int newX, const int newY, const vector<int> winId) const;
+    vector<Rule> isTransformation();
 };
 
 #endif
