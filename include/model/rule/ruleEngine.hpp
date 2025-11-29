@@ -11,6 +11,7 @@ private:
     vector<Rule> activeRules;
 public:
     RuleEngine(Map& map): map(map) {};
+    ~RuleEngine() = default;
 
     void addActiveRule(NounWordEntity noun, OperatorWordEntity ope, PropertyWordEntity property, NounWordEntity transform);
     vector<Rule> getActiveRules() const;
@@ -18,7 +19,7 @@ public:
     void printActivesRules() const;
 
     void updateRules();
-    void checkRule(int x, int y, Entity* nounEntity, bool horizontal);
+    void checkRules(int x, int y, Entity* nounEntity, bool horizontal);
 };
 
 #endif

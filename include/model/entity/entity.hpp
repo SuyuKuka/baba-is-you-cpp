@@ -3,11 +3,11 @@
 #include "model/entity/entityType.hpp"
 
 class Entity {
-    private:
-        int x;
-        int y; 
+private:
+    int x;
+    int y; 
     int id;
-    public: 
+public: 
     Entity(const int x, const int y, int id) : x(x), y(y), id(id) { }
     virtual ~Entity();
     const int& getX() const;

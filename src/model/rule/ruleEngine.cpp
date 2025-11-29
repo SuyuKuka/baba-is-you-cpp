@@ -42,12 +42,12 @@ void RuleEngine::updateRules() {
         int x = nounEntity->getX();
         int y = nounEntity->getY();
         
-        checkRule(x, y, nounEntity, true);
-        checkRule(x, y, nounEntity, false);
+        checkRules(x, y, nounEntity, true);
+        checkRules(x, y, nounEntity, false);
     }
 }
 
-void RuleEngine::checkRule(int x, int y, Entity* nounEntity, bool isHorizontal) {
+void RuleEngine::checkRules(int x, int y, Entity* nounEntity, bool isHorizontal) {
     int dx = isHorizontal ? 1 : 0;
     int dy = isHorizontal ? 0 : 1;
     if ((x + 2 * dx >= map.getWidth()) || (y + 2 * dy >= map.getHeight())) {

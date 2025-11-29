@@ -1,7 +1,19 @@
 #include "model/map/map.hpp"
 
-Map::Map(int width, int height): width(width), height(height), rules(*this) {
+Map::Map(int width, int height): width(width), height(height) {
+    rules = new RuleEngine(*this);
+    ruleProcessor = new RuleProcessor(*this);
     map.resize(height, std::vector<Cell>(width));
+}
+
+Map::~Map() {
+    for (vector<Cell>& list : map) {
+        for (Cell& cell : list) {
+            cell.deleteEntities();
+        }
+    }
+    delete ruleProcessor;
+    delete rules;
 }
 
 void Map::addCell(int x, int y, Entity* entity) {
@@ -24,19 +36,9 @@ const Cell& Map::getCell(int x, int y) const {
     return map[y][x];
 }
 
-void Map::initIds(vector<int>& youId, vector<int>& stopId, vector<int>& winId) {
-    for (const Rule& rule : rules.getActiveRules()) {
-        if (rule.properties == PropertyWordEntity::TEXTYOU) {
-            int gameEntity = static_cast<int>(rule.subjects) - 4;
-            youId.push_back(gameEntity);
-        } else if (rule.properties == PropertyWordEntity::TEXTSTOP) {
-            int gameEntity = static_cast<int>(rule.subjects) - 4;
-            stopId.push_back(gameEntity);
-        } else if (rule.properties == PropertyWordEntity::TEXTWIN) {
-            int gameEntity = static_cast<int>(rule.subjects) - 4;
-            winId.push_back(gameEntity);
-        }
-    }
+void Map::update(const int dx, const int dy) {
+    move(dx, dy);
+    rules->updateRules();
 }
 
 void Map::move(const int dx, const int dy) {
@@ -44,7 +46,7 @@ void Map::move(const int dx, const int dy) {
     vector<int> stopId;
     vector<int> winId;
 
-    initIds(youId, stopId, winId);
+    ruleProcessor->initIds(youId, stopId, winId);
 
     for (Entity* entity : nounsEntityOnMap) {
         if (std::find(youId.begin(), youId.end(), entity->getId()) != youId.end()) {
@@ -53,8 +55,8 @@ void Map::move(const int dx, const int dy) {
             int newX = x + dx;
             int newY = y + dy;
             if (newX >= 0 && newX < width && newY >= 0 && newY < height) {
-                if (!isStop(newX, newY, stopId)) {
-                    if (isPushable(newX, newY)) {
+                if (!ruleProcessor->isStop(newX, newY, stopId)) {
+                    if (ruleProcessor->isNextPushable(newX, newY)) {
                         executePush(x, y, newX, newY, dx, dy);
                     }
                     removeCell(x, y, entity); 
@@ -68,7 +70,7 @@ void Map::move(const int dx, const int dy) {
 }
 
 void Map::executePush(const int x, const int y, int& newX, int& newY, const int dx, const int dy) {
-    while (isPushable(newX, newY)) {
+    while (ruleProcessor->isNextPushable(newX, newY)) {
         if (newX < 0 || newX >= width || newY < 0 || newY >= height) {
             break;
         }
@@ -88,38 +90,6 @@ void Map::executePush(const int x, const int y, int& newX, int& newY, const int 
                 newX -= dx;
                 newY -= dy;
             }
-        }
-    }
-}
-
-bool Map::isStop(const int newX, const int newY, const vector<int> stopId) const {
-    for (Entity* entity : nounsEntityOnMap) {
-        if (std::find(stopId.begin(), stopId.end(), entity->getId()) != stopId.end()) {
-            int x = entity->getX();
-            int y = entity->getY();
-            if (newX == x && newY == y) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-bool Map::isPushable(const int newX, const int newY) const {
-    const Cell& cell = map[newY][newX];
-    for (size_t i = 0; i < cell.getEntities().size(); i++) {
-        Entity* pushed = cell.getEntities()[i];
-        if (pushed->isPushable()) {
-            return true;
-        }
-    }
-    return false;
-}
-
-void Map::clear() {
-    for (vector<Cell>& list : map) {
-        for (Cell& cell : list) {
-            cell.deleteEntities();
         }
     }
 }
