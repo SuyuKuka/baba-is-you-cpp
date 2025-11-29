@@ -63,7 +63,10 @@ void Map::move(const int dx, const int dy) {
                     entity->setX(newX);
                     entity->setY(newY);
                     addCell(newX, newY, entity);
-                }
+                    if (ruleProcessor->isWin(newX, newY, winId)) {
+                        cout << "You win !" << endl;
+                    }
+                } 
             }
         }
     }

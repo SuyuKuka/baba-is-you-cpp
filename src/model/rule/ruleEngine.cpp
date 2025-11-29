@@ -47,7 +47,7 @@ void RuleEngine::updateRules() {
     }
 }
 
-void RuleEngine::checkRules(int x, int y, Entity* nounEntity, bool isHorizontal) {
+void RuleEngine::checkRules(const int x, const int y, const Entity* nounEntity, const bool isHorizontal) {
     int dx = isHorizontal ? 1 : 0;
     int dy = isHorizontal ? 0 : 1;
     if ((x + 2 * dx >= map.getWidth()) || (y + 2 * dy >= map.getHeight())) {

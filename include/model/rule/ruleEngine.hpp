@@ -19,7 +19,7 @@ public:
     void printActivesRules() const;
 
     void updateRules();
-    void checkRules(int x, int y, Entity* nounEntity, bool horizontal);
+    void checkRules(const int x, const int y, const Entity* nounEntity, const bool horizontal);
 };
 
 #endif

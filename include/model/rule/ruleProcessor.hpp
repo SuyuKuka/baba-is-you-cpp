@@ -16,6 +16,7 @@ public:
     void initIds(vector<int>& youId, vector<int>& stopId, vector<int>& winId);
     bool isStop(const int newX, const int newY, const vector<int> stopId) const;
     bool isNextPushable(const int newX, const int newY) const;
+    bool isWin(const int newX, const int newY, const vector<int> winId) const;
 };
 
 #endif
