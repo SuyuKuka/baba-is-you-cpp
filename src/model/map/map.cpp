@@ -49,6 +49,7 @@ void Map::update(const int dx, const int dy) {
 }
 
 void Map::move(const int dx, const int dy) {
+    bool move = true;
     vector<int> youId;
     vector<int> stopId;
     vector<int> winId;
@@ -64,12 +65,14 @@ void Map::move(const int dx, const int dy) {
             if (newX >= 0 && newX < width && newY >= 0 && newY < height) {
                 if (!ruleProcessor->isStop(newX, newY, stopId)) {
                     if (ruleProcessor->isNextPushable(newX, newY)) {
-                        applyPush(x, y, newX, newY, dx, dy);
+                        applyPush(x, y, newX, newY, dx, dy, stopId, move);
                     }
-                    removeCell(x, y, entity); 
-                    entity->setX(newX);
-                    entity->setY(newY);
-                    addCell(newX, newY, entity);
+                    if (move) {
+                        removeCell(x, y, entity); 
+                        entity->setX(newX);
+                        entity->setY(newY);
+                        addCell(newX, newY, entity);
+                    }
                     if (ruleProcessor->isWin(newX, newY, winId)) {
                         cout << "You win !" << endl;
                     }
@@ -79,27 +82,33 @@ void Map::move(const int dx, const int dy) {
     }
 }
 
-void Map::applyPush(const int x, const int y, int& newX, int& newY, const int dx, const int dy) {
-    while (ruleProcessor->isNextPushable(newX, newY)) {
-        if (newX < 0 || newX >= width || newY < 0 || newY >= height) {
+void Map::applyPush(const int x, const int y, int& newX, int& newY, const int dx, const int dy, const vector<int> stopId, bool& move) {
+    while (true) {
+        // Zone inaccessible donc on empeche d'avancer et on reprend la position precedente
+        if (newX < 0 || newX >= width || newY < 0 || newY >= height || ruleProcessor->isStop(newX, newY, stopId)) {
+            move = false;
+            newX -= dx;
+            newY -= dy;
+            break;
+        }
+        if (!ruleProcessor->isNextPushable(newX, newY)) {
             break;
         }
         newX += dx;
         newY += dy;
     }
-    
+
+    // On deplace les objets qu'on peut pousser en commencant par la dernière position
     while (newX != x + dx || newY != y + dy) {
         const Cell& cell = getCell(newX - dx, newY - dy);
         for (size_t i = 0; i < cell.getEntities().size(); i++) {
             Entity* pushed = map[newY - dy][newX - dx].getEntities()[i];
-            if (pushed->isPushable()) {
-                removeCell(newX - dx, newY - dy, pushed);
-                pushed->setX(newX);
-                pushed->setY(newY);
-                addCell(newX, newY, pushed);
-                newX -= dx;
-                newY -= dy;
-            }
+            removeCell(newX - dx, newY - dy, pushed);
+            pushed->setX(newX);
+            pushed->setY(newY);
+            addCell(newX, newY, pushed);
+            newX -= dx;
+            newY -= dy;
         }
     }
 }

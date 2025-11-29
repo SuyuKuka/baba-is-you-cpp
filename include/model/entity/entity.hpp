@@ -16,8 +16,6 @@ public:
     void setX(int x) { this->x = x; };
     void setY(int y) { this->y = y; };
     void setId(int id) { this->id = id; };
-    virtual bool isPushable() const = 0;
-    virtual bool isDestroyable() const = 0;
     bool isNounWordEntity() const;
     bool isOperatorWordEntity() const;
     bool isPropertyWordEntity() const;
