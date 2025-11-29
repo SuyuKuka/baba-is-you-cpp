@@ -103,12 +103,14 @@ void Map::applyPush(const int x, const int y, int& newX, int& newY, const int dx
         const Cell& cell = getCell(newX - dx, newY - dy);
         for (size_t i = 0; i < cell.getEntities().size(); i++) {
             Entity* pushed = map[newY - dy][newX - dx].getEntities()[i];
-            removeCell(newX - dx, newY - dy, pushed);
-            pushed->setX(newX);
-            pushed->setY(newY);
-            addCell(newX, newY, pushed);
-            newX -= dx;
-            newY -= dy;
+            if (pushed->isPushable()) {
+                removeCell(newX - dx, newY - dy, pushed);
+                pushed->setX(newX);
+                pushed->setY(newY);
+                addCell(newX, newY, pushed);
+                newX -= dx;
+                newY -= dy;
+            }
         }
     }
 }
