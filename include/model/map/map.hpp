@@ -38,7 +38,7 @@ public:
     RuleProcessor& getRuleProcessor() const { return *ruleProcessor; }
     void update(const int dx, const int dy);
     void move(const int dx, const int dy);
-    void applyPush(const int x, const int y, int& newX, int& newY, const int dx, const int dy);
+    void applyPush(const int x, const int y, int& newX, int& newY, const int dx, const int dy, const vector<int> stopId, bool& move);
     void applyTransformations(Rule rule);
     void clear();
 

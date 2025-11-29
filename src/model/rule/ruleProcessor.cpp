@@ -40,12 +40,22 @@ bool RuleProcessor::isStop(const int newX, const int newY, const vector<int> sto
 }
 
 bool RuleProcessor::isNextPushable(const int newX, const int newY) const {
+    vector<int> entityPushableRules;
+    for (const Rule& rule : map.getRuleEngine().getActiveRules()) { 
+        if (rule.properties == PropertyWordEntity::TEXTPUSH) {
+            int gameEntity = static_cast<int>(rule.subjects) - 4;
+            entityPushableRules.push_back(gameEntity);
+        }
+    }
+
     const Cell& cell = map.getCell(newX, newY);
     for (size_t i = 0; i < cell.getEntities().size(); i++) {
         Entity* pushed = cell.getEntities()[i];
-        if (pushed->isPushable()) {
+        if (pushed->isPushable() || 
+            std::find(entityPushableRules.begin(), entityPushableRules.end(), pushed->getId()) != entityPushableRules.end()
+        ) {
             return true;
-        }
+        } 
     }
     return false;
 }

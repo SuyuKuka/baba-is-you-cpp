@@ -7,14 +7,6 @@ class EntityNoun: public Entity {
 public:
     EntityNoun(int x, int y, int id): Entity(x, y, id) { }
 
-    bool isPushable() const override {
-        return true;
-    }
-
-    bool isDestroyable() const override {
-        return false;
-    }
-
     NounWordEntity getNounWordEntity() const {
         return static_cast<NounWordEntity>(getId());
     }
