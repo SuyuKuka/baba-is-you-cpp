@@ -8,16 +8,16 @@ BabaTexture::BabaTexture() {
     BABA_TEXT.loadFromFile(path + "BABA_TEXT.png");
     FLAG_TEXT.loadFromFile(path + "FLAG_TEXT.png");
     FLAG.loadFromFile(path + "FLAG.png");
-    IS.loadFromFile(path + "IS.png");
-    PULL.loadFromFile(path + "PULL.png");
-    PUSH.loadFromFile(path + "PUSH.png");
+    IS_TEXT.loadFromFile(path + "IS.png");
+    PULL_TEXT.loadFromFile(path + "PULL.png");
+    PUSH_TEXT.loadFromFile(path + "PUSH.png");
     ROCK_TEXT.loadFromFile(path + "ROCK_TEXT.png");
     ROCK.loadFromFile(path + "ROCK.png");
-    STOP.loadFromFile(path + "STOP.png");
+    STOP_TEXT.loadFromFile(path + "STOP.png");
     WALL_TEXT.loadFromFile(path + "WALL_TEXT.png");
     WALL.loadFromFile(path + "WALL.png");
-    WIN.loadFromFile(path + "WIN.png");
-    YOU.loadFromFile(path + "YOU.png");
+    WIN_TEXT.loadFromFile(path + "WIN.png");
+    YOU_TEXT.loadFromFile(path + "YOU.png");
 }
 
 BabaTexture& BabaTexture::getInstance() {
@@ -39,20 +39,16 @@ const Texture& BabaTexture::getTexture(const int id,  const Keyboard::Key key) c
         case 11: return FLAG;
         case 12: return ROCK;
         case 13: return WALL;
-        case 14: return IS;
-        case 15: return YOU;
-        case 16: return WIN;
-        case 17: return PUSH;
-        case 18: return STOP;
-        case 19: return BABA_TEXT;
-        case 20: return FLAG_TEXT;
-        case 21: return ROCK_TEXT;
-        case 22: return WALL_TEXT;
-        case 23: return IS;
-        case 24: return YOU;
-        case 25: return WIN;
-        case 26: return PUSH;
-        case 27: return STOP;
+        case 14: return BABA_TEXT;
+        case 15: return FLAG_TEXT;
+        case 16: return ROCK_TEXT;
+        case 17: return WALL_TEXT;
+        case 18: return IS_TEXT;
+        case 19: return YOU_TEXT;
+        case 20: return WIN_TEXT;
+        case 21: return PUSH_TEXT;
+        case 22: return STOP_TEXT;
+        case 23: return PULL_TEXT;
         default: return BABA_RIGHT;
     }
 }

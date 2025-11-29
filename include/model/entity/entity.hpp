@@ -3,21 +3,22 @@
 #include "model/entity/entityType.hpp"
 
 class Entity {
-    private:
-        int x;
-        int y; 
+private:
+    int x;
+    int y; 
     int id;
-    public: 
-    Entity(const int x, const int y, int id) : x(x), y(y), id(id) { }
+    bool pushable;
+public: 
+    Entity(const int x, const int y, int id, bool pushable) : x(x), y(y), id(id), pushable(pushable) { }
     virtual ~Entity();
     const int& getX() const;
     const int& getY() const;
     int getId() const;
     void setX(int x) { this->x = x; };
     void setY(int y) { this->y = y; };
-    virtual bool isPushable() const = 0;
-    virtual bool isStackable() const = 0;
-    virtual bool isDestroyable() const = 0;
+    void setId(int id) { this->id = id; };
+    bool isPushable() const { return this->pushable; };
+    void setIsPushable(const bool pushable) { this->pushable = pushable; };
     bool isNounWordEntity() const;
     bool isOperatorWordEntity() const;
     bool isPropertyWordEntity() const;

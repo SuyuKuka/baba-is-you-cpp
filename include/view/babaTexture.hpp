@@ -17,16 +17,16 @@ class BabaTexture {
     Texture BABA_TEXT;
     Texture FLAG_TEXT;
     Texture FLAG;
-    Texture IS;
-    Texture PULL;
-    Texture PUSH;
+    Texture IS_TEXT;
+    Texture PULL_TEXT;
+    Texture PUSH_TEXT;
     Texture ROCK_TEXT;
     Texture ROCK;
-    Texture STOP;
+    Texture STOP_TEXT;
     Texture WALL_TEXT;
     Texture WALL;
-    Texture WIN;
-    Texture YOU;
+    Texture WIN_TEXT;
+    Texture YOU_TEXT;
 
     BabaTexture();
     ~BabaTexture() = default;
