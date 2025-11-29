@@ -39,10 +39,11 @@ const Cell& Map::getCell(int x, int y) const {
 void Map::update(const int dx, const int dy) {
     move(dx, dy);
     rules->updateRules();
-    
+
     vector<Rule> transformationRules = ruleProcessor->isTransformation();
     if (transformationRules.size() > 0) {
         for (Rule rule : transformationRules) {
+            applyTransformations(rule);
         }
     }
 }
