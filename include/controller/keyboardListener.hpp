@@ -3,7 +3,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "model/map.hpp"
+#include "model/map/map.hpp"
 using namespace std;
 using namespace sf;
 
@@ -20,8 +20,8 @@ private:
     KeyboardListener& operator=(const KeyboardListener&) = delete;
     vector<Keyboard::Key> keyPressed;
     sf::Clock repeatClock; 
-    sf::Time initialDelay = sf::milliseconds(400); 
-    sf::Time repeatRate = sf::milliseconds(200); 
+    sf::Time initialDelay = sf::milliseconds(100); 
+    sf::Time repeatRate = sf::milliseconds(100); 
     
     sf::Keyboard::Key lastMovedKey = sf::Keyboard::Key::Unknown;
     bool firstMoveExecuted = false;

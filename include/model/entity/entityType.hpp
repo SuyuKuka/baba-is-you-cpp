@@ -10,23 +10,24 @@ enum class GameEntity {
 
 enum class NounWordEntity {
     NONE = 0,
-    TEXTBABA = 19,
-    TEXTFLAG = 20,
-    TEXTROCK = 21,
-    TEXTWALL = 22
+    TEXTBABA = 14,
+    TEXTFLAG = 15,
+    TEXTROCK = 16,
+    TEXTWALL = 17
 };
 
 enum class OperatorWordEntity {
     NONE = 0,
-    TEXTIS = 23
+    TEXTIS = 18
 };
 
 enum class PropertyWordEntity {
     NONE = 0,
-    TEXTYOU = 24,
-    TEXTWIN = 25,
-    TEXTPUSH = 26,
-    TEXTSTOP = 27
+    TEXTYOU = 19,
+    TEXTWIN = 20,
+    TEXTPUSH = 21,
+    TEXTSTOP = 22,
+    TEXTPULL = 23
 };
 
 #endif

@@ -5,8 +5,8 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <cmath>
-#include "model/cell.hpp"
-#include "model/entity.hpp"
+#include "model/map/cell.hpp"
+#include "model/entity/entity.hpp"
 #include "view/babaTexture.hpp"
 using namespace std;
 using namespace sf;

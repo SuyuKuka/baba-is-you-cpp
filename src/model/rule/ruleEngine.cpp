@@ -1,5 +1,5 @@
-#include "model/ruleEngine.hpp"
-#include "model/map.hpp"
+#include "model/rule/ruleEngine.hpp"
+#include "model/map/map.hpp"
 
 void RuleEngine::addActiveRule(NounWordEntity noun, OperatorWordEntity ope, PropertyWordEntity property, NounWordEntity transform) {
     Rule rule;
@@ -10,7 +10,7 @@ void RuleEngine::addActiveRule(NounWordEntity noun, OperatorWordEntity ope, Prop
     activeRules.push_back(rule);
 }
 
-vector<Rule> RuleEngine::getActiveRules() const {
+const vector<Rule> RuleEngine::getActiveRules() const {
     return activeRules;
 }
 
@@ -25,7 +25,7 @@ void RuleEngine::printActivesRules() const {
         return;
     }
 
-    for (const auto& rule : activeRules) {
+    for (const Rule& rule : activeRules) {
         if (static_cast<int>(rule.properties) != 0) {
             cout << static_cast<int>(rule.subjects) << " " << static_cast<int>(rule.operators) << " " << static_cast<int>(rule.properties) << endl;
             continue;
@@ -38,16 +38,21 @@ void RuleEngine::printActivesRules() const {
 
 void RuleEngine::updateRules() {
     clearActiveRules();
+    // Reset le pushable de tous les entités
+    for (Entity* entity: map.getNounsEntityOnMap()) {
+        entity->setIsPushable(false);
+    }
+
     for (Entity* nounEntity: map.getNounsTextOnMap()) {
         int x = nounEntity->getX();
         int y = nounEntity->getY();
         
-        checkRule(x, y, nounEntity, true);
-        checkRule(x, y, nounEntity, false);
+        checkRules(x, y, nounEntity, true);
+        checkRules(x, y, nounEntity, false);
     }
 }
 
-void RuleEngine::checkRule(int x, int y, Entity* nounEntity, bool isHorizontal) {
+void RuleEngine::checkRules(const int x, const int y, const Entity* nounEntity, const bool isHorizontal) {
     int dx = isHorizontal ? 1 : 0;
     int dy = isHorizontal ? 0 : 1;
     if ((x + 2 * dx >= map.getWidth()) || (y + 2 * dy >= map.getHeight())) {

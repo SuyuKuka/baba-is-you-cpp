@@ -1,4 +1,4 @@
-#include "model/mapParser.hpp"
+#include "model/map/mapParser.hpp"
 
 json MapParser::parseJSON(const string path) {
     json mapData;
@@ -26,12 +26,9 @@ Map MapParser::loadMap(const std::string& path) {
         if (key == "map_name" || key == "width" || key == "height") {
             continue;
         }
-        std::cout << "  - " << key << std::endl;
         loadEntity(map, parser, key);
     }
-    map.printMap();
     rules.updateRules();
-    rules.printActivesRules();
     return map;
 }
 
@@ -41,21 +38,20 @@ void MapParser::loadEntity(Map& map, json parser, string entity) {
             int x = location["x"];
             int y = location["y"];
            
-            std::cout << "x: " << x << ", y: " << y << std::endl;
             if (entity == "walls") {
-                Entity* wall = new EntityGame(x, y, static_cast<int>(GameEntity::WALL), map);
+                Entity* wall = new EntityGame(x, y, static_cast<int>(GameEntity::WALL));
                 map.addCell(x, y, wall);
                 map.addNounEntityOnMap(wall);
             } else if (entity == "baba") {
-                Entity* baba = new EntityGame(x, y, static_cast<int>(GameEntity::BABA), map);
+                Entity* baba = new EntityGame(x, y, static_cast<int>(GameEntity::BABA));
                 map.addCell(x, y, baba);
                 map.addNounEntityOnMap(baba);
             } else if (entity == "flag") {
-                Entity* flag = new EntityGame(x, y, static_cast<int>(GameEntity::FLAG), map);
+                Entity* flag = new EntityGame(x, y, static_cast<int>(GameEntity::FLAG));
                 map.addCell(x, y, flag);
                 map.addNounEntityOnMap(flag);
             } else if (entity == "rock") {
-                Entity* rock = new EntityGame(x, y, static_cast<int>(GameEntity::ROCK), map);
+                Entity* rock = new EntityGame(x, y, static_cast<int>(GameEntity::ROCK));
                 map.addCell(x, y, rock);
                 map.addNounEntityOnMap(rock);
             } else if (entity == "text_baba") {
