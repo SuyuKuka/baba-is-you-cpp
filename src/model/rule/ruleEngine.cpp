@@ -38,6 +38,11 @@ void RuleEngine::printActivesRules() const {
 
 void RuleEngine::updateRules() {
     clearActiveRules();
+    // Reset le pushable de tous les entités
+    for (Entity* entity: map.getNounsEntityOnMap()) {
+        entity->setIsPushable(false);
+    }
+
     for (Entity* nounEntity: map.getNounsTextOnMap()) {
         int x = nounEntity->getX();
         int y = nounEntity->getY();
