@@ -51,7 +51,7 @@ void KeyboardListener::handleMove() {
     }
 
     if (dx != 0 || dy != 0) {
-        map.move(dx, dy);
+        map.update(dx, dy);
         
         repeatClock.restart();
         firstMoveExecuted = true;

@@ -20,6 +20,7 @@ Map MapParser::loadMap(const std::string& path) {
     json parser = MapParser::parseJSON(path);
     Map map = Map(parser["width"], parser["height"]);
     RuleEngine& rules = map.getRuleEngine();
+    RuleProcessor& ruleProcessor = map.getRuleProcessor();
 
     for (json::iterator it = parser.begin(); it != parser.end(); ++it) {
         std::string key = it.key();
@@ -39,19 +40,19 @@ void MapParser::loadEntity(Map& map, json parser, string entity) {
             int y = location["y"];
            
             if (entity == "walls") {
-                Entity* wall = new EntityGame(x, y, static_cast<int>(GameEntity::WALL), map);
+                Entity* wall = new EntityGame(x, y, static_cast<int>(GameEntity::WALL));
                 map.addCell(x, y, wall);
                 map.addNounEntityOnMap(wall);
             } else if (entity == "baba") {
-                Entity* baba = new EntityGame(x, y, static_cast<int>(GameEntity::BABA), map);
+                Entity* baba = new EntityGame(x, y, static_cast<int>(GameEntity::BABA));
                 map.addCell(x, y, baba);
                 map.addNounEntityOnMap(baba);
             } else if (entity == "flag") {
-                Entity* flag = new EntityGame(x, y, static_cast<int>(GameEntity::FLAG), map);
+                Entity* flag = new EntityGame(x, y, static_cast<int>(GameEntity::FLAG));
                 map.addCell(x, y, flag);
                 map.addNounEntityOnMap(flag);
             } else if (entity == "rock") {
-                Entity* rock = new EntityGame(x, y, static_cast<int>(GameEntity::ROCK), map);
+                Entity* rock = new EntityGame(x, y, static_cast<int>(GameEntity::ROCK));
                 map.addCell(x, y, rock);
                 map.addNounEntityOnMap(rock);
             } else if (entity == "text_baba") {
