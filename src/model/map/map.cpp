@@ -36,8 +36,8 @@ const Cell& Map::getCell(int x, int y) const {
     return map[y][x];
 }
 
-void Map::update(const int dx, const int dy) {
-    move(dx, dy);
+void Map::update(const int& dx, const int& dy, const bool& pull) {
+    move(dx, dy, pull);
     rules->updateRules();
 
     vector<Rule> transformationRules = ruleProcessor->isTransformation();
@@ -48,9 +48,8 @@ void Map::update(const int dx, const int dy) {
     }
 }
 
-void Map::move(const int dx, const int dy) {
+void Map::move(const int& dx, const int& dy, const bool& pull) {
     bool move = true;
-    vector<int> youId;
     vector<int> stopId;
     vector<int> winId;
     ruleProcessor->initIds(youId, stopId, winId);
@@ -135,4 +134,8 @@ const vector<const Cell*> Map::getOccupiedCells() const {
         }
     }
     return occupied;
+}
+
+bool Map::babaIsYou() const {
+    return find(youId.begin(), youId.end(), static_cast<int> (GameEntity::BABA)) != youId.end();
 }
