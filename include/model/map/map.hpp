@@ -20,7 +20,6 @@ private:
     vector<Entity*> nounsEntityOnMap;
     RuleEngine* rules = nullptr;
     RuleProcessor* ruleProcessor = nullptr;
-    vector<int> youId;
     friend class MapParser;
 public: 
     Map(int width, int height);
@@ -36,7 +35,6 @@ public:
     void removeCell(int x, int y, Entity* entity);
     const Cell& getCell(int x, int y) const;
     const vector<Entity*> getNounsEntityOnMap() const { return nounsEntityOnMap; }
-    bool babaIsYou() const;
     RuleEngine& getRuleEngine() const { return *rules; }
     RuleProcessor& getRuleProcessor() const { return *ruleProcessor; }
     void update(const int& dx, const int& dy, const bool& pull);
