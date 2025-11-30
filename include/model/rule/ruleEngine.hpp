@@ -13,13 +13,13 @@ public:
     RuleEngine(Map& map): map(map) {};
     ~RuleEngine() = default;
 
-    void addActiveRule(NounWordEntity noun, OperatorWordEntity ope, PropertyWordEntity property, NounWordEntity transform);
-    const vector<Rule> getActiveRules() const;
+    void addActiveRule(const NounWordEntity noun, const OperatorWordEntity ope, const PropertyWordEntity property, const NounWordEntity transform);
+    const vector<Rule>& getActiveRules() const;
     void clearActiveRules();
     void printActivesRules() const;
 
     void updateRules();
-    void checkRules(const int x, const int y, const Entity* nounEntity, const bool horizontal);
+    void checkRules(Position pos, const Entity* nounEntity, const bool horizontal);
 };
 
 #endif
