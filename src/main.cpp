@@ -19,7 +19,7 @@ int main() {
                 keyboardListener.handleKeyPressedAndReleased(event);
             }
             keyboardListener.handleMove();
-            if (map.babaIsYou()) {
+            if (map.getRuleProcessor().babaIsYou()) {
                 view.render(map.getOccupiedCells(), keyboardListener.getLastKeyPressed());
             } else {
                 view.render(map.getOccupiedCells(), Keyboard::Unknown);
