@@ -55,6 +55,10 @@ public:
      * @return True si la touche est une touche autorisée.
      */
     bool isAuthorizedKey(const Keyboard::Key& key) const;
+
+    const Keyboard::Key& getLastKeyPressed() const {
+        return lastMovedKey;
+    }
 };
 
 ostream& operator<<(ostream& out, const KeyboardListener& keyboardListener);

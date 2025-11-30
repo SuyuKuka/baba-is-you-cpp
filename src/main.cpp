@@ -19,7 +19,11 @@ int main() {
                 keyboardListener.handleKeyPressedAndReleased(event);
             }
             keyboardListener.handleMove();
-            view.render(map.getOccupiedCells());
+            if (map.babaIsYou()) {
+                view.render(map.getOccupiedCells(), keyboardListener.getLastKeyPressed());
+            } else {
+                view.render(map.getOccupiedCells(), Keyboard::Unknown);
+            }   
         }
     }
     return EXIT_SUCCESS;

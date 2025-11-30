@@ -27,6 +27,7 @@ class BabaTexture {
     Texture WALL;
     Texture WIN_TEXT;
     Texture YOU_TEXT;
+    Texture * last_baba_texture;
 
     BabaTexture();
     ~BabaTexture() = default;
@@ -42,7 +43,7 @@ class BabaTexture {
      * @param key une touche qui est par défaut D.
      * @return Une texture const correspondant à l'entité indiquée.
      */
-    const Texture& getTexture(const int id,  const Keyboard::Key key = Keyboard::Key::D) const; 
+    const Texture& getTexture(const int& id,  const Keyboard::Key& key); 
 };
 
 #endif
