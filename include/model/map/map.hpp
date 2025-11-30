@@ -16,6 +16,7 @@ private:
     int width;
     int height;
     vector<vector<Cell>> map;
+    mutable vector<const Cell *> occupiedCells;
     vector<Entity*> nounsTextOnMap;
     vector<Entity*> nounsEntityOnMap;
     RuleEngine* rules = nullptr;
@@ -44,7 +45,6 @@ public:
     void clear();
 
     /**
-     * @brief Cette fonction crée une copie.
      * @return Un vector contenant les cellules occupées.
      */
     const vector<const Cell*> getOccupiedCells() const;

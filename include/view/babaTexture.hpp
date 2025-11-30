@@ -27,6 +27,7 @@ class BabaTexture {
     Texture WALL;
     Texture WIN_TEXT;
     Texture YOU_TEXT;
+    const Texture empty;
     Texture * last_baba_texture;
 
     BabaTexture();
