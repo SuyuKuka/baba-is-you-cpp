@@ -14,6 +14,8 @@ public:
     Position getPosition() const { return this->pos; };
     int getId() const;
     bool isPushable() const { return this->pushable; };
+    virtual const bool& isPullable() const = 0;
+    virtual void setIsPullable(const bool pullable) = 0;
     void setPosition(const Position& pos) { this->pos = pos; };
     void setId(int id) { this->id = id; };
     void setIsPushable(const bool pushable) { this->pushable = pushable; };

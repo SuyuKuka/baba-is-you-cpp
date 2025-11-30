@@ -46,7 +46,7 @@ public:
     void applyPush(const Position& pos, Position& newPos, const Position& dPos, const vector<int> stopId, bool& move);
     void applyTransformations(const Rule& rule);
     void clear();
-
+    void applyPull(const Position& pullPos, const Position& newPos);
     /**
      * @return Un vector contenant les cellules occupées.
      */
