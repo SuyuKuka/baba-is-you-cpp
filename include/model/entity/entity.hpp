@@ -8,14 +8,15 @@ private:
     Position pos; 
     int id;
     bool pushable;
+    bool pullable;
 public: 
-    Entity(Position pos, int id, bool pushable) : pos(pos), id(id), pushable(pushable) { }
+    Entity(Position pos, int id, bool pushable, bool pullable) : pos(pos), id(id), pushable(pushable), pullable(pullable) { }
     virtual ~Entity();
     Position getPosition() const { return this->pos; };
     int getId() const;
     bool isPushable() const { return this->pushable; };
-    virtual const bool& isPullable() const = 0;
-    virtual void setIsPullable(const bool pullable) = 0;
+    virtual bool isPullable() const {return pullable;}
+    virtual void setIsPullable(const bool pullable) { this->pullable = pullable; }
     void setPosition(const Position& pos) { this->pos = pos; };
     void setId(int id) { this->id = id; };
     void setIsPushable(const bool pushable) { this->pushable = pushable; };
