@@ -38,20 +38,19 @@ void KeyboardListener::handleMove() {
         return;
     }
 
-    int dx = 0;
-    int dy = 0;
+    Position pos;
     if (currentKey == Keyboard::Up || currentKey == Keyboard::Z || currentKey == Keyboard::W) {
-        dy = -1;
+        pos.y = -1;
     } else if (currentKey == Keyboard::Down || currentKey == Keyboard::S) {
-        dy = 1;
+        pos.y = 1;
     } else if (currentKey == Keyboard::Left || currentKey == Keyboard::Q || currentKey == Keyboard::A) {
-        dx = -1;
+        pos.x = -1;
     } else if (currentKey == Keyboard::Right || currentKey == Keyboard::D) {
-        dx = 1;
+        pos.x = 1;
     }
 
-    if (dx != 0 || dy != 0) {
-        map.update(dx, dy);
+    if (pos.x != 0 || pos.y != 0) {
+        map.update(pos);
         
         repeatClock.restart();
         firstMoveExecuted = true;

@@ -9,8 +9,8 @@ void MainView::render(const vector<const Cell*>& occupied) {
     Sprite sprite;
     for (const Cell* cell : occupied) {
         for (const Entity* entity : cell -> getEntities()) {
-            double px = entity -> getX() * cellWidth;
-            double py = entity -> getY() * cellHeight;
+            double px = entity -> getPosition().x * cellWidth;
+            double py = entity -> getPosition().y * cellHeight;
             sprite.setTexture(babaTexture.getTexture(entity -> getId()));
             sprite.setScale(cellWidth / sprite.getTextureRect().width,
                 cellHeight / sprite.getTextureRect().height);

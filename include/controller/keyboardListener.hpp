@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "model/map/map.hpp"
+#include "model/map/position.hpp"
 using namespace std;
 using namespace sf;
 
