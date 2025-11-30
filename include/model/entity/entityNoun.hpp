@@ -3,16 +3,14 @@
 #include "model/entity/entity.hpp"
 
 class EntityNoun: public Entity {
-    private:
-        const bool pullable;
     public:
-        EntityNoun(Position pos, int id): Entity(pos, id, true), pullable(true) { }
+        EntityNoun(Position pos, int id): Entity(pos, id, true, true)  { }
 
         NounWordEntity getNounWordEntity() const {
             return static_cast<NounWordEntity>(getId());
         }
 
-        const bool& isPullable() const override { return pullable; }
+        bool isPullable() const override { return true; }
         void setIsPullable(const bool pullable) override {(void) pullable;}
     };
 
