@@ -70,7 +70,6 @@ void Map::move(const Position& dPos, const bool& pull) {
         for (Entity* entity: entities) {
             Position pos = entity->getPosition();
             Position newPos = pos + dPos;
-            Position pullPos;
             if (newPos.x >= 0 && newPos.x < width && newPos.y >= 0 && newPos.y < height) {
                 if (!ruleProcessor->isStop(newPos, stopId)) {
                     if (ruleProcessor->isNextPushable(newPos)) {
@@ -78,7 +77,7 @@ void Map::move(const Position& dPos, const bool& pull) {
                     }
                     if (move) {
                         if (pull) {
-                            pullPos = pos - dPos; 
+                            Position pullPos = pos - dPos; 
                             ruleProcessor->updatePullable(pullPos);                            
                             applyPull(pullPos, pos);
                         }
@@ -100,7 +99,6 @@ void Map::applyPull(const Position& pullPos, const Position& newPos) {
     vector<Entity *> entities = cell.getEntities();
     for (size_t i = 0; i < entities.size(); i++) {
         Entity* pulled = entities[i];
-        cout << pulled -> getId() << endl;
         if (pulled->isPullable()) {
             removeCell(pullPos, pulled);
             pulled->setPosition(newPos);
