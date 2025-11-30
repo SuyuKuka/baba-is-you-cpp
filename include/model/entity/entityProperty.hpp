@@ -4,7 +4,15 @@
 
 class EntityProperty: public Entity {
 public:
-    EntityProperty(Position pos, int id): Entity(pos, id, true) { }
+    EntityProperty(Position pos, int id): Entity(pos, id) { }
+
+    bool isPushable() const override {
+        return true;
+    }
+
+    void reversePushable() {
+        return;
+    }
 
     PropertyWordEntity getPropertyWordEntity() const {
         return static_cast<PropertyWordEntity>(getId());

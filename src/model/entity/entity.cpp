@@ -6,6 +6,14 @@ int Entity::getId() const {
     return id;
 }
 
+bool Entity::isPushable() const {
+    return true;
+}
+
+void Entity::reversePushable() {
+    return;
+}
+
 bool Entity::isNounWordEntity() const {
     return id >= static_cast<int>(NounWordEntity::TEXTBABA) && 
            id <= static_cast<int>(NounWordEntity::TEXTWALL);

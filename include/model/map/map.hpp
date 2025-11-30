@@ -7,6 +7,7 @@
 #include "model/rule/ruleProcessor.hpp"
 #include "model/entity/entity.hpp"
 #include "model/map/position.hpp"
+#include "model/entity/entityGame.hpp"
 using namespace std;
 
 class RuleEngine;

@@ -24,6 +24,11 @@ private:
     MapParser() = delete;
     static json parseJSON(const string path);
     static void loadEntity(Map& map, const json parser, const string entity);
+    static void loadGameEntity(Map& map, const string entity, const Position& pos);
+    static void loadNounText(Map& map, const string entity, const Position& pos);
+    static void loadOperatorText(Map& map, const string entity, const Position& pos);
+    static void loadPropertyText(Map& map, const string entity, const Position& pos);
+
 public:
     static Map loadMap(const string& path);
 };
