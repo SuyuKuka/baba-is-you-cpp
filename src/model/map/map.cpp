@@ -49,6 +49,7 @@ void Map::update(const Position dPos) {
             applyTransformations(rule);
         }
     }
+    // rules->printActivesRules();
 }
 
 void Map::move(const Position& dPos) {
