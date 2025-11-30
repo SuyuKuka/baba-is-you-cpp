@@ -26,12 +26,11 @@ const vector<Entity*> RuleProcessor::isYou(const vector<int> youId) {
     return entities;
 }
 
-bool RuleProcessor::isStop(const int newX, const int newY, const vector<int> stopId) const {
+bool RuleProcessor::isStop(const Position& newPos, const vector<int>& stopId) const {
     for (Entity* entity : map.getNounsEntityOnMap()) {
         if (std::find(stopId.begin(), stopId.end(), entity->getId()) != stopId.end()) {
-            int x = entity->getX();
-            int y = entity->getY();
-            if (newX == x && newY == y) {
+            Position pos = entity->getPosition();
+            if (newPos == pos) {
                 return true;
             }
         }
@@ -39,7 +38,7 @@ bool RuleProcessor::isStop(const int newX, const int newY, const vector<int> sto
     return false;
 }
 
-bool RuleProcessor::isNextPushable(const int newX, const int newY) const {
+bool RuleProcessor::isNextPushable(const Position& newPos) const {
     vector<int> entityPushableRules;
     for (const Rule& rule : map.getRuleEngine().getActiveRules()) { 
         if (rule.properties == PropertyWordEntity::TEXTPUSH) {
@@ -48,7 +47,7 @@ bool RuleProcessor::isNextPushable(const int newX, const int newY) const {
         }
     }
 
-    const Cell& cell = map.getCell(newX, newY);
+    const Cell& cell = map[newPos];
     for (size_t i = 0; i < cell.getEntities().size(); i++) {
         Entity* pushed = cell.getEntities()[i];
         if (pushed->isPushable()) {
@@ -62,12 +61,11 @@ bool RuleProcessor::isNextPushable(const int newX, const int newY) const {
     return false;
 }
 
-bool RuleProcessor::isWin(const int newX, const int newY, const vector<int> winId) const {
+bool RuleProcessor::isWin(const Position& newPos, const vector<int>& winId) const {
     for (Entity* entity : map.getNounsEntityOnMap()) {
         if (std::find(winId.begin(), winId.end(), entity->getId()) != winId.end()) {
-            int x = entity->getX();
-            int y = entity->getY();
-            if (newX == x && newY == y) {
+            Position pos = entity->getPosition();
+            if (newPos == pos) {
                 return true;
             }
         }

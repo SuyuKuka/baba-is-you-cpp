@@ -4,6 +4,7 @@
 #include <fstream>
 #include "model/map/json.hpp"
 #include "model/map/map.hpp"
+#include "model/map/position.hpp"
 #include "model/rule/ruleEngine.hpp"
 #include "model/entity/entityGame.hpp"
 #include "model/entity/entityNoun.hpp"

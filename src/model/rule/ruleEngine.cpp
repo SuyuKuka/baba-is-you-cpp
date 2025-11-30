@@ -1,7 +1,7 @@
 #include "model/rule/ruleEngine.hpp"
 #include "model/map/map.hpp"
 
-void RuleEngine::addActiveRule(NounWordEntity noun, OperatorWordEntity ope, PropertyWordEntity property, NounWordEntity transform) {
+void RuleEngine::addActiveRule(const NounWordEntity noun, const OperatorWordEntity ope, const PropertyWordEntity property, const NounWordEntity transform) {
     Rule rule;
     rule.subjects = noun;
     rule.operators = ope;
@@ -10,7 +10,7 @@ void RuleEngine::addActiveRule(NounWordEntity noun, OperatorWordEntity ope, Prop
     activeRules.push_back(rule);
 }
 
-const vector<Rule> RuleEngine::getActiveRules() const {
+const vector<Rule>& RuleEngine::getActiveRules() const {
     return activeRules;
 }
 
@@ -44,34 +44,31 @@ void RuleEngine::updateRules() {
     }
 
     for (Entity* nounEntity: map.getNounsTextOnMap()) {
-        int x = nounEntity->getX();
-        int y = nounEntity->getY();
+        Position pos = nounEntity->getPosition();
         
-        checkRules(x, y, nounEntity, true);
-        checkRules(x, y, nounEntity, false);
+        checkRules(pos, nounEntity, true);
+        checkRules(pos, nounEntity, false);
     }
 }
 
-void RuleEngine::checkRules(const int x, const int y, const Entity* nounEntity, const bool isHorizontal) {
+void RuleEngine::checkRules(Position pos, const Entity* nounEntity, const bool isHorizontal) {
     int dx = isHorizontal ? 1 : 0;
     int dy = isHorizontal ? 0 : 1;
-    if ((x + 2 * dx >= map.getWidth()) || (y + 2 * dy >= map.getHeight())) {
+    if ((pos.x + 2 * dx >= map.getWidth()) || (pos.y + 2 * dy >= map.getHeight())) {
         return;
     }
     
     // Check si y'a un opérateur
-    int xOp = x + dx;
-    int yOp = y + dy;
-    const Cell& cellOp = map.getCell(xOp, yOp);
+    Position posOp(pos.x + dx, pos.y + dy);
+    const Cell& cellOp = map[posOp];
     const std::vector<Entity*>& entitiesOp = cellOp.getEntities();
     if (entitiesOp.empty() || !entitiesOp[0]->isOperatorWordEntity()) {
         return;
     }
 
     // Check si y'a une propriété ou un nom
-    int xTarget = x + 2 * dx;
-    int yTarget = y + 2 * dy;
-    const Cell& cellTarget = map.getCell(xTarget, yTarget);
+    Position posTarget(pos.x + 2 * dx, pos.y + 2 * dy);
+    const Cell& cellTarget = map[posTarget];
     const std::vector<Entity*>& entitiesTarget = cellTarget.getEntities();
     if (entitiesTarget.empty()) {
         return;
