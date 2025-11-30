@@ -5,6 +5,7 @@
 #include "model/rule/rule.hpp"
 #include "model/entity/entity.hpp"
 #include "model/entity/entityType.hpp"
+#include "model/entity/entityType.hpp"
 using namespace std;
 
 class Map;
@@ -12,6 +13,7 @@ class Map;
 class RuleProcessor{
 private:
     Map& map;
+    mutable vector<int> youId;
     mutable vector<int> youId;
 public:
     RuleProcessor(Map& map): map(map) {}
@@ -26,7 +28,10 @@ public:
     const vector<Rule> isTransformation();
     const vector<int>& getYouID() const { return youId; }
     bool babaIsYou() const;
+    const vector<int>& getYouID() const { return youId; }
+    bool babaIsYou() const;
 };
+
 
 
 #endif
