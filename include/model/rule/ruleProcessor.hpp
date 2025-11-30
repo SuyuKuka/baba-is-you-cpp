@@ -21,6 +21,7 @@ public:
     const vector<Entity*> isYou() const;
     bool isStop(const int newX, const int newY, const vector<int> stopId) const;
     bool isNextPushable(const int newX, const int newY) const;
+    bool isPull(const int x, const int y, const vector <int> pullId) const;
     bool isWin(const int newX, const int newY, const vector<int> winId) const;
     const vector<Rule> isTransformation();
     const vector<int>& getYouID() const { return youId; }

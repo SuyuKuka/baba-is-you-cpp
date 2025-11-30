@@ -125,13 +125,13 @@ void Map::applyTransformations(Rule rule) {
 }
 
 const vector<const Cell*> Map::getOccupiedCells() const {
-    vector<const Cell*> occupied;
+    occupiedCells.clear();
     for (const vector<Cell>& vCell : map) {
         for(const Cell& cell : vCell) {
             if (!cell.getEntities().empty()) {
-                occupied.push_back(&cell);
+                occupiedCells.push_back(&cell);
             }
         }
     }
-    return occupied;
+    return occupiedCells;
 }

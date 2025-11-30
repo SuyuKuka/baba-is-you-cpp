@@ -56,6 +56,6 @@ const Texture& BabaTexture::getTexture(const int& id,  const Keyboard::Key& key)
         case 21: return PUSH_TEXT;
         case 22: return STOP_TEXT;
         case 23: return PULL_TEXT;
-        default: return BABA_RIGHT;
+        default: return empty;
     }
 }
