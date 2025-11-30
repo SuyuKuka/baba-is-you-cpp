@@ -2,6 +2,7 @@
 #include "model/map/map.hpp"
 
 void RuleProcessor::initIds(vector<int>& youId, vector<int>& stopId, vector<int>& winId) const {
+    youId.clear();
     for (const Rule& rule : map.getRuleEngine().getActiveRules()) {
         if (rule.properties == PropertyWordEntity::TEXTYOU) {
             int gameEntity = static_cast<int>(rule.subjects) - 4;

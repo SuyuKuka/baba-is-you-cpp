@@ -19,7 +19,7 @@ class MainView {
     public:
     MainView();
     ~MainView() = default;
-    void render(const vector<const Cell*>& occupied);
+    void render(const vector<const Cell*>& occupied, Keyboard::Key key);
     bool pollEvent(Event& event);
     bool isOpen() const;
     void close();
