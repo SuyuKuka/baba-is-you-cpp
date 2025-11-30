@@ -46,8 +46,8 @@ void Map::addNounEntityOnMap(Entity* noun) {
     nounsEntityOnMap.push_back(noun);
 }
 
-void Map::update(const Position dPos) {
-    move(dPos);
+void Map::update(const Position dPos, const bool& pull) {
+    move(dPos, pull);
     rules->updateRules();
 
     vector<Rule> transformationRules = ruleProcessor->isTransformation();
@@ -58,9 +58,8 @@ void Map::update(const Position dPos) {
     }
 }
 
-void Map::move(const Position& dPos) {
+void Map::move(const Position& dPos, const bool& pull) {
     bool move = true;
-    vector<int> youId;
     vector<int> stopId;
     vector<int> winId;
     ruleProcessor->initIds(youId, stopId, winId);
@@ -138,4 +137,8 @@ const vector<const Cell*> Map::getOccupiedCells() const {
         }
     }
     return occupied;
+}
+
+bool Map::babaIsYou() const {
+    return find(youId.begin(), youId.end(), static_cast<int> (GameEntity::BABA)) != youId.end();
 }

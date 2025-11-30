@@ -5,6 +5,7 @@
 #include "model/map/cell.hpp"
 #include "model/rule/ruleEngine.hpp"
 #include "model/rule/ruleProcessor.hpp"
+#include "model/entity/entityType.hpp"
 #include "model/entity/entity.hpp"
 #include "model/map/position.hpp"
 using namespace std;
@@ -21,6 +22,7 @@ private:
     vector<Entity*> nounsEntityOnMap;
     RuleEngine* rules = nullptr;
     RuleProcessor* ruleProcessor = nullptr;
+    vector<int> youId;
     friend class MapParser;
 public: 
     Map(int width, int height);
@@ -37,10 +39,11 @@ public:
     void addNounEntityOnMap(Entity* entity);
     void removeCell(const Position pos, Entity* entity);
     const vector<Entity*> getNounsEntityOnMap() const { return nounsEntityOnMap; }
+    bool babaIsYou() const;
     RuleEngine& getRuleEngine() const { return *rules; }
     RuleProcessor& getRuleProcessor() const { return *ruleProcessor; }
-    void update(const Position dPos);
-    void move(const Position& dPos);
+    void update(const Position dPos, const bool& pull);
+    void move(const Position& dPos, const bool& pull);
     void applyPush(const Position& pos, Position& newPos, const Position& dPos, const vector<int> stopId, bool& move);
     void applyTransformations(const Rule& rule);
     void clear();
