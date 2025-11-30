@@ -51,6 +51,8 @@ void KeyboardListener::handleMove() {
 
     bool pull = (isKeyPressed(Keyboard::LControl) || isKeyPressed(Keyboard::RControl));
 
+    bool pull = (isKeyPressed(Keyboard::LControl) || isKeyPressed(Keyboard::RControl));
+
     if (pos.x != 0 || pos.y != 0) {
         map.update(pos, pull);
         

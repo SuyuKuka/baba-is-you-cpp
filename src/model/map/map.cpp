@@ -63,7 +63,9 @@ void Map::move(const Position& dPos, const bool& pull) {
     vector<int> stopId;
     vector<int> winId;
     ruleProcessor->initIds(stopId, winId);
+    ruleProcessor->initIds(stopId, winId);
 
+    vector<Entity*> entities = ruleProcessor->isYou();
     vector<Entity*> entities = ruleProcessor->isYou();
     if (entities.size() > 0) {
         for (Entity* entity: entities) {
@@ -129,12 +131,15 @@ void Map::applyTransformations(const Rule& rule) {
 
 const vector<const Cell*> Map::getOccupiedCells() const {
     occupiedCells.clear();
+    occupiedCells.clear();
     for (const vector<Cell>& vCell : map) {
         for(const Cell& cell : vCell) {
             if (!cell.getEntities().empty()) {
                 occupiedCells.push_back(&cell);
+                occupiedCells.push_back(&cell);
             }
         }
     }
+    return occupiedCells;
     return occupiedCells;
 }
