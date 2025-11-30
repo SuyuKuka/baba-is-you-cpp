@@ -62,9 +62,9 @@ void Map::move(const Position& dPos, const bool& pull) {
     bool move = true;
     vector<int> stopId;
     vector<int> winId;
-    ruleProcessor->initIds(youId, stopId, winId);
+    ruleProcessor->initIds(stopId, winId);
 
-    vector<Entity*> entities = ruleProcessor->isYou(youId);
+    vector<Entity*> entities = ruleProcessor->isYou();
     if (entities.size() > 0) {
         for (Entity* entity: entities) {
             Position pos = entity->getPosition();
@@ -137,8 +137,4 @@ const vector<const Cell*> Map::getOccupiedCells() const {
         }
     }
     return occupied;
-}
-
-bool Map::babaIsYou() const {
-    return find(youId.begin(), youId.end(), static_cast<int> (GameEntity::BABA)) != youId.end();
 }
