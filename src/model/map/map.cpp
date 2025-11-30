@@ -18,16 +18,9 @@ Map::~Map() {
 
 Cell& Map::operator[](const Position& pos) {
     if (pos.x < 0 || pos.x >= width || pos.y < 0 || pos.y >= height) {
-        throw out_of_range("Position out of bounds in Map operator[] (non-const)");
+        throw out_of_range("Index out of range");
     }
     return map[pos.y][pos.x]; 
-}
-
-const Cell& Map::operator[](const Position& pos) const {
-    if (pos.x < 0 || pos.x >= width || pos.y < 0 || pos.y >= height) {
-        throw out_of_range("Position out of bounds in Map operator[]");
-    }
-    return map[pos.y][pos.x];
 }
 
 void Map::addCell(Position pos, Entity* entity) {
@@ -119,8 +112,8 @@ void Map::applyPush(const Position& pos, Position& newPos, const Position& dPos,
 }
 
 void Map::applyTransformations(const Rule& rule) {
-    int subject = static_cast<int>(rule.subjects) - 4;
-    int transformation = static_cast<int>(rule.transformation) - 4;
+    int subject = static_cast<int>(rule.subjects) - 20;
+    int transformation = static_cast<int>(rule.transformation) - 20;
     for (Entity* entity : nounsEntityOnMap) {
         if (entity->getId() == subject) {
             entity->setId(transformation);

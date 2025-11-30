@@ -27,6 +27,12 @@ class BabaTexture {
     Texture WALL;
     Texture WIN_TEXT;
     Texture YOU_TEXT;
+    Texture KEY;
+    Texture KEY_TEXT;
+    Texture DOOR;
+    Texture DOOR_TEXT;
+    Texture OPEN_TEXT;
+    Texture SHUT_TEXT;
 
     BabaTexture();
     ~BabaTexture() = default;

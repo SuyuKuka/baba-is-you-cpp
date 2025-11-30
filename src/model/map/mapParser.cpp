@@ -39,7 +39,7 @@ void MapParser::loadEntity(Map& map, json parser, string entity) {
             const int y = location["y"];
             const Position pos(x, y);
 
-            if (entity == "walls") {
+            if (entity == "wall") {
                 Entity* wall = new EntityGame(pos, static_cast<int>(GameEntity::WALL));
                 map.addCell(pos, wall);
                 map.addNounEntityOnMap(wall);
@@ -86,7 +86,33 @@ void MapParser::loadEntity(Map& map, json parser, string entity) {
             } else if (entity == "text_stop") {
                 Entity* text_stop = new EntityProperty(pos, static_cast<int>(PropertyWordEntity::TEXTSTOP));
                 map.addCell(pos, text_stop);
-            } else {
+            } else if (entity == "key") {
+                Entity* key = new EntityGame(pos, static_cast<int>(GameEntity::KEY));
+                map.addCell(pos, key);
+                map.addNounEntityOnMap(key);
+            } else if (entity == "door") {
+                Entity* door = new EntityGame(pos, static_cast<int>(GameEntity::DOOR));
+                map.addCell(pos, door);
+                map.addNounEntityOnMap(door);
+            } else if (entity == "text_door") {
+                Entity* text_door = new EntityNoun(pos, static_cast<int>(NounWordEntity::TEXTDOOR));
+                map.addCell(pos, text_door);
+                map.addNounTextOnMap(text_door);
+            } else if (entity == "text_key") {
+                Entity* text_key = new EntityNoun(pos, static_cast<int>(NounWordEntity::TEXTKEY));
+                map.addCell(pos, text_key);
+                map.addNounTextOnMap(text_key);
+            } else if (entity == "text_open") {
+                Entity* text_open = new EntityProperty(pos, static_cast<int>(PropertyWordEntity::TEXTOPEN));
+                map.addCell(pos, text_open);
+            } else if (entity == "text_shut") {
+                Entity* text_close = new EntityProperty(pos, static_cast<int>(PropertyWordEntity::TEXTSHUT));
+                map.addCell(pos, text_close);
+            }
+            
+            
+            
+            else {
                 cout << "Unknown entity: " << entity << endl;
             }
         }
