@@ -26,7 +26,6 @@ public:
     Map(int width, int height);
     ~Map();
     Cell& operator[](const Position& pos);
-    const Cell& operator[](const Position& pos) const;
 
     int getWidth() const { return width; }
     int getHeight() const { return height; }

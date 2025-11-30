@@ -4,13 +4,13 @@
 void RuleProcessor::initIds(vector<int>& youId, vector<int>& stopId, vector<int>& winId) const {
     for (const Rule& rule : map.getRuleEngine().getActiveRules()) {
         if (rule.properties == PropertyWordEntity::TEXTYOU) {
-            int gameEntity = static_cast<int>(rule.subjects) - 4;
+            int gameEntity = static_cast<int>(rule.subjects) - 20;
             youId.push_back(gameEntity);
         } else if (rule.properties == PropertyWordEntity::TEXTSTOP) {
-            int gameEntity = static_cast<int>(rule.subjects) - 4;
+            int gameEntity = static_cast<int>(rule.subjects) - 20;
             stopId.push_back(gameEntity);
         } else if (rule.properties == PropertyWordEntity::TEXTWIN) {
-            int gameEntity = static_cast<int>(rule.subjects) - 4;
+            int gameEntity = static_cast<int>(rule.subjects) - 20;
             winId.push_back(gameEntity);
         }
     }
@@ -42,7 +42,7 @@ bool RuleProcessor::isNextPushable(const Position& newPos) const {
     vector<int> entityPushableRules;
     for (const Rule& rule : map.getRuleEngine().getActiveRules()) { 
         if (rule.properties == PropertyWordEntity::TEXTPUSH) {
-            int gameEntity = static_cast<int>(rule.subjects) - 4;
+            int gameEntity = static_cast<int>(rule.subjects) - 20;
             entityPushableRules.push_back(gameEntity);
         }
     }

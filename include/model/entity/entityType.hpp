@@ -5,29 +5,35 @@ enum class GameEntity {
     BABA = 10,
     FLAG = 11,
     ROCK = 12,
-    WALL = 13
+    WALL = 13,
+    DOOR = 14,
+    KEY = 15
 };
 
 enum class NounWordEntity {
     NONE = 0,
-    TEXTBABA = 14,
-    TEXTFLAG = 15,
-    TEXTROCK = 16,
-    TEXTWALL = 17
+    TEXTBABA = 30,
+    TEXTFLAG = 31,
+    TEXTROCK = 32,
+    TEXTWALL = 33,
+    TEXTDOOR = 34,
+    TEXTKEY = 35
 };
 
 enum class OperatorWordEntity {
     NONE = 0,
-    TEXTIS = 18
+    TEXTIS = 50
 };
 
 enum class PropertyWordEntity {
     NONE = 0,
-    TEXTYOU = 19,
-    TEXTWIN = 20,
-    TEXTPUSH = 21,
-    TEXTSTOP = 22,
-    TEXTPULL = 23
+    TEXTYOU = 70,
+    TEXTWIN = 71,
+    TEXTPUSH = 72,
+    TEXTSTOP = 73,
+    TEXTPULL = 74,
+    TEXTOPEN = 75,
+    TEXTSHUT = 76
 };
 
 #endif
