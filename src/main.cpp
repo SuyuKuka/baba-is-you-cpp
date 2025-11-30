@@ -19,10 +19,11 @@ int main() {
                 keyboardListener.handleKeyPressedAndReleased(event);
             }
             keyboardListener.handleMove();
+            const vector<const Cell *>& occupied = map.getOccupiedCells();
             if (map.getRuleProcessor().babaIsYou()) {
-                view.render(map.getOccupiedCells(), keyboardListener.getLastKeyPressed());
+                view.render(occupied, keyboardListener.getLastKeyPressed());
             } else {
-                view.render(map.getOccupiedCells(), Keyboard::Unknown);
+                view.render(occupied, Keyboard::Unknown);
             }   
         }
     }
