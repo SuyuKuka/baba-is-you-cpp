@@ -5,6 +5,8 @@
 #include "model/map/cell.hpp"
 #include "model/rule/ruleEngine.hpp"
 #include "model/rule/ruleProcessor.hpp"
+#include "model/entity/entity.hpp"
+#include "model/map/position.hpp"
 using namespace std;
 
 class RuleEngine;
@@ -23,23 +25,24 @@ private:
 public: 
     Map(int width, int height);
     ~Map();
+    Cell& operator[](const Position& pos);
+    const Cell& operator[](const Position& pos) const;
 
     int getWidth() const { return width; }
     int getHeight() const { return height; }
-    vector<vector<Cell>> getMap() const { return map; }
-    vector<Entity*> getNounsTextOnMap() const { return nounsTextOnMap; }
-    void addCell(int x, int y, Entity* entity);
+    const vector<std::vector<Cell>>& getMap() const { return map; }
+    const vector<Entity*>& getNounsTextOnMap() const { return nounsTextOnMap; }
+    void addCell(const Position pos, Entity* entity);
     void addNounTextOnMap(Entity* entity);
     void addNounEntityOnMap(Entity* entity);
-    void removeCell(int x, int y, Entity* entity);
-    const Cell& getCell(int x, int y) const;
+    void removeCell(const Position pos, Entity* entity);
     const vector<Entity*> getNounsEntityOnMap() const { return nounsEntityOnMap; }
     RuleEngine& getRuleEngine() const { return *rules; }
     RuleProcessor& getRuleProcessor() const { return *ruleProcessor; }
-    void update(const int dx, const int dy);
-    void move(const int dx, const int dy);
-    void applyPush(const int x, const int y, int& newX, int& newY, const int dx, const int dy, const vector<int> stopId, bool& move);
-    void applyTransformations(Rule rule);
+    void update(const Position dPos);
+    void move(const Position& dPos);
+    void applyPush(const Position& pos, Position& newPos, const Position& dPos, const vector<int> stopId, bool& move);
+    void applyTransformations(const Rule& rule);
     void clear();
 
     /**
@@ -47,7 +50,6 @@ public:
      * @return Un vector contenant les cellules occupées.
      */
     const vector<const Cell*> getOccupiedCells() const;
-
 };
 
 #endif

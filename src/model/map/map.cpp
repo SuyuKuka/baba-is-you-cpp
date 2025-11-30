@@ -16,12 +16,26 @@ Map::~Map() {
     delete rules;
 }
 
-void Map::addCell(int x, int y, Entity* entity) {
-    map[y][x].addEntity(entity);
+Cell& Map::operator[](const Position& pos) {
+    if (pos.x < 0 || pos.x >= width || pos.y < 0 || pos.y >= height) {
+        throw std::out_of_range("Position out of bounds in Map operator[] (non-const)");
+    }
+    return map[pos.y][pos.x]; 
 }
 
-void Map::removeCell(int x, int y, Entity* entity) {
-    map[y][x].removeEntity(entity);
+const Cell& Map::operator[](const Position& pos) const {
+    if (pos.x < 0 || pos.x >= width || pos.y < 0 || pos.y >= height) {
+        throw out_of_range("Position out of bounds in Map operator[]");
+    }
+    return map[pos.y][pos.x];
+}
+
+void Map::addCell(Position pos, Entity* entity) {
+    (*this)[pos].addEntity(entity);
+}
+
+void Map::removeCell(Position pos, Entity* entity) {
+    (*this)[pos].removeEntity(entity);
 }
 
 void Map::addNounTextOnMap(Entity* noun) {
@@ -32,23 +46,19 @@ void Map::addNounEntityOnMap(Entity* noun) {
     nounsEntityOnMap.push_back(noun);
 }
 
-const Cell& Map::getCell(int x, int y) const {
-    return map[y][x];
-}
-
-void Map::update(const int dx, const int dy) {
-    move(dx, dy);
+void Map::update(const Position dPos) {
+    move(dPos);
     rules->updateRules();
 
     vector<Rule> transformationRules = ruleProcessor->isTransformation();
     if (transformationRules.size() > 0) {
-        for (Rule rule : transformationRules) {
+        for (Rule& rule : transformationRules) {
             applyTransformations(rule);
         }
     }
 }
 
-void Map::move(const int dx, const int dy) {
+void Map::move(const Position& dPos) {
     bool move = true;
     vector<int> youId;
     vector<int> stopId;
@@ -58,22 +68,19 @@ void Map::move(const int dx, const int dy) {
     vector<Entity*> entities = ruleProcessor->isYou(youId);
     if (entities.size() > 0) {
         for (Entity* entity: entities) {
-            int x = entity->getX();
-            int y = entity->getY();
-            int newX = x + dx;
-            int newY = y + dy;
-            if (newX >= 0 && newX < width && newY >= 0 && newY < height) {
-                if (!ruleProcessor->isStop(newX, newY, stopId)) {
-                    if (ruleProcessor->isNextPushable(newX, newY)) {
-                        applyPush(x, y, newX, newY, dx, dy, stopId, move);
+            Position pos = entity->getPosition();
+            Position newPos = pos + dPos;
+            if (newPos.x >= 0 && newPos.x < width && newPos.y >= 0 && newPos.y < height) {
+                if (!ruleProcessor->isStop(newPos, stopId)) {
+                    if (ruleProcessor->isNextPushable(newPos)) {
+                        applyPush(pos, newPos, dPos, stopId, move);
                     }
                     if (move) {
-                        removeCell(x, y, entity); 
-                        entity->setX(newX);
-                        entity->setY(newY);
-                        addCell(newX, newY, entity);
+                        removeCell(pos, entity); 
+                        entity->setPosition(newPos);
+                        addCell(newPos, entity);
                     }
-                    if (ruleProcessor->isWin(newX, newY, winId)) {
+                    if (ruleProcessor->isWin(newPos, winId)) {
                         cout << "You win !" << endl;
                     }
                 } 
@@ -82,40 +89,36 @@ void Map::move(const int dx, const int dy) {
     }
 }
 
-void Map::applyPush(const int x, const int y, int& newX, int& newY, const int dx, const int dy, const vector<int> stopId, bool& move) {
+void Map::applyPush(const Position& pos, Position& newPos, const Position& dPos, const vector<int> stopId, bool& move) {
     while (true) {
         // Zone inaccessible donc on empeche d'avancer et on reprend la position precedente
-        if (newX < 0 || newX >= width || newY < 0 || newY >= height || ruleProcessor->isStop(newX, newY, stopId)) {
+        if (newPos.x < 0 || newPos.x >= width || newPos.y < 0 || newPos.y >= height || ruleProcessor->isStop(newPos, stopId)) {
             move = false;
-            newX -= dx;
-            newY -= dy;
+            newPos -= dPos;
             break;
         }
-        if (!ruleProcessor->isNextPushable(newX, newY)) {
+        if (!ruleProcessor->isNextPushable(newPos)) {
             break;
         }
-        newX += dx;
-        newY += dy;
+        newPos += dPos;
     }
 
     // On deplace les objets qu'on peut pousser en commencant par la dernière position
-    while (newX != x + dx || newY != y + dy) {
-        const Cell& cell = getCell(newX - dx, newY - dy);
+    while (newPos.x != pos.x + dPos.x || newPos.y != pos.y + dPos.y) {
+        Cell& cell = (*this)[newPos - dPos];
         for (size_t i = 0; i < cell.getEntities().size(); i++) {
-            Entity* pushed = map[newY - dy][newX - dx].getEntities()[i];
+            Entity* pushed = (*this)[newPos - dPos].getEntities()[i];
             if (pushed->isPushable()) {
-                removeCell(newX - dx, newY - dy, pushed);
-                pushed->setX(newX);
-                pushed->setY(newY);
-                addCell(newX, newY, pushed);
-                newX -= dx;
-                newY -= dy;
+                removeCell(newPos - dPos, pushed);
+                pushed->setPosition(newPos);
+                addCell(newPos, pushed);
+                newPos -= dPos;
             }
         }
     }
 }
 
-void Map::applyTransformations(Rule rule) {
+void Map::applyTransformations(const Rule& rule) {
     int subject = static_cast<int>(rule.subjects) - 4;
     int transformation = static_cast<int>(rule.transformation) - 4;
     for (Entity* entity : nounsEntityOnMap) {

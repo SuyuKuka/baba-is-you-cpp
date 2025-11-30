@@ -5,7 +5,7 @@
 
 class EntityGame: public Entity {
 public:
-    EntityGame(int x, int y, int id): Entity(x, y, id, false) { }
+    EntityGame(Position pos, int id): Entity(pos, id, false) { }
 
     GameEntity getGameEntity() const override {
         return static_cast<GameEntity>(getId());

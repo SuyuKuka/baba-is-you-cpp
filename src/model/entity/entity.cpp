@@ -35,11 +35,3 @@ OperatorWordEntity Entity::getOperatorWordEntity() const {
 PropertyWordEntity Entity::getPropertyWordEntity() const {
     return static_cast<PropertyWordEntity>(id);
 }
-
-const int& Entity::getX() const {
-    return x;
-}
-
-const int& Entity::getY() const {
-    return y;
-}

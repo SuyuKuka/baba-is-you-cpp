@@ -1,23 +1,21 @@
 #ifndef ENTITY_HPP
 #define ENTITY_HPP
+#include "model/map/position.hpp"
 #include "model/entity/entityType.hpp"
 
 class Entity {
 private:
-    int x;
-    int y; 
+    Position pos; 
     int id;
     bool pushable;
 public: 
-    Entity(const int x, const int y, int id, bool pushable) : x(x), y(y), id(id), pushable(pushable) { }
+    Entity(Position pos, int id, bool pushable) : pos(pos), id(id), pushable(pushable) { }
     virtual ~Entity();
-    const int& getX() const;
-    const int& getY() const;
+    Position getPosition() const { return this->pos; };
     int getId() const;
-    void setX(int x) { this->x = x; };
-    void setY(int y) { this->y = y; };
-    void setId(int id) { this->id = id; };
     bool isPushable() const { return this->pushable; };
+    void setPosition(const Position& pos) { this->pos = pos; };
+    void setId(int id) { this->id = id; };
     void setIsPushable(const bool pushable) { this->pushable = pushable; };
     bool isNounWordEntity() const;
     bool isOperatorWordEntity() const;

@@ -4,7 +4,7 @@
 
 class EntityProperty: public Entity {
 public:
-    EntityProperty(int x, int y, int id): Entity(x, y, id, true) { }
+    EntityProperty(Position pos, int id): Entity(pos, id, true) { }
 
     PropertyWordEntity getPropertyWordEntity() const {
         return static_cast<PropertyWordEntity>(getId());
