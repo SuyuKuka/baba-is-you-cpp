@@ -3,7 +3,7 @@
 Map::Map(int width, int height): width(width), height(height) {
     rules = new RuleEngine(*this);
     ruleProcessor = new RuleProcessor(*this);
-    map.resize(height, std::vector<Cell>(width));
+    map.resize(height, vector<Cell>(width));
 }
 
 Map::~Map() {
@@ -18,7 +18,7 @@ Map::~Map() {
 
 Cell& Map::operator[](const Position& pos) {
     if (pos.x < 0 || pos.x >= width || pos.y < 0 || pos.y >= height) {
-        throw std::out_of_range("Position out of bounds in Map operator[] (non-const)");
+        throw out_of_range("Position out of bounds in Map operator[] (non-const)");
     }
     return map[pos.y][pos.x]; 
 }

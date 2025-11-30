@@ -19,7 +19,7 @@ void RuleProcessor::initIds(vector<int>& youId, vector<int>& stopId, vector<int>
 const vector<Entity*> RuleProcessor::isYou(const vector<int> youId) {
     vector<Entity*> entities;
     for (Entity* entity : map.getNounsEntityOnMap()) {
-        if (std::find(youId.begin(), youId.end(), entity->getId()) != youId.end()) {
+        if (find(youId.begin(), youId.end(), entity->getId()) != youId.end()) {
             entities.push_back(entity);
         }
     }
@@ -28,7 +28,7 @@ const vector<Entity*> RuleProcessor::isYou(const vector<int> youId) {
 
 bool RuleProcessor::isStop(const Position& newPos, const vector<int>& stopId) const {
     for (Entity* entity : map.getNounsEntityOnMap()) {
-        if (std::find(stopId.begin(), stopId.end(), entity->getId()) != stopId.end()) {
+        if (find(stopId.begin(), stopId.end(), entity->getId()) != stopId.end()) {
             Position pos = entity->getPosition();
             if (newPos == pos) {
                 return true;
@@ -53,7 +53,7 @@ bool RuleProcessor::isNextPushable(const Position& newPos) const {
         if (pushed->isPushable()) {
             return true;
         }
-        if (std::find(entityPushableRules.begin(), entityPushableRules.end(), pushed->getId()) != entityPushableRules.end()) {
+        if (find(entityPushableRules.begin(), entityPushableRules.end(), pushed->getId()) != entityPushableRules.end()) {
             pushed->setIsPushable(true);
             return true;
         } 
@@ -63,7 +63,7 @@ bool RuleProcessor::isNextPushable(const Position& newPos) const {
 
 bool RuleProcessor::isWin(const Position& newPos, const vector<int>& winId) const {
     for (Entity* entity : map.getNounsEntityOnMap()) {
-        if (std::find(winId.begin(), winId.end(), entity->getId()) != winId.end()) {
+        if (find(winId.begin(), winId.end(), entity->getId()) != winId.end()) {
             Position pos = entity->getPosition();
             if (newPos == pos) {
                 return true;

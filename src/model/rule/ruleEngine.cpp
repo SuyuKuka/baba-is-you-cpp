@@ -61,7 +61,7 @@ void RuleEngine::checkRules(Position pos, const Entity* nounEntity, const bool i
     // Check si y'a un opérateur
     Position posOp(pos.x + dx, pos.y + dy);
     const Cell& cellOp = map[posOp];
-    const std::vector<Entity*>& entitiesOp = cellOp.getEntities();
+    const vector<Entity*>& entitiesOp = cellOp.getEntities();
     if (entitiesOp.empty() || !entitiesOp[0]->isOperatorWordEntity()) {
         return;
     }
@@ -69,7 +69,7 @@ void RuleEngine::checkRules(Position pos, const Entity* nounEntity, const bool i
     // Check si y'a une propriété ou un nom
     Position posTarget(pos.x + 2 * dx, pos.y + 2 * dy);
     const Cell& cellTarget = map[posTarget];
-    const std::vector<Entity*>& entitiesTarget = cellTarget.getEntities();
+    const vector<Entity*>& entitiesTarget = cellTarget.getEntities();
     if (entitiesTarget.empty()) {
         return;
     }

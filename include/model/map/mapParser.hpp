@@ -25,7 +25,7 @@ private:
     static json parseJSON(const string path);
     static void loadEntity(Map& map, const json parser, const string entity);
 public:
-    static Map loadMap(const std::string& path);
+    static Map loadMap(const string& path);
 };
 
 #endif
