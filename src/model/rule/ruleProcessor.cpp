@@ -1,7 +1,7 @@
 #include "model/rule/ruleProcessor.hpp"
 #include "model/map/map.hpp"
 
-void RuleProcessor::initIds(vector<int>& youId, vector<int>& stopId, vector<int>& winId) const {
+void RuleProcessor::initIds(vector<int>& stopId, vector<int>& winId) const {
     youId.clear();
     for (const Rule& rule : map.getRuleEngine().getActiveRules()) {
         if (rule.properties == PropertyWordEntity::TEXTYOU) {
@@ -17,7 +17,7 @@ void RuleProcessor::initIds(vector<int>& youId, vector<int>& stopId, vector<int>
     }
 }
 
-const vector<Entity*> RuleProcessor::isYou(const vector<int> youId) {
+const vector<Entity*> RuleProcessor::isYou() const {
     vector<Entity*> entities;
     for (Entity* entity : map.getNounsEntityOnMap()) {
         if (std::find(youId.begin(), youId.end(), entity->getId()) != youId.end()) {
@@ -85,4 +85,8 @@ const vector<Rule> RuleProcessor::isTransformation() {
         }
     }
     return transformationRules;
+}
+
+bool RuleProcessor::babaIsYou() const {
+    return find(youId.begin(), youId.end(), static_cast<int> (GameEntity::BABA)) != youId.end();
 }
