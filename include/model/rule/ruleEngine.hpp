@@ -1,6 +1,9 @@
 #ifndef RULE_ENGINE_HPP
 #define RULE_ENGINE_HPP
+#include <vector>
 #include "model/rule/rule.hpp"
+#include "model/map/position.hpp"
+#include "model/entity/entity.hpp"
 using namespace std;
 
 class Map;

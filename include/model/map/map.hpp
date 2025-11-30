@@ -30,7 +30,7 @@ public:
 
     int getWidth() const { return width; }
     int getHeight() const { return height; }
-    const vector<std::vector<Cell>>& getMap() const { return map; }
+    const vector<vector<Cell>>& getMap() const { return map; }
     const vector<Entity*>& getNounsTextOnMap() const { return nounsTextOnMap; }
     void addCell(const Position pos, Entity* entity);
     void addNounTextOnMap(Entity* entity);

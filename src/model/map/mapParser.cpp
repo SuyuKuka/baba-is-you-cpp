@@ -16,13 +16,13 @@ json MapParser::parseJSON(const string path) {
 }
 
 
-Map MapParser::loadMap(const std::string& path) {
+Map MapParser::loadMap(const string& path) {
     json parser = MapParser::parseJSON(path);
     Map map = Map(parser["width"], parser["height"]);
     RuleEngine& rules = map.getRuleEngine();
 
     for (json::iterator it = parser.begin(); it != parser.end(); ++it) {
-        std::string key = it.key();
+        string key = it.key();
         if (key == "map_name" || key == "width" || key == "height") {
             continue;
         }
@@ -87,7 +87,7 @@ void MapParser::loadEntity(Map& map, json parser, string entity) {
                 Entity* text_stop = new EntityProperty(pos, static_cast<int>(PropertyWordEntity::TEXTSTOP));
                 map.addCell(pos, text_stop);
             } else {
-                std::cout << "Unknown entity: " << entity << std::endl;
+                cout << "Unknown entity: " << entity << endl;
             }
         }
     }
