@@ -19,7 +19,6 @@ private:
     int height;
     vector<vector<Cell>> map;
     mutable vector<const Cell *> occupiedCells;
-    mutable vector<const Cell *> occupiedCells;
     vector<Entity*> nounsTextOnMap;
     vector<Entity*> nounsEntityOnMap;
     RuleEngine* rules = nullptr;

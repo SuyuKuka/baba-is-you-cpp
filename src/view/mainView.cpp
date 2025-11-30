@@ -4,7 +4,6 @@ MainView::MainView(): app(VideoMode(1280, 720), "BABA IS YOU", Style::Titlebar |
 , cellWidth(floor(app.getSize().x/33.0)), cellHeight(floor(app.getSize().y/18.0)) { }
 
 void MainView::render(const vector<const Cell*>& occupied, const Keyboard::Key key) {
-void MainView::render(const vector<const Cell*>& occupied, const Keyboard::Key key) {
     app.clear();
     BabaTexture& babaTexture = BabaTexture::getInstance();
     Sprite sprite;

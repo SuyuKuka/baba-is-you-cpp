@@ -14,7 +14,6 @@ class RuleProcessor{
 private:
     Map& map;
     mutable vector<int> youId;
-    mutable vector<int> youId;
 public:
     RuleProcessor(Map& map): map(map) {}
     ~RuleProcessor() = default;
@@ -26,8 +25,6 @@ public:
     bool isPull(const int x, const int y, const vector <int> pullId) const;
     bool isWin(const Position& newPos, const vector<int>& winId) const;
     const vector<Rule> isTransformation();
-    const vector<int>& getYouID() const { return youId; }
-    bool babaIsYou() const;
     const vector<int>& getYouID() const { return youId; }
     bool babaIsYou() const;
 };
