@@ -39,6 +39,28 @@ bool RuleProcessor::isStop(const Position& newPos, const vector<int>& stopId) co
     return false;
 }
 
+void RuleProcessor::updatePullable(const Position& pullPos) const {
+    vector<int> entityPullableRules;
+    for (const Rule& rule : map.getRuleEngine().getActiveRules()) {
+        if (rule.properties == PropertyWordEntity::TEXTPULL) {
+            int gameEntity = static_cast<int>(rule.subjects) - 4;
+            entityPullableRules.push_back(gameEntity);
+        }
+    }
+
+    const Cell& cell = map[pullPos];
+    const vector<Entity *> entities = cell.getEntities();
+    for (size_t i = 0; i < entities.size(); i++) {
+        Entity* entity = entities[i];
+        if (entity -> isPullable()) {
+            break;
+        }
+        if (find(entityPullableRules.begin(), entityPullableRules.end(), entity->getId()) != entityPullableRules.end()) {
+            entity->setIsPullable(true);
+        }
+    }
+}
+
 bool RuleProcessor::isNextPushable(const Position& newPos) const {
     vector<int> entityPushableRules;
     for (const Rule& rule : map.getRuleEngine().getActiveRules()) { 

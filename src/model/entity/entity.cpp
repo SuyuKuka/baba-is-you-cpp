@@ -17,7 +17,7 @@ bool Entity::isOperatorWordEntity() const {
 
 bool Entity::isPropertyWordEntity() const {
     return id >= static_cast<int>(PropertyWordEntity::TEXTYOU) && 
-           id <= static_cast<int>(PropertyWordEntity::TEXTSTOP);
+           id <= static_cast<int>(PropertyWordEntity::TEXTPULL);
 }
 
 GameEntity Entity::getGameEntity() const {

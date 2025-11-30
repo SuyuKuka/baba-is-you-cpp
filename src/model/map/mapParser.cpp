@@ -86,6 +86,9 @@ void MapParser::loadEntity(Map& map, json parser, string entity) {
             } else if (entity == "text_stop") {
                 Entity* text_stop = new EntityProperty(pos, static_cast<int>(PropertyWordEntity::TEXTSTOP));
                 map.addCell(pos, text_stop);
+            } else if (entity == "text_pull"){
+                Entity* text_pull = new EntityProperty(pos, static_cast<int>(PropertyWordEntity::TEXTPULL));
+                map.addCell(pos, text_pull);
             } else {
                 cout << "Unknown entity: " << entity << endl;
             }
