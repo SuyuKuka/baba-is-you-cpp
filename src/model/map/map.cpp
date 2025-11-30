@@ -66,7 +66,6 @@ void Map::move(const Position& dPos, const bool& pull) {
     ruleProcessor->initIds(stopId, winId);
 
     vector<Entity*> entities = ruleProcessor->isYou();
-    vector<Entity*> entities = ruleProcessor->isYou();
     if (entities.size() > 0) {
         for (Entity* entity: entities) {
             Position pos = entity->getPosition();
