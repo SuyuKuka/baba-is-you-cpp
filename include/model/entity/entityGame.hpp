@@ -14,8 +14,8 @@ public:
         return pushable;
     }
 
-    void reversePushable() override {
-        pushable = !pushable;
+    void setPushable(bool pushable) override {
+        this->pushable = pushable;
     }
 
     GameEntity getGameEntity() const override {

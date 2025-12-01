@@ -54,7 +54,7 @@ bool RuleProcessor::isNextPushable(const Position& newPos) const {
             return true;
         }
         if (find(entityPushableRules.begin(), entityPushableRules.end(), pushed->getId()) != entityPushableRules.end()) {
-            pushed->reversePushable();
+            pushed->setPushable(true);
             return true;
         } 
     }

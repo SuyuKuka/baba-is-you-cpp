@@ -10,8 +10,8 @@ bool Entity::isPushable() const {
     return true;
 }
 
-void Entity::reversePushable() {
-    return;
+void Entity::setPushable(bool pushable) {
+    (void)pushable;
 }
 
 bool Entity::isNounWordEntity() const {
