@@ -10,8 +10,8 @@ public:
         return true;
     }
 
-    void reversePushable() {
-        return;
+    void setPushable(bool pushable) {
+        (void)pushable;
     }
 
     NounWordEntity getNounWordEntity() const {

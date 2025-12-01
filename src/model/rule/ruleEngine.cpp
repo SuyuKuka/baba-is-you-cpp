@@ -40,7 +40,7 @@ void RuleEngine::updateRules() {
     clearActiveRules();
     // Reset le pushable de tous les entités
     for (Entity* entity: map.getNounsEntityOnMap()) {
-        entity->reversePushable();
+        entity->setPushable(false);
     }
 
     for (Entity* nounEntity: map.getNounsTextOnMap()) {
