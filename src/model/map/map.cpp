@@ -97,6 +97,8 @@ void Map::applyPush(const Position& pos, Position& newPos, const Position& dPos,
         newPos += dPos;
     }
 
+    if (!move) { return; }
+
     // On deplace les objets qu'on peut pousser en commencant par la dernière position
     while (newPos.x != pos.x + dPos.x || newPos.y != pos.y + dPos.y) {
         Cell& cell = (*this)[newPos - dPos];
