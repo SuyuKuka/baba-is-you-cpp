@@ -16,16 +16,17 @@ void Entity::setPushable(bool pushable) {
 
 bool Entity::isNounWordEntity() const {
     return id >= static_cast<int>(NounWordEntity::TEXTBABA) && 
-           id <= static_cast<int>(NounWordEntity::TEXTWALL);
+           id <= 299;
 }
 
 bool Entity::isOperatorWordEntity() const {
-    return id == static_cast<int>(OperatorWordEntity::TEXTIS);
+    return id >= static_cast<int>(OperatorWordEntity::TEXTIS) &&
+           id <= 399;
 }
 
 bool Entity::isPropertyWordEntity() const {
     return id >= static_cast<int>(PropertyWordEntity::TEXTYOU) && 
-           id <= static_cast<int>(PropertyWordEntity::TEXTSTOP);
+           id <= 499;
 }
 
 GameEntity Entity::getGameEntity() const {

@@ -2,38 +2,38 @@
 #define ENTITY_TYPE_HPP
 
 enum class GameEntity {
-    BABA = 10,
-    FLAG = 11,
-    ROCK = 12,
-    WALL = 13,
-    DOOR = 14,
-    KEY = 15
+    BABA = 100,
+    FLAG = 101,
+    ROCK = 102,
+    WALL = 103,
+    DOOR = 104,
+    KEY = 105
 };
 
 enum class NounWordEntity {
     NONE = 0,
-    TEXTBABA = 30,
-    TEXTFLAG = 31,
-    TEXTROCK = 32,
-    TEXTWALL = 33,
-    TEXTDOOR = 34,
-    TEXTKEY = 35
+    TEXTBABA = 200,
+    TEXTFLAG = 201,
+    TEXTROCK = 202,
+    TEXTWALL = 203,
+    TEXTDOOR = 204,
+    TEXTKEY = 205
 };
 
 enum class OperatorWordEntity {
     NONE = 0,
-    TEXTIS = 50
+    TEXTIS = 300
 };
 
 enum class PropertyWordEntity {
     NONE = 0,
-    TEXTYOU = 70,
-    TEXTWIN = 71,
-    TEXTPUSH = 72,
-    TEXTSTOP = 73,
-    TEXTPULL = 74,
-    TEXTOPEN = 75,
-    TEXTSHUT = 76
+    TEXTYOU = 400,
+    TEXTWIN = 401,
+    TEXTPUSH = 402,
+    TEXTSTOP = 403,
+    TEXTPULL = 404,
+    TEXTSHUT = 405,
+    TEXTOPEN = 406,
 };
 
 #endif

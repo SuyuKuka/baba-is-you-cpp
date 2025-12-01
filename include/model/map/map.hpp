@@ -43,7 +43,7 @@ public:
     void move(const Position& dPos);
     void applyPush(const Position& pos, Position& newPos, const Position& dPos, const vector<int> stopId, bool& move);
     void applyTransformations(const Rule& rule);
-    void clear();
+    void applyOpen(Position newPos, const Position& dPos, vector<int>& openId, vector<int>& shutId);
 
     /**
      * @brief Cette fonction crée une copie.

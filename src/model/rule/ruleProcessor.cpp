@@ -1,17 +1,19 @@
 #include "model/rule/ruleProcessor.hpp"
 #include "model/map/map.hpp"
 
-void RuleProcessor::initIds(vector<int>& youId, vector<int>& stopId, vector<int>& winId) const {
+void RuleProcessor::initIds(vector<int>& youId, vector<int>& stopId, vector<int>& winId, vector<int>& openId, vector<int>& shutId) const {
     for (const Rule& rule : map.getRuleEngine().getActiveRules()) {
+        int gameEntity = static_cast<int>(rule.subjects) - 100;
         if (rule.properties == PropertyWordEntity::TEXTYOU) {
-            int gameEntity = static_cast<int>(rule.subjects) - 20;
             youId.push_back(gameEntity);
         } else if (rule.properties == PropertyWordEntity::TEXTSTOP) {
-            int gameEntity = static_cast<int>(rule.subjects) - 20;
             stopId.push_back(gameEntity);
         } else if (rule.properties == PropertyWordEntity::TEXTWIN) {
-            int gameEntity = static_cast<int>(rule.subjects) - 20;
             winId.push_back(gameEntity);
+        } else if (rule.properties == PropertyWordEntity::TEXTOPEN) {
+            openId.push_back(gameEntity);
+        } else if (rule.properties == PropertyWordEntity::TEXTSHUT) {
+            shutId.push_back(gameEntity);
         }
     }
 }
@@ -42,7 +44,7 @@ bool RuleProcessor::isNextPushable(const Position& newPos) const {
     vector<int> entityPushableRules;
     for (const Rule& rule : map.getRuleEngine().getActiveRules()) { 
         if (rule.properties == PropertyWordEntity::TEXTPUSH) {
-            int gameEntity = static_cast<int>(rule.subjects) - 20;
+            int gameEntity = static_cast<int>(rule.subjects) - 100;
             entityPushableRules.push_back(gameEntity);
         }
     }
@@ -82,4 +84,17 @@ const vector<Rule> RuleProcessor::isTransformation() {
         }
     }
     return transformationRules;
+}
+
+bool RuleProcessor::isOpen(const Position newPos, const Position& dPos, const vector<int>& openId, const vector<int>& shutId) const {
+    for (const Entity* entity : map[newPos].getEntities()) {
+        if (find(openId.begin(), openId.end(), entity->getId()) != openId.end()) {
+            for (const Entity* entity2 : map[newPos + dPos].getEntities()) {
+                if (find(shutId.begin(), shutId.end(), entity2->getId()) != shutId.end()) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
