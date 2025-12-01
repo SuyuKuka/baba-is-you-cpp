@@ -33,7 +33,7 @@ BabaTexture& BabaTexture::getInstance() {
 
 const Texture& BabaTexture::getTexture(const int id,  const Keyboard::Key key) const {
     switch (id) {
-        case 10:
+        case 100:
             if (key == Keyboard::Q || key == Keyboard::Key::A) {
                 return BABA_LEFT;
             } else if (key == Keyboard::S) {
@@ -42,25 +42,25 @@ const Texture& BabaTexture::getTexture(const int id,  const Keyboard::Key key) c
                 return BABA_UP;
             } 
         return BABA_RIGHT;
-        case 11: return FLAG;
-        case 12: return ROCK;
-        case 13: return WALL;
-        case 14: return DOOR;
-        case 15: return KEY;
-        case 30: return BABA_TEXT;
-        case 31: return FLAG_TEXT;
-        case 32: return ROCK_TEXT;
-        case 33: return WALL_TEXT;
-        case 34: return DOOR_TEXT;
-        case 35: return KEY_TEXT;
-        case 50: return IS_TEXT;
-        case 70: return YOU_TEXT;
-        case 71: return WIN_TEXT;
-        case 72: return PUSH_TEXT;
-        case 73: return STOP_TEXT;
-        case 74: return PULL_TEXT;
-        case 75: return OPEN_TEXT;
-        case 76: return SHUT_TEXT;
+        case 101: return FLAG;
+        case 102: return ROCK;
+        case 103: return WALL;
+        case 104: return DOOR;
+        case 105: return KEY;
+        case 200: return BABA_TEXT;
+        case 201: return FLAG_TEXT;
+        case 202: return ROCK_TEXT;
+        case 203: return WALL_TEXT;
+        case 204: return DOOR_TEXT;
+        case 205: return KEY_TEXT;
+        case 300: return IS_TEXT;
+        case 400: return YOU_TEXT;
+        case 401: return WIN_TEXT;
+        case 402: return PUSH_TEXT;
+        case 403: return STOP_TEXT;
+        case 404: return PULL_TEXT;
+        case 405: return SHUT_TEXT;
+        case 406: return OPEN_TEXT;
         default: return BABA_RIGHT;
     }
 }

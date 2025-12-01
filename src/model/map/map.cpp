@@ -49,7 +49,6 @@ void Map::update(const Position dPos) {
             applyTransformations(rule);
         }
     }
-    // rules->printActivesRules();
 }
 
 void Map::move(const Position& dPos) {
@@ -57,7 +56,9 @@ void Map::move(const Position& dPos) {
     vector<int> youId;
     vector<int> stopId;
     vector<int> winId;
-    ruleProcessor->initIds(youId, stopId, winId);
+    vector<int> openId;
+    vector<int> shutId;
+    ruleProcessor->initIds(youId, stopId, winId, openId, shutId);
 
     vector<Entity*> entities = ruleProcessor->isYou(youId);
     if (entities.size() > 0) {
@@ -66,6 +67,9 @@ void Map::move(const Position& dPos) {
             Position newPos = pos + dPos;
             if (newPos.x >= 0 && newPos.x < width && newPos.y >= 0 && newPos.y < height) {
                 if (!ruleProcessor->isStop(newPos, stopId)) {
+                    if (ruleProcessor->isOpen(newPos, dPos, openId, shutId)) {
+                        applyOpen(newPos, dPos, openId, shutId);
+                    }
                     if (ruleProcessor->isNextPushable(newPos)) {
                         applyPush(pos, newPos, dPos, stopId, move);
                     }
@@ -97,7 +101,7 @@ void Map::applyPush(const Position& pos, Position& newPos, const Position& dPos,
         newPos += dPos;
     }
 
-    if (!move) { return; }
+    if (!move) { return; } // On sort si on ne peut pas avancer
 
     // On deplace les objets qu'on peut pousser en commencant par la dernière position
     while (newPos.x != pos.x + dPos.x || newPos.y != pos.y + dPos.y) {
@@ -115,11 +119,31 @@ void Map::applyPush(const Position& pos, Position& newPos, const Position& dPos,
 }
 
 void Map::applyTransformations(const Rule& rule) {
-    int subject = static_cast<int>(rule.subjects) - 20;
-    int transformation = static_cast<int>(rule.transformation) - 20;
+    int subject = static_cast<int>(rule.subjects) - 100;
+    int transformation = static_cast<int>(rule.transformation) - 100;
     for (Entity* entity : nounsEntityOnMap) {
         if (entity->getId() == subject) {
             entity->setId(transformation);
+        }
+    }
+}
+
+void Map::applyOpen(Position newPos, const Position& dPos, vector<int>& openId, vector<int>& shutId) {
+    Cell& cell = (*this)[newPos];
+    for (Entity* entity : cell.getEntities()) {
+        if (find(openId.begin(), openId.end(), entity->getId()) != openId.end()) {
+            removeCell(newPos, entity);
+            nounsEntityOnMap.erase(remove(nounsEntityOnMap.begin(), nounsEntityOnMap.end(), entity), nounsEntityOnMap.end());
+            break;
+        }
+    }
+
+    Cell& cell2 = (*this)[newPos + dPos];
+    for (Entity* entity : cell2.getEntities()) {
+        if (find(shutId.begin(), shutId.end(), entity->getId()) != shutId.end()) {
+            removeCell(newPos + dPos, entity);
+            nounsEntityOnMap.erase(remove(nounsEntityOnMap.begin(), nounsEntityOnMap.end(), entity), nounsEntityOnMap.end());
+            break;
         }
     }
 }
