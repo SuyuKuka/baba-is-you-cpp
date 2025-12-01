@@ -7,7 +7,7 @@ using namespace sf;
 
 int main() {
     MainView view;
-    Map map = MapParser::loadMap("resources/maps/map-1.json");
+    Map map = MapParser::loadMap("resources/maps/map-2.json");
     KeyboardListener& keyboardListener = KeyboardListener::getInstance(map);
     while (view.isOpen()) {
         Event event;

@@ -18,6 +18,12 @@ BabaTexture::BabaTexture() {
     WALL.loadFromFile(path + "WALL.png");
     WIN_TEXT.loadFromFile(path + "WIN.png");
     YOU_TEXT.loadFromFile(path + "YOU.png");
+    KEY.loadFromFile(path + "KEY.png");
+    KEY_TEXT.loadFromFile(path + "KEY_TEXT.png");
+    DOOR.loadFromFile(path + "DOOR.png");
+    DOOR_TEXT.loadFromFile(path + "DOOR_TEXT.png");
+    OPEN_TEXT.loadFromFile(path + "OPEN_TEXT.png");
+    SHUT_TEXT.loadFromFile(path + "SHUT_TEXT.png");
 }
 
 BabaTexture& BabaTexture::getInstance() {
@@ -27,7 +33,7 @@ BabaTexture& BabaTexture::getInstance() {
 
 const Texture& BabaTexture::getTexture(const int id,  const Keyboard::Key key) const {
     switch (id) {
-        case 10:
+        case 100:
             if (key == Keyboard::Q || key == Keyboard::Key::A) {
                 return BABA_LEFT;
             } else if (key == Keyboard::S) {
@@ -36,19 +42,25 @@ const Texture& BabaTexture::getTexture(const int id,  const Keyboard::Key key) c
                 return BABA_UP;
             } 
         return BABA_RIGHT;
-        case 11: return FLAG;
-        case 12: return ROCK;
-        case 13: return WALL;
-        case 14: return BABA_TEXT;
-        case 15: return FLAG_TEXT;
-        case 16: return ROCK_TEXT;
-        case 17: return WALL_TEXT;
-        case 18: return IS_TEXT;
-        case 19: return YOU_TEXT;
-        case 20: return WIN_TEXT;
-        case 21: return PUSH_TEXT;
-        case 22: return STOP_TEXT;
-        case 23: return PULL_TEXT;
+        case 101: return FLAG;
+        case 102: return ROCK;
+        case 103: return WALL;
+        case 104: return DOOR;
+        case 105: return KEY;
+        case 200: return BABA_TEXT;
+        case 201: return FLAG_TEXT;
+        case 202: return ROCK_TEXT;
+        case 203: return WALL_TEXT;
+        case 204: return DOOR_TEXT;
+        case 205: return KEY_TEXT;
+        case 300: return IS_TEXT;
+        case 400: return YOU_TEXT;
+        case 401: return WIN_TEXT;
+        case 402: return PUSH_TEXT;
+        case 403: return STOP_TEXT;
+        case 404: return PULL_TEXT;
+        case 405: return SHUT_TEXT;
+        case 406: return OPEN_TEXT;
         default: return BABA_RIGHT;
     }
 }

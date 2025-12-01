@@ -4,7 +4,15 @@
 
 class EntityOperator: public Entity {
 public:
-    EntityOperator(Position pos, int id): Entity(pos, id, true) { }
+    EntityOperator(Position pos, int id): Entity(pos, id) { }
+
+    bool isPushable() const override {
+        return true;
+    }
+
+    void setPushable(bool pushable) {
+        (void)pushable;
+    }
 
     OperatorWordEntity getOperatorWordEntity() const {
         return static_cast<OperatorWordEntity>(getId());

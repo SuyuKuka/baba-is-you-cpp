@@ -7,16 +7,15 @@ class Entity {
 private:
     Position pos; 
     int id;
-    bool pushable;
 public: 
-    Entity(Position pos, int id, bool pushable) : pos(pos), id(id), pushable(pushable) { }
+    Entity(Position pos, int id) : pos(pos), id(id) { }
     virtual ~Entity();
     Position getPosition() const { return this->pos; };
     int getId() const;
-    bool isPushable() const { return this->pushable; };
+    virtual bool isPushable() const;
     void setPosition(const Position& pos) { this->pos = pos; };
     void setId(int id) { this->id = id; };
-    void setIsPushable(const bool pushable) { this->pushable = pushable; };
+    virtual void setPushable(bool pushable);
     bool isNounWordEntity() const;
     bool isOperatorWordEntity() const;
     bool isPropertyWordEntity() const;
