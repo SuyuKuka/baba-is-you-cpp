@@ -7,6 +7,7 @@
 #include "model/rule/ruleProcessor.hpp"
 #include "model/entity/entity.hpp"
 #include "model/map/position.hpp"
+#include "model/entity/entityGame.hpp"
 using namespace std;
 
 class RuleEngine;
@@ -26,7 +27,6 @@ public:
     Map(int width, int height);
     ~Map();
     Cell& operator[](const Position& pos);
-    const Cell& operator[](const Position& pos) const;
 
     int getWidth() const { return width; }
     int getHeight() const { return height; }
@@ -43,7 +43,7 @@ public:
     void move(const Position& dPos);
     void applyPush(const Position& pos, Position& newPos, const Position& dPos, const vector<int> stopId, bool& move);
     void applyTransformations(const Rule& rule);
-    void clear();
+    void applyOpen(Position newPos, const Position& dPos, vector<int>& openId, vector<int>& shutId);
 
     /**
      * @brief Cette fonction crée une copie.

@@ -12,11 +12,11 @@ using namespace std;
 using namespace sf;
 
 class MainView {
-    private:
+private:
     RenderWindow app;
     const double cellWidth;
     const double cellHeight;
-    public:
+public:
     MainView();
     ~MainView() = default;
     void render(const vector<const Cell*>& occupied);
