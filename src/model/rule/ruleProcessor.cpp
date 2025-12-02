@@ -1,9 +1,9 @@
 #include "model/rule/ruleProcessor.hpp"
-#include "model/map/map.hpp"
+#include "model/mainModel.hpp"
 
 void RuleProcessor::initIds(vector<int>& stopId, vector<int>& winId, vector<int>& openId, vector<int>& shutId) const {
     youId.clear();
-    for (const Rule& rule : map.getRuleEngine().getActiveRules()) {
+    for (const Rule& rule: game.getRuleEngine().getActiveRules()) {
         int gameEntity = static_cast<int>(rule.subjects) - 100;
         if (rule.properties == PropertyWordEntity::TEXTYOU) {
             youId.push_back(gameEntity);
@@ -21,7 +21,7 @@ void RuleProcessor::initIds(vector<int>& stopId, vector<int>& winId, vector<int>
 
 const vector<Entity*> RuleProcessor::isYou() const {
     vector<Entity*> entities;
-    for (Entity* entity : map.getNounsEntityOnMap()) {
+    for (Entity* entity : game.getMap()->getNounsEntityOnMap()) {
         if (find(youId.begin(), youId.end(), entity->getId()) != youId.end()) {
             entities.push_back(entity);
         }
@@ -30,7 +30,7 @@ const vector<Entity*> RuleProcessor::isYou() const {
 }
 
 bool RuleProcessor::isStop(const Position& newPos, const vector<int>& stopId) const {
-    for (Entity* entity : map.getNounsEntityOnMap()) {
+    for (Entity* entity : game.getMap()->getNounsEntityOnMap()) {
         if (find(stopId.begin(), stopId.end(), entity->getId()) != stopId.end()) {
             Position pos = entity->getPosition();
             if (newPos == pos) {
@@ -43,14 +43,14 @@ bool RuleProcessor::isStop(const Position& newPos, const vector<int>& stopId) co
 
 void RuleProcessor::updatePullable(const Position& pullPos) const {
     vector<int> entityPullableRules;
-    for (const Rule& rule : map.getRuleEngine().getActiveRules()) {
+    for (const Rule& rule : game.getRuleEngine().getActiveRules()) {
         if (rule.properties == PropertyWordEntity::TEXTPULL) {
             int gameEntity = static_cast<int>(rule.subjects) - 100;
             entityPullableRules.push_back(gameEntity);
         }
     }
 
-    const Cell& cell = map[pullPos];
+    const Cell& cell = (*game.getMap())[pullPos];
     const vector<Entity *> entities = cell.getEntities();
     for (size_t i = 0; i < entities.size(); i++) {
         Entity* entity = entities[i];
@@ -65,14 +65,14 @@ void RuleProcessor::updatePullable(const Position& pullPos) const {
 
 bool RuleProcessor::isNextPushable(const Position& newPos) const {
     vector<int> entityPushableRules;
-    for (const Rule& rule : map.getRuleEngine().getActiveRules()) { 
+    for (const Rule& rule : game.getRuleEngine().getActiveRules()) { 
         if (rule.properties == PropertyWordEntity::TEXTPUSH) {
             int gameEntity = static_cast<int>(rule.subjects) - 100;
             entityPushableRules.push_back(gameEntity);
         }
     }
 
-    const Cell& cell = map[newPos];
+    const Cell& cell = (*game.getMap())[newPos];
     for (size_t i = 0; i < cell.getEntities().size(); i++) {
         Entity* pushed = cell.getEntities()[i];
         if (pushed->isPushable()) {
@@ -87,7 +87,7 @@ bool RuleProcessor::isNextPushable(const Position& newPos) const {
 }
 
 bool RuleProcessor::isWin(const Position& newPos, const vector<int>& winId) const {
-    for (Entity* entity : map.getNounsEntityOnMap()) {
+    for (Entity* entity : game.getMap()->getNounsEntityOnMap()) {
         if (find(winId.begin(), winId.end(), entity->getId()) != winId.end()) {
             Position pos = entity->getPosition();
             if (newPos == pos) {
@@ -99,7 +99,7 @@ bool RuleProcessor::isWin(const Position& newPos, const vector<int>& winId) cons
 }
 
 const vector<Rule> RuleProcessor::isTransformation() {
-    const vector<Rule>& activeRules = map.getRuleEngine().getActiveRules();
+    const vector<Rule>& activeRules = game.getRuleEngine().getActiveRules();
     vector<Rule> transformationRules;
     for (const Rule& rule : activeRules) {
         if (rule.transformation != NounWordEntity::NONE) {
@@ -110,9 +110,9 @@ const vector<Rule> RuleProcessor::isTransformation() {
 }
 
 bool RuleProcessor::isOpen(const Position newPos, const Position& dPos, const vector<int>& openId, const vector<int>& shutId) const {
-    for (const Entity* entity : map[newPos].getEntities()) {
+    for (const Entity* entity : (*game.getMap())[newPos].getEntities()) {
         if (find(openId.begin(), openId.end(), entity->getId()) != openId.end()) {
-            for (const Entity* entity2 : map[newPos + dPos].getEntities()) {
+            for (const Entity* entity2 : (*game.getMap())[newPos + dPos].getEntities()) {
                 if (find(shutId.begin(), shutId.end(), entity2->getId()) != shutId.end()) {
                     return true;
                 }

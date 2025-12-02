@@ -14,8 +14,7 @@ using namespace sf;
  */
 class KeyboardListener {
 private:
-    Map& map; 
-    KeyboardListener(Map& map) : map(map) {};
+    KeyboardListener() = default;
     ~KeyboardListener() = default;
     KeyboardListener(const KeyboardListener&) = delete;
     KeyboardListener& operator=(const KeyboardListener&) = delete;
@@ -31,7 +30,7 @@ public:
     /**
      * @return L'instance du KeyboardListener.
      */
-    static KeyboardListener& getInstance(Map& map);
+    static KeyboardListener& getInstance();
 
     /**
      * @param event un événement contenant la touche à ajouter.  
@@ -39,7 +38,9 @@ public:
      */
     void handleKeyPressedAndReleased(const Event& event);
 
-    void handleMove();
+    Position handleMove();
+
+    bool isPulling() const;
 
     /**
      * @param key la touche que l'on veut vérifier.
@@ -60,6 +61,8 @@ public:
     const Keyboard::Key& getLastKeyPressed() const {
         return lastMovedKey;
     }
+
+    void clearKeyPressed() { keyPressed.clear(); }
 };
 
 ostream& operator<<(ostream& out, const KeyboardListener& keyboardListener);

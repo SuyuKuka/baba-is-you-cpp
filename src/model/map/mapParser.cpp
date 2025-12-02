@@ -19,7 +19,6 @@ json MapParser::parseJSON(const string path) {
 Map MapParser::loadMap(const string& path) {
     json parser = MapParser::parseJSON(path);
     Map map = Map(parser["width"], parser["height"]);
-    RuleEngine& rules = map.getRuleEngine();
 
     for (json::iterator it = parser.begin(); it != parser.end(); ++it) {
         string key = it.key();
@@ -28,7 +27,6 @@ Map MapParser::loadMap(const string& path) {
         }
         loadEntity(map, parser, key);
     }
-    rules.updateRules();
     return map;
 }
 
