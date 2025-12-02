@@ -135,5 +135,8 @@ void MapParser::loadPropertyText(Map& map, const string entity, const Position& 
     } else if (entity == "text_shut") {
         Entity* text_close = new EntityProperty(pos, static_cast<int>(PropertyWordEntity::TEXTSHUT));
         map.addCell(pos, text_close);
+    } else if (entity == "text_pull") {
+        Entity* text_pull = new EntityProperty(pos, static_cast<int>(PropertyWordEntity::TEXTPULL));
+        map.addCell(pos, text_pull);
     }
 }
