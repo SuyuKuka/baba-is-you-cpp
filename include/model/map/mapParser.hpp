@@ -3,7 +3,6 @@
 #include <iostream>
 #include <fstream>
 #include "model/map/json.hpp"
-#include "model/map/map.hpp"
 #include "model/map/position.hpp"
 #include "model/rule/ruleEngine.hpp"
 #include "model/entity/entityGame.hpp"
@@ -14,6 +13,8 @@
 
 using namespace std;
 using json = nlohmann::json;
+
+class Map;
 
 /**
  * @class mapParser 

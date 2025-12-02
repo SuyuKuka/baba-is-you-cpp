@@ -4,16 +4,17 @@
 #include "model/rule/rule.hpp"
 #include "model/map/position.hpp"
 #include "model/entity/entity.hpp"
+#include "model/mainModel.hpp"
 using namespace std;
 
-class Map;
+class MainModel;
 
 class RuleEngine {
 private:
-    Map& map;
+    MainModel& game;
     vector<Rule> activeRules;
 public:
-    RuleEngine(Map& map): map(map) {};
+    RuleEngine(MainModel& game): game(game) {};
     ~RuleEngine() = default;
 
     void addActiveRule(const NounWordEntity noun, const OperatorWordEntity ope, const PropertyWordEntity property, const NounWordEntity transform);

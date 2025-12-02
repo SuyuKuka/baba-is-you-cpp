@@ -6,13 +6,13 @@
 #include "model/entity/entity.hpp"
 using namespace std;
 
-class Map;
+class MainModel;
 
 class RuleProcessor{
 private:
-    Map& map;
+    MainModel& game;
 public:
-    RuleProcessor(Map& map): map(map) {}
+    RuleProcessor(MainModel& game): game(game) {}
     ~RuleProcessor() = default;
 
     void initIds(vector<int>& youId, vector<int>& stopId, vector<int>& winId, vector<int>& openId, vector<int>& shutId) const;
