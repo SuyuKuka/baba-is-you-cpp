@@ -29,6 +29,7 @@ int main() {
                     game.update(pos);
                     view.render(map.getOccupiedCells());
                     if (game.isWin()) {
+                        keyboardListener.clearKeyPressed();
                         view.setCurrentState(AppState::Menu);
                     }
                 }
