@@ -22,7 +22,8 @@ enum class NounWordEntity {
 
 enum class OperatorWordEntity {
     NONE = 0,
-    TEXTIS = 300
+    TEXTIS = 300,
+    TEXTAND = 301
 };
 
 enum class PropertyWordEntity {

@@ -41,7 +41,7 @@ void MapParser::loadEntity(Map& map, json parser, string entity) {
                 loadGameEntity(map, entity, pos);
             } else if (entity == "text_baba" || entity == "text_flag" || entity == "text_rock" || entity == "text_wall" || entity == "text_key" || entity == "text_door") {
                 loadNounText(map, entity, pos);
-            } else if (entity == "text_is") {
+            } else if (entity == "text_is" || entity == "text_and") {
                 loadOperatorText(map, entity, pos);
             } else if (entity == "text_you" || entity == "text_win" || entity == "text_push" || entity == "text_stop" || entity == "text_open" || entity == "text_shut"
             || entity == "text_pull") {
@@ -113,6 +113,9 @@ void MapParser::loadOperatorText(Map& map, const string entity, const Position& 
     if (entity == "text_is") {
         Entity* text_is = new EntityOperator(pos, static_cast<int>(OperatorWordEntity::TEXTIS));
         map.addCell(pos, text_is);
+    } else if (entity == "text_and") {
+        Entity* text_and = new EntityOperator(pos, static_cast<int>(OperatorWordEntity::TEXTAND));
+        map.addCell(pos, text_and);
     }
 }
 

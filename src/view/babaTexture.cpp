@@ -9,6 +9,7 @@ BabaTexture::BabaTexture() {
     FLAG_TEXT.loadFromFile(path + "FLAG_TEXT.png");
     FLAG.loadFromFile(path + "FLAG.png");
     IS_TEXT.loadFromFile(path + "IS.png");
+    AND_TEXT.loadFromFile(path + "AND.png");
     PULL_TEXT.loadFromFile(path + "PULL.png");
     PUSH_TEXT.loadFromFile(path + "PUSH.png");
     ROCK_TEXT.loadFromFile(path + "ROCK_TEXT.png");
@@ -61,6 +62,7 @@ const Texture& BabaTexture::getTexture(const int& id,  const Keyboard::Key& key)
         case 204: return DOOR_TEXT;
         case 205: return KEY_TEXT;
         case 300: return IS_TEXT;
+        case 301: return AND_TEXT;
         case 400: return YOU_TEXT;
         case 401: return WIN_TEXT;
         case 402: return PUSH_TEXT;
