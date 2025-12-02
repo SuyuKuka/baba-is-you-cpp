@@ -27,6 +27,7 @@ void MainModel::update(const Position& dPos, const bool& isPulling) {
             applyTransformations(rule);
         }
     }
+    rules->printActivesRules();
 }
 
 void MainModel::move(const Position& dPos, const bool& isPulling) {
@@ -52,7 +53,6 @@ void MainModel::move(const Position& dPos, const bool& isPulling) {
                     }
                     if (move) {
                         if (isPulling) {
-                            cout << "pull" << endl;
                             Position pullPos = pos - dPos; 
                             ruleProcessor->updatePullable(pullPos);                            
                             applyPull(pullPos, pos);
@@ -136,7 +136,6 @@ void MainModel::applyPull(const Position& pullPos, const Position& newPos) {
     for (size_t i = 0; i < entities.size(); i++) {
         Entity* pulled = entities[i];
         if (pulled->isPullable()) {
-            cout << "test" << endl;
             map->removeCell(pullPos, pulled);
             pulled->setPosition(newPos);
             map->addCell(newPos, pulled);

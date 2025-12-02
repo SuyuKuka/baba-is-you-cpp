@@ -58,6 +58,8 @@ void RuleEngine::checkRules(Position pos, const Entity* nounEntity, const bool i
     if ((pos.x + 2 * dx >= game.getMap()->getWidth()) || (pos.y + 2 * dy >= game.getMap()->getHeight())) {
         return;
     }
+
+    // todo: and
     
     // Check si y'a un opérateur
     Position posOp(pos.x + dx, pos.y + dy);
@@ -77,18 +79,8 @@ void RuleEngine::checkRules(Position pos, const Entity* nounEntity, const bool i
 
     Entity* targetEntity = entitiesTarget[0];
     if (targetEntity->isPropertyWordEntity()) {
-        addActiveRule(
-            nounEntity->getNounWordEntity(),
-            entitiesOp[0]->getOperatorWordEntity(),
-            targetEntity->getPropertyWordEntity(),
-            NounWordEntity::NONE
-        );
+        addActiveRule(nounEntity->getNounWordEntity(), entitiesOp[0]->getOperatorWordEntity(), targetEntity->getPropertyWordEntity(), NounWordEntity::NONE);
     } else if (targetEntity->isNounWordEntity()) {
-        addActiveRule(
-            nounEntity->getNounWordEntity(),
-            entitiesOp[0]->getOperatorWordEntity(),
-            PropertyWordEntity::NONE,
-            targetEntity->getNounWordEntity()
-        );
+        addActiveRule(nounEntity->getNounWordEntity(), entitiesOp[0]->getOperatorWordEntity(), PropertyWordEntity::NONE, targetEntity->getNounWordEntity());
     }
 }
