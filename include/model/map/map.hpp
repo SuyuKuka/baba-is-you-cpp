@@ -5,6 +5,7 @@
 #include "model/map/cell.hpp"
 #include "model/rule/ruleEngine.hpp"
 #include "model/rule/ruleProcessor.hpp"
+#include "model/entity/entityType.hpp"
 #include "model/entity/entity.hpp"
 #include "model/map/position.hpp"
 #include "model/entity/entityGame.hpp"
@@ -18,6 +19,7 @@ private:
     int width;
     int height;
     vector<vector<Cell>> map;
+    mutable vector<const Cell *> occupiedCells;
     vector<Entity*> nounsTextOnMap;
     vector<Entity*> nounsEntityOnMap;
     RuleEngine* rules = nullptr;
@@ -39,14 +41,15 @@ public:
     const vector<Entity*> getNounsEntityOnMap() const { return nounsEntityOnMap; }
     RuleEngine& getRuleEngine() const { return *rules; }
     RuleProcessor& getRuleProcessor() const { return *ruleProcessor; }
-    void update(const Position dPos);
-    void move(const Position& dPos);
+    void update(const Position dPos, const bool& pull);
+    void move(const Position& dPos, const bool& pull);
     void applyPush(const Position& pos, Position& newPos, const Position& dPos, const vector<int> stopId, bool& move);
     void applyTransformations(const Rule& rule);
     void applyOpen(Position newPos, const Position& dPos, vector<int>& openId, vector<int>& shutId);
 
+    void clear();
+    void applyPull(const Position& pullPos, const Position& newPos);
     /**
-     * @brief Cette fonction crée une copie.
      * @return Un vector contenant les cellules occupées.
      */
     const vector<const Cell*> getOccupiedCells() const;

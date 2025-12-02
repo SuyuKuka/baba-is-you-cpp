@@ -14,6 +14,14 @@ void Entity::setPushable(bool pushable) {
     (void)pushable;
 }
 
+bool Entity::isPullable() const {
+    return true;
+}
+
+void Entity::setPullable(const bool pullable) {
+    (void) pullable;
+}
+
 bool Entity::isNounWordEntity() const {
     return id >= static_cast<int>(NounWordEntity::TEXTBABA) && 
            id <= 299;

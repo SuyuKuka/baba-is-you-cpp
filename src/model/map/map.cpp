@@ -39,8 +39,8 @@ void Map::addNounEntityOnMap(Entity* noun) {
     nounsEntityOnMap.push_back(noun);
 }
 
-void Map::update(const Position dPos) {
-    move(dPos);
+void Map::update(const Position dPos, const bool& pull) {
+    move(dPos, pull);
     rules->updateRules();
 
     vector<Rule> transformationRules = ruleProcessor->isTransformation();
@@ -51,16 +51,15 @@ void Map::update(const Position dPos) {
     }
 }
 
-void Map::move(const Position& dPos) {
+void Map::move(const Position& dPos, const bool& pull) {
     bool move = true;
-    vector<int> youId;
     vector<int> stopId;
     vector<int> winId;
     vector<int> openId;
     vector<int> shutId;
-    ruleProcessor->initIds(youId, stopId, winId, openId, shutId);
+    ruleProcessor->initIds(stopId, winId, openId, shutId);
 
-    vector<Entity*> entities = ruleProcessor->isYou(youId);
+    vector<Entity*> entities = ruleProcessor->isYou();
     if (entities.size() > 0) {
         for (Entity* entity: entities) {
             Position pos = entity->getPosition();
@@ -74,6 +73,11 @@ void Map::move(const Position& dPos) {
                         applyPush(pos, newPos, dPos, stopId, move);
                     }
                     if (move) {
+                        if (pull) {
+                            Position pullPos = pos - dPos; 
+                            ruleProcessor->updatePullable(pullPos);                            
+                            applyPull(pullPos, pos);
+                        }
                         removeCell(pos, entity); 
                         entity->setPosition(newPos);
                         addCell(newPos, entity);
@@ -83,6 +87,19 @@ void Map::move(const Position& dPos) {
                     }
                 } 
             }
+        }
+    }
+}
+
+void Map::applyPull(const Position& pullPos, const Position& newPos) {
+    Cell& cell = (*this)[pullPos];
+    vector<Entity *> entities = cell.getEntities();
+    for (size_t i = 0; i < entities.size(); i++) {
+        Entity* pulled = entities[i];
+        if (pulled->isPullable()) {
+            removeCell(pullPos, pulled);
+            pulled->setPosition(newPos);
+            addCell(newPos, pulled);
         }
     }
 }
@@ -149,13 +166,16 @@ void Map::applyOpen(Position newPos, const Position& dPos, vector<int>& openId, 
 }
 
 const vector<const Cell*> Map::getOccupiedCells() const {
-    vector<const Cell*> occupied;
+    occupiedCells.clear();
+    occupiedCells.clear();
     for (const vector<Cell>& vCell : map) {
         for(const Cell& cell : vCell) {
             if (!cell.getEntities().empty()) {
-                occupied.push_back(&cell);
+                occupiedCells.push_back(&cell);
+                occupiedCells.push_back(&cell);
             }
         }
     }
-    return occupied;
+    return occupiedCells;
+    return occupiedCells;
 }

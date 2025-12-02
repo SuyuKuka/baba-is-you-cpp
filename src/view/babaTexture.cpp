@@ -24,6 +24,7 @@ BabaTexture::BabaTexture() {
     DOOR_TEXT.loadFromFile(path + "DOOR_TEXT.png");
     OPEN_TEXT.loadFromFile(path + "OPEN_TEXT.png");
     SHUT_TEXT.loadFromFile(path + "SHUT_TEXT.png");
+    last_baba_texture = &BABA_RIGHT;
 }
 
 BabaTexture& BabaTexture::getInstance() {
@@ -31,17 +32,23 @@ BabaTexture& BabaTexture::getInstance() {
     return instance;
 }
 
-const Texture& BabaTexture::getTexture(const int id,  const Keyboard::Key key) const {
+const Texture& BabaTexture::getTexture(const int& id,  const Keyboard::Key& key) {
     switch (id) {
         case 100:
-            if (key == Keyboard::Q || key == Keyboard::Key::A) {
+            if (key == Keyboard::Q || key == Keyboard::A) {
+                last_baba_texture = &BABA_LEFT;
                 return BABA_LEFT;
             } else if (key == Keyboard::S) {
+                last_baba_texture = &BABA_DOWN; 
                 return BABA_DOWN;
-            } else if (key == Keyboard::Key::Z || key == Keyboard::Key::W) {
+            } else if (key == Keyboard::Z || key == Keyboard::W) {
+                last_baba_texture = &BABA_UP;
                 return BABA_UP;
-            } 
-        return BABA_RIGHT;
+            } else if (key == Keyboard::D) {
+                last_baba_texture = &BABA_RIGHT;
+                return BABA_RIGHT;
+            }
+        return *last_baba_texture;
         case 101: return FLAG;
         case 102: return ROCK;
         case 103: return WALL;

@@ -17,6 +17,8 @@ public:
     PropertyWordEntity getPropertyWordEntity() const {
         return static_cast<PropertyWordEntity>(getId());
     }
+
+    bool isPullable() const override { return true; }
 };
 
 #endif

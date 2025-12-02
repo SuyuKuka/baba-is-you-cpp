@@ -13,6 +13,8 @@ public:
     Position getPosition() const { return this->pos; };
     int getId() const;
     virtual bool isPushable() const;
+    virtual bool isPullable() const;
+    virtual void setPullable(const bool pullable);
     void setPosition(const Position& pos) { this->pos = pos; };
     void setId(int id) { this->id = id; };
     virtual void setPushable(bool pushable);
