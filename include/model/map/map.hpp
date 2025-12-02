@@ -11,9 +11,6 @@
 #include "model/entity/entityGame.hpp"
 using namespace std;
 
-class RuleEngine;
-class RuleProcessor;
-
 class Map {
 private: 
     int width;
@@ -22,8 +19,6 @@ private:
     mutable vector<const Cell *> occupiedCells;
     vector<Entity*> nounsTextOnMap;
     vector<Entity*> nounsEntityOnMap;
-    RuleEngine* rules = nullptr;
-    RuleProcessor* ruleProcessor = nullptr;
     friend class MapParser;
 public: 
     Map(int width, int height);
@@ -38,17 +33,10 @@ public:
     void addNounTextOnMap(Entity* entity);
     void addNounEntityOnMap(Entity* entity);
     void removeCell(const Position pos, Entity* entity);
-    const vector<Entity*> getNounsEntityOnMap() const { return nounsEntityOnMap; }
-    RuleEngine& getRuleEngine() const { return *rules; }
-    RuleProcessor& getRuleProcessor() const { return *ruleProcessor; }
-    void update(const Position dPos, const bool& pull);
-    void move(const Position& dPos, const bool& pull);
-    void applyPush(const Position& pos, Position& newPos, const Position& dPos, const vector<int> stopId, bool& move);
-    void applyTransformations(const Rule& rule);
-    void applyOpen(Position newPos, const Position& dPos, vector<int>& openId, vector<int>& shutId);
-
+    void deleteCell(const Position pos, Entity* entity);
+    vector<Entity*> getNounsEntityOnMap() const { return nounsEntityOnMap; }
     void clear();
-    void applyPull(const Position& pullPos, const Position& newPos);
+    
     /**
      * @return Un vector contenant les cellules occupées.
      */

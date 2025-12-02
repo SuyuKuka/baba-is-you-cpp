@@ -1,5 +1,5 @@
 #include "model/rule/ruleEngine.hpp"
-#include "model/map/map.hpp"
+#include "model/mainModel.hpp"
 
 void RuleEngine::addActiveRule(const NounWordEntity noun, const OperatorWordEntity ope, const PropertyWordEntity property, const NounWordEntity transform) {
     Rule rule;
@@ -39,12 +39,12 @@ void RuleEngine::printActivesRules() const {
 void RuleEngine::updateRules() {
     clearActiveRules();
     // Reset le pushable de tous les entités
-    for (Entity* entity: map.getNounsEntityOnMap()) {
+    for (Entity* entity: game.getMap()->getNounsEntityOnMap()) {
         entity->setPushable(false);
         entity->setPullable(false);
     }
 
-    for (Entity* nounEntity: map.getNounsTextOnMap()) {
+    for (Entity* nounEntity: game.getMap()->getNounsTextOnMap()) {
         Position pos = nounEntity->getPosition();
         
         checkRules(pos, nounEntity, true);
@@ -55,13 +55,13 @@ void RuleEngine::updateRules() {
 void RuleEngine::checkRules(Position pos, const Entity* nounEntity, const bool isHorizontal) {
     int dx = isHorizontal ? 1 : 0;
     int dy = isHorizontal ? 0 : 1;
-    if ((pos.x + 2 * dx >= map.getWidth()) || (pos.y + 2 * dy >= map.getHeight())) {
+    if ((pos.x + 2 * dx >= game.getMap()->getWidth()) || (pos.y + 2 * dy >= game.getMap()->getHeight())) {
         return;
     }
     
     // Check si y'a un opérateur
     Position posOp(pos.x + dx, pos.y + dy);
-    const Cell& cellOp = map[posOp];
+    const Cell& cellOp = (*game.getMap())[posOp];
     const vector<Entity*>& entitiesOp = cellOp.getEntities();
     if (entitiesOp.empty() || !entitiesOp[0]->isOperatorWordEntity()) {
         return;
@@ -69,7 +69,7 @@ void RuleEngine::checkRules(Position pos, const Entity* nounEntity, const bool i
 
     // Check si y'a une propriété ou un nom
     Position posTarget(pos.x + 2 * dx, pos.y + 2 * dy);
-    const Cell& cellTarget = map[posTarget];
+    const Cell& cellTarget = (*game.getMap())[posTarget];
     const vector<Entity*>& entitiesTarget = cellTarget.getEntities();
     if (entitiesTarget.empty()) {
         return;

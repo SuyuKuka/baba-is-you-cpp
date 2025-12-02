@@ -1,0 +1,145 @@
+#include "model/mainModel.hpp"
+
+MainModel::MainModel(): map(nullptr), rules(nullptr), ruleProcessor(nullptr), win(false) {
+
+}
+
+void MainModel::init(Map* map) {
+    win = false;
+    this->map = map;
+    rules = new RuleEngine(*this);
+    ruleProcessor = new RuleProcessor(*this);
+    rules->updateRules();
+}
+
+MainModel::~MainModel() {
+    delete rules;
+    delete ruleProcessor;
+}
+
+void MainModel::update(const Position& dPos, const bool& isPulling) {
+    move(dPos, isPulling);
+    getRuleEngine().updateRules();
+
+    vector<Rule> transformationRules = ruleProcessor->isTransformation();
+    if (transformationRules.size() > 0) {
+        for (Rule& rule : transformationRules) {
+            applyTransformations(rule);
+        }
+    }
+}
+
+void MainModel::move(const Position& dPos, const bool& isPulling) {
+    bool move = true;
+    vector<int> stopId;
+    vector<int> winId;
+    vector<int> openId;
+    vector<int> shutId;
+    ruleProcessor->initIds(stopId, winId, openId, shutId);
+
+    vector<Entity*> entities = ruleProcessor->isYou();
+    if (entities.size() > 0) {
+        for (Entity* entity: entities) {
+            Position pos = entity->getPosition();
+            Position newPos = pos + dPos;
+            if (newPos.x >= 0 && newPos.x < map->getWidth() && newPos.y >= 0 && newPos.y < map->getHeight()) {
+                if (!ruleProcessor->isStop(newPos, stopId)) {
+                    if (ruleProcessor->isOpen(newPos, dPos, openId, shutId)) {
+                        applyOpen(newPos, dPos, openId, shutId);
+                    }
+                    if (ruleProcessor->isNextPushable(newPos)) {
+                        applyPush(pos, newPos, dPos, stopId, move);
+                    }
+                    if (move) {
+                        if (isPulling) {
+                            cout << "pull" << endl;
+                            Position pullPos = pos - dPos; 
+                            ruleProcessor->updatePullable(pullPos);                            
+                            applyPull(pullPos, pos);
+                        }
+                        map->removeCell(pos, entity); 
+                        entity->setPosition(newPos);
+                        map->addCell(newPos, entity);
+                    }
+                    if (ruleProcessor->isWin(newPos, winId)) {
+                        win = true;
+                        return;
+                    }
+                } 
+            }
+        }
+    }
+}
+
+void MainModel::applyPush(const Position& pos, Position& newPos, const Position& dPos, const vector<int> stopId, bool& move) {
+    while (true) {
+        // Zone inaccessible donc on empeche d'avancer et on reprend la position precedente
+        if (newPos.x < 0 || newPos.x >= map->getWidth() || newPos.y < 0 || newPos.y >= map->getHeight() || ruleProcessor->isStop(newPos, stopId)) {
+            move = false;
+            newPos -= dPos;
+            break;
+        }
+        if (!ruleProcessor->isNextPushable(newPos)) {
+            break;
+        }
+        newPos += dPos;
+    }
+
+    if (!move) { return; } // On sort si on ne peut pas avancer
+
+    // On deplace les objets qu'on peut pousser en commencant par la dernière position
+    while (newPos.x != pos.x + dPos.x || newPos.y != pos.y + dPos.y) {
+        Cell& cell = (*map)[newPos - dPos];
+        for (size_t i = 0; i < cell.getEntities().size(); i++) {
+            Entity* pushed = (*map)[newPos - dPos].getEntities()[i];
+            if (pushed->isPushable()) {
+                map->removeCell(newPos - dPos, pushed);
+                pushed->setPosition(newPos);
+                map->addCell(newPos, pushed);
+                newPos -= dPos;
+            }
+        }
+    }
+}
+
+void MainModel::applyTransformations(const Rule& rule) {
+    int subject = static_cast<int>(rule.subjects) - 100;
+    int transformation = static_cast<int>(rule.transformation) - 100;
+    for (Entity* entity : map->getNounsEntityOnMap()) {
+        if (entity->getId() == subject) {
+            entity->setId(transformation);
+        }
+    }
+}
+
+void MainModel::applyOpen(Position newPos, const Position& dPos, vector<int>& openId, vector<int>& shutId) {
+    Cell& cell = (*map)[newPos];
+    for (Entity* entity : cell.getEntities()) {
+        if (find(openId.begin(), openId.end(), entity->getId()) != openId.end()) {
+            map->deleteCell(newPos, entity);
+            break;
+        }
+    }
+
+    Cell& cell2 = (*map)[newPos + dPos];
+    for (Entity* entity : cell2.getEntities()) {
+        if (find(shutId.begin(), shutId.end(), entity->getId()) != shutId.end()) {
+            map->deleteCell(newPos + dPos, entity);
+            break;
+        }
+    }
+}
+
+void MainModel::applyPull(const Position& pullPos, const Position& newPos) {
+    Cell& cell = (*map)[pullPos];
+    vector<Entity *> entities = cell.getEntities();
+    for (size_t i = 0; i < entities.size(); i++) {
+        Entity* pulled = entities[i];
+        if (pulled->isPullable()) {
+            cout << "test" << endl;
+            map->removeCell(pullPos, pulled);
+            pulled->setPosition(newPos);
+            map->addCell(newPos, pulled);
+        }
+    }
+}
