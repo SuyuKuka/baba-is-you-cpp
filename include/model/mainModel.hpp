@@ -10,8 +10,8 @@ class RuleProcessor;
 
 class MainModel {
 private:
-    Map* map = nullptr;
-    RuleEngine* rules = nullptr;
+    Map* map;
+    RuleEngine* rules;
     RuleProcessor* ruleProcessor;
     bool win = false;
 public:

@@ -1,14 +1,11 @@
 #include "model/mainModel.hpp"
 
-MainModel::MainModel() {
+MainModel::MainModel(): map(nullptr), rules(nullptr), ruleProcessor(nullptr), win(false) {
 
 }
 
 void MainModel::init(Map* map) {
     win = false;
-    // if (this->map != nullptr) {
-    //     delete this->map;
-    // }
     this->map = map;
     rules = new RuleEngine(*this);
     ruleProcessor = new RuleProcessor(*this);
@@ -16,7 +13,6 @@ void MainModel::init(Map* map) {
 }
 
 MainModel::~MainModel() {
-    delete map;
     delete rules;
     delete ruleProcessor;
 }
