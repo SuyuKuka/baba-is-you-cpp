@@ -17,6 +17,8 @@ public:
     NounWordEntity getNounWordEntity() const {
         return static_cast<NounWordEntity>(getId());
     }
+
+    bool isPullable() const override { return true; }
 };
 
 #endif

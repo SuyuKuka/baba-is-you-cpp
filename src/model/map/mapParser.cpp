@@ -45,7 +45,8 @@ void MapParser::loadEntity(Map& map, json parser, string entity) {
                 loadNounText(map, entity, pos);
             } else if (entity == "text_is") {
                 loadOperatorText(map, entity, pos);
-            } else if (entity == "text_you" || entity == "text_win" || entity == "text_push" || entity == "text_stop" || entity == "text_open" || entity == "text_shut") {
+            } else if (entity == "text_you" || entity == "text_win" || entity == "text_push" || entity == "text_stop" || entity == "text_open" || entity == "text_shut"
+            || entity == "text_pull") {
                 loadPropertyText(map, entity, pos);
             } else {
                 cout << "Unknown entity: " << entity << endl;

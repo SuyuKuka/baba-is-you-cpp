@@ -49,8 +49,10 @@ void KeyboardListener::handleMove() {
         pos.x = 1;
     }
 
+    bool pull = (isKeyPressed(Keyboard::LControl) || isKeyPressed(Keyboard::RControl));
+
     if (pos.x != 0 || pos.y != 0) {
-        map.update(pos);
+        map.update(pos, pull);
         
         repeatClock.restart();
         firstMoveExecuted = true;
@@ -76,7 +78,8 @@ bool KeyboardListener::isAuthorizedKey(const Keyboard::Key& key) const {
         || key == Keyboard::Down|| key == Keyboard::S
         || key == Keyboard::Left || key == Keyboard::Q || key == Keyboard::A 
         || key == Keyboard::Right|| key == Keyboard::D 
-        || key == Keyboard::LControl || key == Keyboard::RControl;
+        || key == Keyboard::LControl || key == Keyboard::RControl
+        || key == Keyboard::R || key == Keyboard::T;
 }
 
 

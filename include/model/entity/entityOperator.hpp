@@ -17,6 +17,8 @@ public:
     OperatorWordEntity getOperatorWordEntity() const {
         return static_cast<OperatorWordEntity>(getId());
     }
+
+    bool isPullable() const override { return true; }
 };
 
 #endif

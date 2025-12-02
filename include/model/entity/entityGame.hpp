@@ -5,9 +5,11 @@
 class EntityGame: public Entity {
 private:
     bool pushable;
+    bool pullable;
 public:
     EntityGame(Position pos, int id): Entity(pos, id) {
         pushable = false;
+        pullable = false;
     }
 
     bool isPushable() const override {
@@ -16,6 +18,14 @@ public:
 
     void setPushable(bool pushable) override {
         this->pushable = pushable;
+    }
+
+    bool isPullable() const override {
+        return pullable;
+    }
+
+    void setPullable(const bool pullable) override {
+        this->pullable = pullable;
     }
 
     GameEntity getGameEntity() const override {
