@@ -123,7 +123,7 @@ void MainModel::applyOpen(Position newPos, const Position& dPos, vector<int>& op
     Cell& cell2 = (*map)[newPos + dPos];
     for (Entity* entity : cell2.getEntities()) {
         if (find(shutId.begin(), shutId.end(), entity->getId()) != shutId.end()) {
-            map->deleteCell(newPos, entity);
+            map->deleteCell(newPos + dPos, entity);
             break;
         }
     }
