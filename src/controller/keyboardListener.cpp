@@ -1,7 +1,7 @@
 #include "controller/keyboardListener.hpp"
 
-KeyboardListener& KeyboardListener::getInstance(Map& map) {
-    static KeyboardListener instance(map);
+KeyboardListener& KeyboardListener::getInstance() {
+    static KeyboardListener instance;
     return instance;
 }
 
@@ -18,11 +18,11 @@ void KeyboardListener::handleKeyPressedAndReleased(const Event& event) {
     }
 }
 
-void KeyboardListener::handleMove() {
+Position KeyboardListener::handleMove() {
     if (keyPressed.empty()) {
         firstMoveExecuted = false;
         lastMovedKey = sf::Keyboard::Key::Unknown;
-        return;
+        return Position(0, 0);
     }
 
     sf::Keyboard::Key currentKey = keyPressed.back(); 
@@ -35,7 +35,7 @@ void KeyboardListener::handleMove() {
     }
 
     if (repeatClock.getElapsedTime() < delay) {
-        return;
+        return Position(0, 0);
     }
 
     Position pos;
@@ -50,12 +50,12 @@ void KeyboardListener::handleMove() {
     }
 
     if (pos.x != 0 || pos.y != 0) {
-        map.update(pos);
-        
         repeatClock.restart();
         firstMoveExecuted = true;
         lastMovedKey = currentKey;
+        return pos;
     }
+    return Position(0, 0);
 }
 
 bool KeyboardListener::isKeyPressed(const Keyboard::Key key) const {

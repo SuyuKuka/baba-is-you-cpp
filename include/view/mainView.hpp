@@ -11,18 +11,39 @@
 using namespace std;
 using namespace sf;
 
+enum class AppState {
+    Menu,
+    Game
+};
+
+struct LevelInfo {
+    string name;
+    string file;
+};
+
 class MainView {
 private:
     RenderWindow app;
+    Font font;
+    AppState currentState;
+    string path;
+    vector<LevelInfo> levels;
     const double cellWidth;
     const double cellHeight;
 public:
     MainView();
     ~MainView() = default;
+    void handleEvents(const Event& event);
+    void handleMenuClick(int mouseX, int mouseY);
+    void run();
+    void menu();
     void render(const vector<const Cell*>& occupied);
     bool pollEvent(Event& event);
     bool isOpen() const;
     void close();
+    string getPath() const;
+    AppState getCurrentState() const;
+    void setCurrentState(AppState state);
 };
 
 #endif

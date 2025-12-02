@@ -1,25 +1,38 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "model/map/mapParser.hpp"
 #include "controller/keyboardListener.hpp"
 #include "view/mainView.hpp"
+#include "model/mainModel.hpp"
 using namespace sf;
 
 int main() {
     MainView view;
-    Map map = MapParser::loadMap("resources/maps/map-2.json");
-    KeyboardListener& keyboardListener = KeyboardListener::getInstance(map);
-    while (view.isOpen()) {
-        Event event;
-        if (view.pollEvent(event)) {
-            if (event.type == Event::Closed) {
-                view.close();
-                break;
-            } else if (event.type == Event::KeyPressed || event.type == Event::KeyReleased) {
-                keyboardListener.handleKeyPressedAndReleased(event);
+    MainModel game;
+    while (view.isOpen()) {         
+        if (view.getCurrentState() == AppState::Menu) {
+            view.run();
+        } else if (view.getCurrentState() == AppState::Game) {
+            cout << view.getPath() << endl;
+            Map map = MapParser::loadMap(view.getPath());
+            KeyboardListener& keyboardListener = KeyboardListener::getInstance();
+            game.init(&map);
+            while (view.getCurrentState() == AppState::Game) {
+                Event event;
+                if (view.pollEvent(event)) {
+                    if (event.type == Event::Closed) {
+                        view.close();
+                        break;
+                    } else if (event.type == Event::KeyPressed || event.type == Event::KeyReleased) {
+                        keyboardListener.handleKeyPressedAndReleased(event);
+                    }
+                    Position pos = keyboardListener.handleMove();
+                    game.update(pos);
+                    view.render(map.getOccupiedCells());
+                    if (game.isWin()) {
+                        view.setCurrentState(AppState::Menu);
+                    }
+                }
             }
-            keyboardListener.handleMove();
-            view.render(map.getOccupiedCells());
         }
     }
     return EXIT_SUCCESS;
