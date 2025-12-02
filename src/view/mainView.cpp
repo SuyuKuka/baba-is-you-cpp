@@ -2,9 +2,9 @@
 
 MainView::MainView(): app(VideoMode(1280, 720), "BABA IS YOU", Style::Titlebar | Style::Close) 
 , cellWidth(floor(app.getSize().x/33.0)), cellHeight(floor(app.getSize().y/18.0)) {
-    font.loadFromFile("resources/fonts/GrapeSoda.ttf");
-    currentState = AppState::Menu;
     path = "";
+    currentState = AppState::Menu;
+    font.loadFromFile("resources/fonts/GrapeSoda.ttf");
 
     levels.push_back(LevelInfo({"Tutorial", "resources/maps/map-1.json"}));
     levels.push_back(LevelInfo({"Lock", "resources/maps/map-2.json"}));
@@ -43,7 +43,7 @@ void MainView::handleMenuClick(int mouseX, int mouseY) {
     for (size_t i = 0; i < levels.size(); ++i) {
         Text levelText;
         levelText.setFont(font);
-        string levelString = "Level " + to_string(i + 1) + " - \"" + levels[i].name + "\"";
+        string levelString = "Level " + to_string(i + 1) + " - " + levels[i].name;
         levelText.setString(levelString);
         levelText.setCharacterSize((unsigned int)charSize);
         
@@ -53,7 +53,6 @@ void MainView::handleMenuClick(int mouseX, int mouseY) {
         FloatRect bounds = levelText.getGlobalBounds();
         
         if (bounds.contains(clickPos)) {
-            cout << "Clic sur le niveau : " << levels[i].name << " (Index " << i << ")" << endl;
             currentState = AppState::Game;
             path = levels[i].file;
         }
@@ -62,7 +61,7 @@ void MainView::handleMenuClick(int mouseX, int mouseY) {
 
 void MainView::menu() {
     app.clear();
-    
+
     Text titleText;
     titleText.setFont(font);
     titleText.setString("BABA IS YOU");
@@ -73,18 +72,24 @@ void MainView::menu() {
     
     float startY = 200.f;
     float verticalSpacing = 80.f;
-    
+    Vector2i mousePos = Mouse::getPosition(app);
+    Vector2f mousePosF((float)mousePos.x, (float)mousePos.y);
     for (size_t i = 0; i < levels.size(); ++i) {
         Text levelText;
         levelText.setFont(font);
-        string levelString = "Level " + to_string(i + 1) + " - \"" + levels[i].name + "\"";
+        string levelString = "Level " + to_string(i + 1) + " - " + levels[i].name;
         levelText.setString(levelString);
         levelText.setCharacterSize(50);
-        levelText.setFillColor(Color(200, 200, 255));
         
         float currentY = startY + (float)i * verticalSpacing;
         levelText.setPosition((app.getSize().x - levelText.getGlobalBounds().width) / 2.f, currentY);
-        
+        FloatRect bounds = levelText.getGlobalBounds();
+        if (bounds.contains(mousePosF)) {
+            levelText.setFillColor(Color(170, 170, 255));
+        } else {
+            levelText.setFillColor(Color(200, 200, 255));
+        }
+
         app.draw(levelText);
     }
     app.display();

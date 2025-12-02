@@ -10,9 +10,10 @@ int main() {
     MainModel game;
     while (view.isOpen()) {         
         if (view.getCurrentState() == AppState::Menu) {
+            cout << "Menu" << endl;
             view.run();
         } else if (view.getCurrentState() == AppState::Game) {
-            cout << view.getPath() << endl;
+            cout << "Game" << endl;
             Map map = MapParser::loadMap(view.getPath());
             KeyboardListener& keyboardListener = KeyboardListener::getInstance();
             game.init(&map);
