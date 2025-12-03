@@ -15,7 +15,7 @@ int main() {
             view.run();
         } else if (view.getCurrentState() == AppState::Game) {
             cout << "Game" << endl;
-           gameController.run();
+            gameController.run();
         }
     }  
     return EXIT_SUCCESS;
