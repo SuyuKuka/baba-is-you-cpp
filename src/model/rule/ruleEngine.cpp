@@ -52,35 +52,50 @@ void RuleEngine::updateRules() {
     }
 }
 
-void RuleEngine::checkRules(Position pos, const Entity* nounEntity, const bool isHorizontal) {
+void RuleEngine::checkRules(Position pos, Entity* nounEntity, const bool isHorizontal) {
     int dx = isHorizontal ? 1 : 0;
     int dy = isHorizontal ? 0 : 1;
     if ((pos.x + 2 * dx >= game.getMap()->getWidth()) || (pos.y + 2 * dy >= game.getMap()->getHeight())) {
         return;
     }
 
-    // todo: and
-    
-    // Check si y'a un opérateur
+    entitiesNoun.push_back(nounEntity);
     Position posOp(pos.x + dx, pos.y + dy);
-    const Cell& cellOp = (*game.getMap())[posOp];
-    const vector<Entity*>& entitiesOp = cellOp.getEntities();
-    if (entitiesOp.empty() || !entitiesOp[0]->isOperatorWordEntity()) {
-        return;
-    }
-
-    // Check si y'a une propriété ou un nom
     Position posTarget(pos.x + 2 * dx, pos.y + 2 * dy);
-    const Cell& cellTarget = (*game.getMap())[posTarget];
-    const vector<Entity*>& entitiesTarget = cellTarget.getEntities();
-    if (entitiesTarget.empty()) {
+    Cell cellOp = (*game.getMap())[posOp];
+    Cell cellTarget = (*game.getMap())[posTarget];
+
+    while ((!cellOp.getEntities().empty() && (cellOp.hasOperatorEntity() != (size_t)-1)) 
+        && (!cellTarget.getEntities().empty() && (cellTarget.hasPropertyEntity() != (size_t)-1 || cellTarget.hasNounEntity() != (size_t)-1))) {
+
+        // Tant qu'on a une opérateur et une propriété ou un nom devant on l'ajoute dans la liste
+        entitiesOp.push_back(cellOp.getEntities()[cellOp.hasOperatorEntity()]);
+        entitiesTarget.push_back(cellTarget.getEntities()[cellTarget.hasPropertyEntity() != (size_t)-1 ? cellTarget.hasPropertyEntity() : cellTarget.hasNounEntity()]);
+
+        posOp += Position(dx, dy);
+        posTarget += Position(2 * dx, 2 * dy);
+        cellOp = (*game.getMap())[posOp];
+        cellTarget = (*game.getMap())[posTarget];
+    }
+
+    if (entitiesOp.empty() || entitiesTarget.empty()) {
+        entitiesNoun.clear();
+        entitiesOp.clear();
+        entitiesTarget.clear();
         return;
     }
 
-    Entity* targetEntity = entitiesTarget[0];
-    if (targetEntity->isPropertyWordEntity()) {
-        addActiveRule(nounEntity->getNounWordEntity(), entitiesOp[0]->getOperatorWordEntity(), targetEntity->getPropertyWordEntity(), NounWordEntity::NONE);
-    } else if (targetEntity->isNounWordEntity()) {
-        addActiveRule(nounEntity->getNounWordEntity(), entitiesOp[0]->getOperatorWordEntity(), PropertyWordEntity::NONE, targetEntity->getNounWordEntity());
+    for (Entity* entityOp: entitiesOp) {
+        for (Entity* entityTarget: entitiesTarget) {
+            if (entityTarget->isPropertyWordEntity()) {
+                addActiveRule(nounEntity->getNounWordEntity(), entityOp->getOperatorWordEntity(), entityTarget->getPropertyWordEntity(), NounWordEntity::NONE);
+            } else if (entityTarget->isNounWordEntity()) {
+                addActiveRule(nounEntity->getNounWordEntity(), entityOp->getOperatorWordEntity(), PropertyWordEntity::NONE, entityTarget->getNounWordEntity());
+            }
+        }
     }
+
+    entitiesNoun.clear();
+    entitiesOp.clear();
+    entitiesTarget.clear();
 }
