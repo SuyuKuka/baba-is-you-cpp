@@ -22,10 +22,6 @@ struct Position {
     Position operator+(const Position& pos) const {
         return Position(x + pos.x, y + pos.y);
     }
-
-    Position operator-() const {
-        return Position(-x, -y);
-    }
     
     Position operator-(const Position& pos) const {
         return Position(x - pos.x, y - pos.y);

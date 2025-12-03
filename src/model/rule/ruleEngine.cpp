@@ -76,7 +76,6 @@ void RuleEngine::checkRules(Position pos, Entity* nounEntity, const bool isHoriz
         posTarget += Position(dx * 2, dy * 2);
         cellOp = (*game.getMap())[posOp];
         cellTarget = (*game.getMap())[posTarget];
-        cout << cellOp.getEntities()[0]->getId() << endl;
     }
 
     if (entitiesOp.empty() || entitiesTarget.empty()) {
