@@ -72,10 +72,11 @@ void RuleEngine::checkRules(Position pos, Entity* nounEntity, const bool isHoriz
         entitiesOp.push_back(cellOp.getEntities()[cellOp.hasOperatorEntity()]);
         entitiesTarget.push_back(cellTarget.getEntities()[cellTarget.hasPropertyEntity() != (size_t)-1 ? cellTarget.hasPropertyEntity() : cellTarget.hasNounEntity()]);
 
-        posOp += Position(dx, dy);
-        posTarget += Position(2 * dx, 2 * dy);
+        posOp += Position(dx * 2, dy * 2);
+        posTarget += Position(dx * 2, dy * 2);
         cellOp = (*game.getMap())[posOp];
         cellTarget = (*game.getMap())[posTarget];
+        cout << cellOp.getEntities()[0]->getId() << endl;
     }
 
     if (entitiesOp.empty() || entitiesTarget.empty()) {
@@ -86,6 +87,9 @@ void RuleEngine::checkRules(Position pos, Entity* nounEntity, const bool isHoriz
     }
 
     for (Entity* entityOp: entitiesOp) {
+        if (entityOp->getOperatorWordEntity() == OperatorWordEntity::TEXTAND) {
+            continue;
+        }
         for (Entity* entityTarget: entitiesTarget) {
             if (entityTarget->isPropertyWordEntity()) {
                 addActiveRule(nounEntity->getNounWordEntity(), entityOp->getOperatorWordEntity(), entityTarget->getPropertyWordEntity(), NounWordEntity::NONE);
