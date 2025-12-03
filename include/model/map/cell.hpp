@@ -35,6 +35,33 @@ public:
     void clear() {
         entities.clear();
     }
+
+    size_t hasNounEntity() const {
+        for (size_t i = 0; i < entities.size(); i++) {
+            if (entities[i]->isNounWordEntity()) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    size_t hasOperatorEntity() const {
+        for (size_t i = 0; i < entities.size(); i++) {
+            if (entities[i]->isOperatorWordEntity()) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    size_t hasPropertyEntity() const {
+        for (size_t i = 0; i < entities.size(); i++) {
+            if (entities[i]->isPropertyWordEntity()) {
+                return i;
+            }
+        }
+        return -1;
+    }
 };
 
 #endif
