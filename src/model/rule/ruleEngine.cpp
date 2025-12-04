@@ -46,7 +46,6 @@ void RuleEngine::updateRules() {
 
     for (Entity* nounEntity: game.getMap()->getNounsTextOnMap()) {
         Position pos = nounEntity->getPosition();
-        
         checkRules(pos, nounEntity, true);
         checkRules(pos, nounEntity, false);
     }
@@ -67,13 +66,15 @@ void RuleEngine::checkRules(Position pos, Entity* nounEntity, const bool isHoriz
 
     while ((!cellOp.getEntities().empty() && (cellOp.hasOperatorEntity() != (size_t)-1)) 
         && (!cellTarget.getEntities().empty() && (cellTarget.hasPropertyEntity() != (size_t)-1 || cellTarget.hasNounEntity() != (size_t)-1))) {
-
         // Tant qu'on a une opérateur et une propriété ou un nom devant on l'ajoute dans la liste
         entitiesOp.push_back(cellOp.getEntities()[cellOp.hasOperatorEntity()]);
         entitiesTarget.push_back(cellTarget.getEntities()[cellTarget.hasPropertyEntity() != (size_t)-1 ? cellTarget.hasPropertyEntity() : cellTarget.hasNounEntity()]);
 
         posOp += Position(dx * 2, dy * 2);
         posTarget += Position(dx * 2, dy * 2);
+        if ((posOp.x + 2 * dx >= game.getMap()->getWidth()) || (posOp.y + 2 * dy >= game.getMap()->getHeight())) {
+            break;
+        }
         cellOp = (*game.getMap())[posOp];
         cellTarget = (*game.getMap())[posTarget];
     }

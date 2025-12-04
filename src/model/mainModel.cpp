@@ -84,11 +84,9 @@ void MainModel::applyPush(const Position& pos, Position& newPos, const Position&
         }
         newPos += dPos;
     }
-
-    if (!move || newPos == pos) { return; } // On sort si on ne peut pas avancer
-
     // On deplace les objets qu'on peut pousser en commencant par la dernière position
     while (newPos.x != pos.x + dPos.x || newPos.y != pos.y + dPos.y) {
+        if (!move || newPos == pos) { return; } // On sort si on ne peut pas avancer
         Cell& cell = (*map)[newPos - dPos];
         for (size_t i = 0; i < cell.getEntities().size(); i++) {
             Entity* pushed = (*map)[newPos - dPos].getEntities()[i];
