@@ -27,7 +27,7 @@ void MainModel::update(const Position& dPos, const bool& isPulling) {
             applyTransformations(rule);
         }
     }
-    rules->printActivesRules();
+    // rules->printActivesRules();
 }
 
 void MainModel::move(const Position& dPos, const bool& isPulling) {
@@ -54,7 +54,7 @@ void MainModel::move(const Position& dPos, const bool& isPulling) {
                     if (move) {
                         if (isPulling) {
                             Position pullPos = pos - dPos; 
-                            ruleProcessor->updatePullable(pullPos);                            
+                            ruleProcessor->updatePullable(pullPos);          
                             applyPull(pullPos, pos);
                         }
                         map->removeCell(pos, entity); 
@@ -85,7 +85,7 @@ void MainModel::applyPush(const Position& pos, Position& newPos, const Position&
         newPos += dPos;
     }
 
-    if (!move) { return; } // On sort si on ne peut pas avancer
+    if (!move || newPos == pos) { return; } // On sort si on ne peut pas avancer
 
     // On deplace les objets qu'on peut pousser en commencant par la dernière position
     while (newPos.x != pos.x + dPos.x || newPos.y != pos.y + dPos.y) {
