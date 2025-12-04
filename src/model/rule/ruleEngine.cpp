@@ -88,6 +88,10 @@ void RuleEngine::checking(Position& posOp, Position& posTarget, Cell& cellOp, Ce
     // Tant qu'on a une opérateur et une propriété ou un nom devant on l'ajoute dans la liste
     while ((!cellOp.getEntities().empty() && (cellOp.hasOperatorEntity() != (size_t)-1)) 
             && (!cellTarget.getEntities().empty() && (cellTarget.hasPropertyEntity() != (size_t)-1 || cellTarget.hasNounEntity() != (size_t)-1))) {
+
+        if (cellOp.isIS() && is) {
+            break; 
+        }
         if (cellOp.isIS()) {
             is = true;
         }
