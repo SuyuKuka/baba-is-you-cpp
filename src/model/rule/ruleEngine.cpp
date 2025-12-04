@@ -7,6 +7,16 @@ void RuleEngine::addActiveRule(const NounWordEntity noun, const OperatorWordEnti
     rule.operators = ope;
     rule.properties = property;
     rule.transformation = transform;
+
+    // Check si la règle existe deja
+    for (const Rule& existingRule : activeRules) {
+        if (existingRule.subjects == rule.subjects &&
+            existingRule.operators == rule.operators &&
+            existingRule.properties == rule.properties &&
+            existingRule.transformation == rule.transformation) {
+            return; 
+        }
+    }
     activeRules.push_back(rule);
 }
 
@@ -19,7 +29,7 @@ void RuleEngine::clearActiveRules() {
 }
 
 void RuleEngine::printActivesRules() const {
-    cout << "\n--- RÈGLES ACTIVES ---" << endl;
+    cout << "\n----RÈGLES ACTIVES----" << endl;
     if (activeRules.empty()) {
         cout << "Aucune règle active détectée." << endl;
         return;
@@ -58,17 +68,36 @@ void RuleEngine::checkRules(Position pos, Entity* nounEntity, const bool isHoriz
         return;
     }
 
-    entitiesNoun.push_back(nounEntity);
     Position posOp(pos.x + dx, pos.y + dy);
     Position posTarget(pos.x + 2 * dx, pos.y + 2 * dy);
     Cell cellOp = (*game.getMap())[posOp];
     Cell cellTarget = (*game.getMap())[posTarget];
+    bool is = false;
 
+    entitiesNoun.push_back(nounEntity);
+    checking(posOp, posTarget, cellOp, cellTarget, dx, dy, is);
+    if (entitiesOp.empty() || entitiesTarget.empty()) {
+        clear();
+        return;
+    }
+    addRules();
+    clear();
+}
+
+void RuleEngine::checking(Position& posOp, Position& posTarget, Cell& cellOp, Cell& cellTarget, int& dx, int& dy, bool& is) {
+    // Tant qu'on a une opérateur et une propriété ou un nom devant on l'ajoute dans la liste
     while ((!cellOp.getEntities().empty() && (cellOp.hasOperatorEntity() != (size_t)-1)) 
-        && (!cellTarget.getEntities().empty() && (cellTarget.hasPropertyEntity() != (size_t)-1 || cellTarget.hasNounEntity() != (size_t)-1))) {
-        // Tant qu'on a une opérateur et une propriété ou un nom devant on l'ajoute dans la liste
+            && (!cellTarget.getEntities().empty() && (cellTarget.hasPropertyEntity() != (size_t)-1 || cellTarget.hasNounEntity() != (size_t)-1))) {
+        if (cellOp.isIS()) {
+            is = true;
+        }
         entitiesOp.push_back(cellOp.getEntities()[cellOp.hasOperatorEntity()]);
-        entitiesTarget.push_back(cellTarget.getEntities()[cellTarget.hasPropertyEntity() != (size_t)-1 ? cellTarget.hasPropertyEntity() : cellTarget.hasNounEntity()]);
+        // Si y'a pas eu de IS dans ce cas on est dans le cas NOUN AND NOUN AND NOUN... et si on a le IS alors on est dans le cas PROPERTY/NOUN AND PROPERTY/NOUN AND....
+        if (!is) {
+            entitiesNoun.push_back(cellTarget.getEntities()[cellTarget.hasNounEntity()]);
+        } else {
+            entitiesTarget.push_back(cellTarget.getEntities()[cellTarget.hasPropertyEntity() != (size_t)-1 ? cellTarget.hasPropertyEntity() : cellTarget.hasNounEntity()]);
+        }
 
         posOp += Position(dx * 2, dy * 2);
         posTarget += Position(dx * 2, dy * 2);
@@ -78,27 +107,27 @@ void RuleEngine::checkRules(Position pos, Entity* nounEntity, const bool isHoriz
         cellOp = (*game.getMap())[posOp];
         cellTarget = (*game.getMap())[posTarget];
     }
+}
 
-    if (entitiesOp.empty() || entitiesTarget.empty()) {
-        entitiesNoun.clear();
-        entitiesOp.clear();
-        entitiesTarget.clear();
-        return;
-    }
-
-    for (Entity* entityOp: entitiesOp) {
-        if (entityOp->getOperatorWordEntity() == OperatorWordEntity::TEXTAND) {
-            continue;
-        }
-        for (Entity* entityTarget: entitiesTarget) {
-            if (entityTarget->isPropertyWordEntity()) {
-                addActiveRule(nounEntity->getNounWordEntity(), entityOp->getOperatorWordEntity(), entityTarget->getPropertyWordEntity(), NounWordEntity::NONE);
-            } else if (entityTarget->isNounWordEntity()) {
-                addActiveRule(nounEntity->getNounWordEntity(), entityOp->getOperatorWordEntity(), PropertyWordEntity::NONE, entityTarget->getNounWordEntity());
+void RuleEngine::addRules() {
+    if (entitiesNoun.empty() || entitiesOp.empty() || entitiesTarget.empty()) return;
+    for (Entity* entityNoun: entitiesNoun) {
+        for (Entity* entityOp: entitiesOp) {
+            if (entityOp->getOperatorWordEntity() == OperatorWordEntity::TEXTAND) {
+                continue;
+            }
+            for (Entity* entityTarget: entitiesTarget) {
+                if (entityTarget->isPropertyWordEntity()) {
+                    addActiveRule(entityNoun->getNounWordEntity(), entityOp->getOperatorWordEntity(), entityTarget->getPropertyWordEntity(), NounWordEntity::NONE);
+                } else if (entityTarget->isNounWordEntity()) {
+                    addActiveRule(entityNoun->getNounWordEntity(), entityOp->getOperatorWordEntity(), PropertyWordEntity::NONE, entityTarget->getNounWordEntity());
+                }
             }
         }
     }
+}
 
+void RuleEngine::clear() {
     entitiesNoun.clear();
     entitiesOp.clear();
     entitiesTarget.clear();

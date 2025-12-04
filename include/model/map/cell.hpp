@@ -62,6 +62,15 @@ public:
         }
         return -1;
     }
+
+    bool isIS() const {
+        for (size_t i = 0; i < entities.size(); i++) {
+            if (entities[i]->getId() == static_cast<int>(OperatorWordEntity::TEXTIS)) {
+                return true;
+            }
+        }
+        return false;
+    }
 };
 
 #endif

@@ -27,7 +27,6 @@ void MainModel::update(const Position& dPos, const bool& isPulling) {
             applyTransformations(rule);
         }
     }
-    // rules->printActivesRules();
 }
 
 void MainModel::move(const Position& dPos, const bool& isPulling) {
