@@ -27,6 +27,9 @@ public:
 
     void updateRules();
     void checkRules(Position pos, Entity* nounEntity, const bool horizontal);
+    void checking(Position& posOp, Position& posTarget, Cell& cellOp, Cell& cellTarget, int& dx, int& dy, bool& is);
+    void addRules();
+    void clear();
 };
 
 #endif
