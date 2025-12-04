@@ -8,6 +8,7 @@ MainView::MainView(): app(VideoMode(1280, 720), "BABA IS YOU", Style::Titlebar |
 
     levels.push_back(LevelInfo({"Tutorial", "resources/maps/map-1.json"}));
     levels.push_back(LevelInfo({"Lock", "resources/maps/map-2.json"}));
+    levels.push_back(LevelInfo({"Secret", "resources/maps/map-3.json"}));
 }
 
 void MainView::run() {

@@ -7,32 +7,32 @@ struct Position {
 
     Position(int x = 0, int y = 0) : x(x), y(y) {}
 
-    Position& operator+=(const Position& other) {
-        x += other.x;
-        y += other.y;
+    Position& operator+=(const Position& pos) {
+        x += pos.x;
+        y += pos.y;
         return *this;
     }
 
-    Position& operator-=(const Position& other) {
-        x -= other.x;
-        y -= other.y;
+    Position& operator-=(const Position& pos) {
+        x -= pos.x;
+        y -= pos.y;
         return *this;
     }
 
-    Position operator+(const Position& other) const {
-        return Position(x + other.x, y + other.y);
-    }
-
-    Position operator-() const {
-        return Position(-x, -y);
+    Position operator+(const Position& pos) const {
+        return Position(x + pos.x, y + pos.y);
     }
     
-    Position operator-(const Position& other) const {
-        return Position(x - other.x, y - other.y);
+    Position operator-(const Position& pos) const {
+        return Position(x - pos.x, y - pos.y);
     }
 
-    bool operator==(const Position& other) const {
-        return x == other.x && y == other.y;
+    bool operator==(const Position& pos) const {
+        return x == pos.x && y == pos.y;
+    }
+
+    bool operator!=(const Position& pos) const {
+        return !(*this == pos);
     }
 };
 
