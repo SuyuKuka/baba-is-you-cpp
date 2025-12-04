@@ -52,9 +52,8 @@ void MainModel::move(const Position& dPos, const bool& isPulling) {
                     }
                     if (move) {
                         if (isPulling) {
-                            cout << "pull" << endl;
                             Position pullPos = pos - dPos; 
-                            ruleProcessor->updatePullable(pullPos);                            
+                            ruleProcessor->updatePullable(pullPos);          
                             applyPull(pullPos, pos);
                         }
                         map->removeCell(pos, entity); 
@@ -84,11 +83,9 @@ void MainModel::applyPush(const Position& pos, Position& newPos, const Position&
         }
         newPos += dPos;
     }
-
-    if (!move) { return; } // On sort si on ne peut pas avancer
-
     // On deplace les objets qu'on peut pousser en commencant par la dernière position
     while (newPos.x != pos.x + dPos.x || newPos.y != pos.y + dPos.y) {
+        if (!move || newPos == pos) { return; } // On sort si on ne peut pas avancer
         Cell& cell = (*map)[newPos - dPos];
         for (size_t i = 0; i < cell.getEntities().size(); i++) {
             Entity* pushed = (*map)[newPos - dPos].getEntities()[i];
@@ -136,7 +133,6 @@ void MainModel::applyPull(const Position& pullPos, const Position& newPos) {
     for (size_t i = 0; i < entities.size(); i++) {
         Entity* pulled = entities[i];
         if (pulled->isPullable()) {
-            cout << "test" << endl;
             map->removeCell(pullPos, pulled);
             pulled->setPosition(newPos);
             map->addCell(newPos, pulled);

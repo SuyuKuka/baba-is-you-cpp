@@ -7,6 +7,16 @@ void RuleEngine::addActiveRule(const NounWordEntity noun, const OperatorWordEnti
     rule.operators = ope;
     rule.properties = property;
     rule.transformation = transform;
+
+    // Check si la règle existe deja
+    for (const Rule& existingRule : activeRules) {
+        if (existingRule.subjects == rule.subjects &&
+            existingRule.operators == rule.operators &&
+            existingRule.properties == rule.properties &&
+            existingRule.transformation == rule.transformation) {
+            return; 
+        }
+    }
     activeRules.push_back(rule);
 }
 
@@ -19,7 +29,7 @@ void RuleEngine::clearActiveRules() {
 }
 
 void RuleEngine::printActivesRules() const {
-    cout << "\n--- RÈGLES ACTIVES ---" << endl;
+    cout << "\n----RÈGLES ACTIVES----" << endl;
     if (activeRules.empty()) {
         cout << "Aucune règle active détectée." << endl;
         return;
@@ -46,49 +56,83 @@ void RuleEngine::updateRules() {
 
     for (Entity* nounEntity: game.getMap()->getNounsTextOnMap()) {
         Position pos = nounEntity->getPosition();
-        
         checkRules(pos, nounEntity, true);
         checkRules(pos, nounEntity, false);
     }
 }
 
-void RuleEngine::checkRules(Position pos, const Entity* nounEntity, const bool isHorizontal) {
+void RuleEngine::checkRules(Position pos, Entity* nounEntity, const bool isHorizontal) {
     int dx = isHorizontal ? 1 : 0;
     int dy = isHorizontal ? 0 : 1;
     if ((pos.x + 2 * dx >= game.getMap()->getWidth()) || (pos.y + 2 * dy >= game.getMap()->getHeight())) {
         return;
     }
-    
-    // Check si y'a un opérateur
+
     Position posOp(pos.x + dx, pos.y + dy);
-    const Cell& cellOp = (*game.getMap())[posOp];
-    const vector<Entity*>& entitiesOp = cellOp.getEntities();
-    if (entitiesOp.empty() || !entitiesOp[0]->isOperatorWordEntity()) {
-        return;
-    }
-
-    // Check si y'a une propriété ou un nom
     Position posTarget(pos.x + 2 * dx, pos.y + 2 * dy);
-    const Cell& cellTarget = (*game.getMap())[posTarget];
-    const vector<Entity*>& entitiesTarget = cellTarget.getEntities();
-    if (entitiesTarget.empty()) {
+    Cell cellOp = (*game.getMap())[posOp];
+    Cell cellTarget = (*game.getMap())[posTarget];
+    bool is = false;
+
+    entitiesNoun.push_back(nounEntity);
+    checking(posOp, posTarget, cellOp, cellTarget, dx, dy, is);
+    if (entitiesOp.empty() || entitiesTarget.empty()) {
+        clear();
         return;
     }
+    addRules();
+    clear();
+}
 
-    Entity* targetEntity = entitiesTarget[0];
-    if (targetEntity->isPropertyWordEntity()) {
-        addActiveRule(
-            nounEntity->getNounWordEntity(),
-            entitiesOp[0]->getOperatorWordEntity(),
-            targetEntity->getPropertyWordEntity(),
-            NounWordEntity::NONE
-        );
-    } else if (targetEntity->isNounWordEntity()) {
-        addActiveRule(
-            nounEntity->getNounWordEntity(),
-            entitiesOp[0]->getOperatorWordEntity(),
-            PropertyWordEntity::NONE,
-            targetEntity->getNounWordEntity()
-        );
+void RuleEngine::checking(Position& posOp, Position& posTarget, Cell& cellOp, Cell& cellTarget, int& dx, int& dy, bool& is) {
+    // Tant qu'on a une opérateur et une propriété ou un nom devant on l'ajoute dans la liste
+    while ((!cellOp.getEntities().empty() && (cellOp.hasOperatorEntity() != (size_t)-1)) 
+            && (!cellTarget.getEntities().empty() && (cellTarget.hasPropertyEntity() != (size_t)-1 || cellTarget.hasNounEntity() != (size_t)-1))) {
+
+        if (cellOp.isIS() && is) {
+            break; 
+        }
+        if (cellOp.isIS()) {
+            is = true;
+        }
+        entitiesOp.push_back(cellOp.getEntities()[cellOp.hasOperatorEntity()]);
+        // Si y'a pas eu de IS dans ce cas on est dans le cas NOUN AND NOUN AND NOUN... et si on a le IS alors on est dans le cas PROPERTY/NOUN AND PROPERTY/NOUN AND....
+        if (!is) {
+            entitiesNoun.push_back(cellTarget.getEntities()[cellTarget.hasNounEntity()]);
+        } else {
+            entitiesTarget.push_back(cellTarget.getEntities()[cellTarget.hasPropertyEntity() != (size_t)-1 ? cellTarget.hasPropertyEntity() : cellTarget.hasNounEntity()]);
+        }
+
+        posOp += Position(dx * 2, dy * 2);
+        posTarget += Position(dx * 2, dy * 2);
+        if ((posOp.x + 2 * dx >= game.getMap()->getWidth()) || (posOp.y + 2 * dy >= game.getMap()->getHeight())) {
+            break;
+        }
+        cellOp = (*game.getMap())[posOp];
+        cellTarget = (*game.getMap())[posTarget];
     }
+}
+
+void RuleEngine::addRules() {
+    if (entitiesNoun.empty() || entitiesOp.empty() || entitiesTarget.empty()) return;
+    for (Entity* entityNoun: entitiesNoun) {
+        for (Entity* entityOp: entitiesOp) {
+            if (entityOp->getOperatorWordEntity() == OperatorWordEntity::TEXTAND) {
+                continue;
+            }
+            for (Entity* entityTarget: entitiesTarget) {
+                if (entityTarget->isPropertyWordEntity()) {
+                    addActiveRule(entityNoun->getNounWordEntity(), entityOp->getOperatorWordEntity(), entityTarget->getPropertyWordEntity(), NounWordEntity::NONE);
+                } else if (entityTarget->isNounWordEntity()) {
+                    addActiveRule(entityNoun->getNounWordEntity(), entityOp->getOperatorWordEntity(), PropertyWordEntity::NONE, entityTarget->getNounWordEntity());
+                }
+            }
+        }
+    }
+}
+
+void RuleEngine::clear() {
+    entitiesNoun.clear();
+    entitiesOp.clear();
+    entitiesTarget.clear();
 }

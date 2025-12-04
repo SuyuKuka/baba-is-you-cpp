@@ -18,6 +18,7 @@ class BabaTexture {
     Texture FLAG_TEXT;
     Texture FLAG;
     Texture IS_TEXT;
+    Texture AND_TEXT;
     Texture PULL_TEXT;
     Texture PUSH_TEXT;
     Texture ROCK_TEXT;
