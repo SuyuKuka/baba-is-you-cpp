@@ -11,7 +11,7 @@ class UndoRedoHandler {
     private:
     stack<vector<EntityState>> undo;
     stack<vector<EntityState>> redo;
-    stack<Direction> undoDirection;
+    stack<Direction> directionStack;
     stack<Direction> redoDirection;
     public:
     UndoRedoHandler();
@@ -22,11 +22,12 @@ class UndoRedoHandler {
     void emptyUndo();
     void emptyRedo();
     void emptyDirection();
+    void emptyRedoDirection();
     void addUndoState(const EntityState& entity);
     void next();
-    void addUndoDirection(const Direction& lastDirection);
-    Direction popUndoDirection();
-    Direction popRedoDirection();
+    void addDirection(const Direction& lastDirection);
+    Direction getDirection();
+    Direction getRedoDirection();
     void removeTopEmpty();
 };
 

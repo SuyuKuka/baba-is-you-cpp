@@ -20,8 +20,7 @@ MainModel::~MainModel() {
 void MainModel::update(const Position& dPos, const bool& isPulling, const Direction& lastDirection) {
     undoRedoHandler.emptyRedo();
     undoRedoHandler.next();
-    undoRedoHandler.addUndoDirection(lastDirection);
-    move(dPos, isPulling);
+    move(dPos, isPulling, lastDirection);
     getRuleEngine().updateRules();
 
     vector<Rule> transformationRules = ruleProcessor->isTransformation();
@@ -33,8 +32,9 @@ void MainModel::update(const Position& dPos, const bool& isPulling, const Direct
     undoRedoHandler.removeTopEmpty();
 }
 
-void MainModel::move(const Position& dPos, const bool& isPulling) {
+void MainModel::move(const Position& dPos, const bool& isPulling, const Direction& lastDirection) {
     bool move = true;
+    bool oneWasMoved = false;
     vector<int> stopId;
     vector<int> winId;
     vector<int> openId;
@@ -48,12 +48,8 @@ void MainModel::move(const Position& dPos, const bool& isPulling) {
             Position newPos = pos + dPos;
             if (newPos.x >= 0 && newPos.x < map->getWidth() && newPos.y >= 0 && newPos.y < map->getHeight()) {
                 if (!ruleProcessor->isStop(newPos, stopId)) {
-                    if (ruleProcessor->isOpen(newPos, dPos, openId, shutId)) {
-                        applyOpen(newPos, dPos, openId, shutId);
-                    }
-                    if (ruleProcessor->isNextPushable(newPos)) {
-                        applyPush(pos, newPos, dPos, stopId, move);
-                    }
+                    if (ruleProcessor->isOpen(newPos, dPos, openId, shutId)) applyOpen(newPos, dPos, openId, shutId);
+                    if (ruleProcessor->isNextPushable(newPos)) applyPush(pos, newPos, dPos, stopId, move);
                     if (move) {
                         if (isPulling) {
                             Position pullPos = pos - dPos; 
@@ -65,6 +61,7 @@ void MainModel::move(const Position& dPos, const bool& isPulling) {
                         map->removeCell(pos, entity); 
                         entity->setPosition(newPos);
                         map->addCell(newPos, entity);
+                        oneWasMoved = true;
                     }
                     if (ruleProcessor->isWin(newPos, winId)) {
                         win = true;
@@ -74,6 +71,7 @@ void MainModel::move(const Position& dPos, const bool& isPulling) {
                 } 
             }
         }
+        if (oneWasMoved) undoRedoHandler.addDirection(lastDirection);
     }
 }
 
@@ -166,7 +164,7 @@ Direction MainModel::undo() {
         map -> removeCell(state.getPosAfter(), state.getEntity());
         map -> addCell(state.getPosBefore(), state.getEntity());
     }
-    Direction undoDirection = undoRedoHandler.popUndoDirection();
+    Direction undoDirection = undoRedoHandler.getDirection();
     return undoDirection;
 }
 
@@ -176,6 +174,6 @@ Direction MainModel::redo() {
         map -> removeCell(state.getPosBefore(), state.getEntity());
         map -> addCell(state.getPosAfter(), state.getEntity());
     }
-    Direction redoDirection = undoRedoHandler.popRedoDirection();
+    Direction redoDirection = undoRedoHandler.getDirection();
     return redoDirection;
 }
