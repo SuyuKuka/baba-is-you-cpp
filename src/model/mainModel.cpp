@@ -19,6 +19,7 @@ MainModel::~MainModel() {
 
 void MainModel::update(const Position& dPos, const bool& isPulling, const Direction& lastDirection) {
     undoRedoHandler.emptyRedo();
+    undoRedoHandler.emptyRedoDirection();
     undoRedoHandler.next();
     move(dPos, isPulling, lastDirection);
     getRuleEngine().updateRules();
