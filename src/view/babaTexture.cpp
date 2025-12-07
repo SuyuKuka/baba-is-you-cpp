@@ -33,19 +33,19 @@ BabaTexture& BabaTexture::getInstance() {
     return instance;
 }
 
-const Texture& BabaTexture::getTexture(const int& id,  const Keyboard::Key& key) {
+const Texture& BabaTexture::getTexture(const int& id,  const Direction& dir) {
     switch (id) {
         case 100:
-            if (key == Keyboard::Q || key == Keyboard::A) {
+            if (dir == Direction::WEST || dir == Direction::WEST) {
                 last_baba_texture = &BABA_LEFT;
                 return BABA_LEFT;
-            } else if (key == Keyboard::S) {
+            } else if (dir == Direction::SOUTH) {
                 last_baba_texture = &BABA_DOWN; 
                 return BABA_DOWN;
-            } else if (key == Keyboard::Z || key == Keyboard::W) {
+            } else if (dir == Direction::NORTH || dir == Direction::NORTH) {
                 last_baba_texture = &BABA_UP;
                 return BABA_UP;
-            } else if (key == Keyboard::D) {
+            } else if (dir == Direction::EAST) {
                 last_baba_texture = &BABA_RIGHT;
                 return BABA_RIGHT;
             }
