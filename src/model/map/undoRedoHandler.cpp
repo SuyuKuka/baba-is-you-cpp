@@ -31,6 +31,28 @@ vector<EntityState> UndoRedoHandler::redoStep() {
     return top;
 }
 
+void UndoRedoHandler::clear() {
+    emptyUndo();
+    emptyRedo();
+    emptyDirection();
+}
+
+void UndoRedoHandler::emptyUndo() {
+    while(!undo.empty()) {
+        undo.pop();
+    }
+}
+
+void UndoRedoHandler::emptyDirection() {
+    while(!undoDirection.empty()) {
+        undoDirection.pop();
+    }
+
+    while(!redoDirection.empty()) {
+        redoDirection.pop();
+    }
+}
+
 void UndoRedoHandler::emptyRedo() {
     while (!redo.empty()) {
         redo.pop();

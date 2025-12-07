@@ -68,6 +68,7 @@ void MainModel::move(const Position& dPos, const bool& isPulling) {
                     }
                     if (ruleProcessor->isWin(newPos, winId)) {
                         win = true;
+                        undoRedoHandler.clear();
                         return;
                     }
                 } 

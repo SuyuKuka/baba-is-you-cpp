@@ -18,7 +18,10 @@ class UndoRedoHandler {
     ~UndoRedoHandler();
     vector<EntityState> undoStep();
     vector<EntityState> redoStep();
+    void clear();
+    void emptyUndo();
     void emptyRedo();
+    void emptyDirection();
     void addUndoState(const EntityState& entity);
     void next();
     void addUndoDirection(const Direction& lastDirection);
