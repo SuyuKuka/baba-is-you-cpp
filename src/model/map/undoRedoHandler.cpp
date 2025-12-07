@@ -7,13 +7,19 @@ vector<EntityState> UndoRedoHandler::undoStep() {
     if (undo.empty()) return {};
     vector<EntityState> top = undo.top();
     if (top.empty()) return {};
+
     for (EntityState& e : top) {
         e.loadBeforeState();
     }
+
     redo.push(top);
     undo.pop();
-    redoDirection.push(undoDirection.top());
-    undoDirection.pop();
+
+    if (!directionStack.empty()) {
+        redoDirection.push(directionStack.top());
+        directionStack.pop();    
+    }
+    
     return top;
 }
 
@@ -21,13 +27,19 @@ vector<EntityState> UndoRedoHandler::redoStep() {
     if (redo.empty()) return {};
     vector<EntityState> top = redo.top();
     if (top.empty()) return {};
+
     for (EntityState& e : top) {
         e.loadAfterState();
     }
+
     undo.push(top);
     redo.pop();
-    undoDirection.push(redoDirection.top());
-    redoDirection.pop();
+
+    if (!redoDirection.empty()) {
+        directionStack.push(redoDirection.top());
+        redoDirection.pop();    
+    }
+
     return top;
 }
 
@@ -35,6 +47,7 @@ void UndoRedoHandler::clear() {
     emptyUndo();
     emptyRedo();
     emptyDirection();
+    emptyRedoDirection();
 }
 
 void UndoRedoHandler::emptyUndo() {
@@ -44,14 +57,17 @@ void UndoRedoHandler::emptyUndo() {
 }
 
 void UndoRedoHandler::emptyDirection() {
-    while(!undoDirection.empty()) {
-        undoDirection.pop();
+    while(!directionStack.empty()) {
+        directionStack.pop();
     }
+}
 
+void UndoRedoHandler::emptyRedoDirection() {
     while(!redoDirection.empty()) {
         redoDirection.pop();
     }
 }
+
 
 void UndoRedoHandler::emptyRedo() {
     while (!redo.empty()) {
@@ -81,17 +97,16 @@ void UndoRedoHandler::removeTopEmpty() {
     }
 }
 
-void UndoRedoHandler::addUndoDirection(const Direction& lastDirection) {
-    undoDirection.push(lastDirection);
+void UndoRedoHandler::addDirection(const Direction& lastDirection) {
+    directionStack.push(lastDirection);
 }
 
-Direction UndoRedoHandler::popUndoDirection() {
-    if (undoDirection.empty()) return Direction::EAST;
-    if (redoDirection.empty()) return Direction::NONE;
-    return redoDirection.top();
+Direction UndoRedoHandler::getDirection() {
+    if (directionStack.empty()) return Direction::EAST;
+    return directionStack.top();
 }
 
-Direction UndoRedoHandler::popRedoDirection() {
-    if (undoDirection.empty()) return Direction::NONE;
-    return undoDirection.top();
+Direction UndoRedoHandler::getRedoDirection() {
+    if (directionStack.empty()) return Direction::NONE;
+    return directionStack.top();
 }
