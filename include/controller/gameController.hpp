@@ -16,6 +16,8 @@ public:
     ~GameController() = default;
     void run();
     void update(KeyboardListener& keyboardListener, Map& map);
+    bool canContinue() const;
+    void computeInput(KeyboardListener &keyboardListener);
 };
 
 #endif

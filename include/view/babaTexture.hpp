@@ -52,6 +52,8 @@ class BabaTexture {
      * @return Une texture const correspondant à l'entité indiquée.
      */
     const Texture& getTexture(const int& id,  const Direction& dir); 
+
+    void resetLastTexutre();
 };
 
 #endif
