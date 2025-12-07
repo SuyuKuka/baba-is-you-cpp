@@ -14,29 +14,8 @@ void GameController::run() {
             } else if (event.type == Event::KeyPressed || event.type == Event::KeyReleased) {
                 keyboardListener.handleKeyPressedAndReleased(event);
             }
-
-            sf::Time delay = repeatRate;
-            if (!keyboardListener.firstInput()) {
-                delay = sf::Time::Zero;
-            } else if (keyboardListener.getLastKeyPressed() != keyboardListener.getKeyPressed().back() 
-            || repeatClock.getElapsedTime() < initialDelay) {
-                delay = (keyboardListener.getLastKeyPressed() != keyboardListener.getKeyPressed().back()) ? initialDelay : repeatRate;
-            }
-            if (repeatClock.getElapsedTime() < delay || keyboardListener.getKeyPressed().empty()) continue;
-            
-            if (keyboardListener.getKeyPressed().back() == Keyboard::R) {
-                keyboardListener.setLastDirection(game.undo());
-                keyboardListener.setLastKey(Keyboard::R);
-            } else if (keyboardListener.getKeyPressed().back() == Keyboard::T) {
-                keyboardListener.setLastDirection(game.redo());
-                keyboardListener.setLastKey(Keyboard::T);
-            } else {
-                Position pos = keyboardListener.handleMove();
-                if (pos == Position(0, 0)) continue;
-                game.update(pos, keyboardListener.isPulling(), keyboardListener.getLastDirection());
-                
-            }
-
+            if (canContinue()) continue;
+            computeInput(keyboardListener);
             repeatClock.restart();
         }
         update(keyboardListener, map);
@@ -53,5 +32,32 @@ void GameController::update(KeyboardListener& keyboardListener, Map& map) {
     if (game.isWin()) {
         keyboardListener.clearKeyPressed();
         view.setCurrentState(AppState::Menu);
+    }
+}
+
+bool GameController::canContinue() const {
+    sf::Time delay = repeatRate;
+    KeyboardListener& keyboardListener = KeyboardListener::getInstance();
+    if (!keyboardListener.firstInput()) {
+        delay = sf::Time::Zero;
+    } else if (keyboardListener.getLastKeyPressed() != keyboardListener.getKeyPressed().back() 
+    || repeatClock.getElapsedTime() < initialDelay) {
+        delay = (keyboardListener.getLastKeyPressed() != keyboardListener.getKeyPressed().back()) ? initialDelay : repeatRate;
+    }
+    if (repeatClock.getElapsedTime() < delay || keyboardListener.getKeyPressed().empty()) return true;
+    return false;
+}
+
+void GameController::computeInput(KeyboardListener& keyboardListener) {
+    if (keyboardListener.getKeyPressed().back() == Keyboard::R) {
+        keyboardListener.setLastDirection(game.undo());
+        keyboardListener.setLastKey(Keyboard::R);
+    } else if (keyboardListener.getKeyPressed().back() == Keyboard::T) {
+        keyboardListener.setLastDirection(game.redo());
+        keyboardListener.setLastKey(Keyboard::T);
+    } else {
+        Position pos = keyboardListener.handleMove();
+        if (pos == Position(0, 0)) return;
+        game.update(pos, keyboardListener.isPulling(), keyboardListener.getLastDirection());
     }
 }

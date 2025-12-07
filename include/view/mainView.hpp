@@ -45,6 +45,7 @@ public:
     string getPath() const;
     AppState getCurrentState() const;
     void setCurrentState(AppState state);
+    void resetLastTexture();
 };
 
 #endif

@@ -73,3 +73,7 @@ const Texture& BabaTexture::getTexture(const int& id,  const Direction& dir) {
         default: return BABA_RIGHT;
     }
 }
+
+void BabaTexture::resetLastTexutre() {
+    last_baba_texture = &BABA_RIGHT;
+}

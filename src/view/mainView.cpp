@@ -140,3 +140,7 @@ AppState MainView::getCurrentState() const {
 void MainView::setCurrentState(AppState state) {
     currentState = state;
 }
+
+void MainView::resetLastTexture() {
+    BabaTexture::getInstance().resetLastTexutre();
+}
