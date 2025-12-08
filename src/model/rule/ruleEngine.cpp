@@ -105,7 +105,7 @@ void RuleEngine::checking(Position& posOp, Position& posTarget, Cell& cellOp, Ce
 
         posOp += Position(dx * 2, dy * 2);
         posTarget += Position(dx * 2, dy * 2);
-        if ((posOp.x + 2 * dx >= game.getMap()->getWidth()) || (posOp.y + 2 * dy >= game.getMap()->getHeight())) {
+        if ((posTarget.x >= game.getMap()->getWidth()) || (posTarget.y >= game.getMap()->getHeight())) {
             break;
         }
         cellOp = (*game.getMap())[posOp];
