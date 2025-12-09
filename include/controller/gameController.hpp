@@ -11,6 +11,7 @@ private:
     sf::Clock repeatClock; 
     sf::Time initialDelay = sf::milliseconds(180); 
     sf::Time repeatRate = sf::milliseconds(120); 
+    
 public:
     GameController(MainView& view, MainModel& game) : view(view), game(game) {};
     ~GameController() = default;

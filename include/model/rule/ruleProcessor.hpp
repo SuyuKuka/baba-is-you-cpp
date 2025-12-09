@@ -14,6 +14,7 @@ class RuleProcessor{
 private:
     MainModel& game;
     mutable vector<int> youId;
+
 public:
     RuleProcessor(MainModel& game): game(game) {}
     ~RuleProcessor() = default;
@@ -26,10 +27,8 @@ public:
     bool isWin(const Position& newPos, const vector<int>& winId) const;
     const vector<Rule> isTransformation();
     bool isOpen(const Position newPos, const Position& dPos, const vector<int>& openId, const vector<int>& shutId) const;
-    const vector<int>& getYouID() const { return youId; }
+    const vector<int>& getYouID() const;
     bool babaIsYou() const;
 };
-
-
 
 #endif
