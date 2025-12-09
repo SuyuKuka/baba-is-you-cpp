@@ -105,8 +105,9 @@ void MainView::render(const vector<const Cell*>& occupied, const Direction dir) 
         for (const Entity* entity : cell -> getEntities()) {
             double px = entity -> getPosition().x * cellWidth;
             double py = entity -> getPosition().y * cellHeight;
-            if (entity -> getId() == 0) continue;
-            sprite.setTexture(babaTexture.getTexture(entity -> getId(), dir));
+            const int id = entity -> getId();
+            if (id == static_cast<int>(GameEntity::NONE)) continue;
+            sprite.setTexture(babaTexture.getTexture(id, dir));
             sprite.setScale(cellWidth / sprite.getTextureRect().width,
                 cellHeight / sprite.getTextureRect().height);
             sprite.setPosition(px,py);

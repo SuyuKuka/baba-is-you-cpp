@@ -12,7 +12,6 @@ enum class GameEntity {
 };
 
 enum class NounWordEntity {
-    NONE = 0,
     TEXTBABA = 200,
     TEXTFLAG = 201,
     TEXTROCK = 202,
@@ -22,13 +21,11 @@ enum class NounWordEntity {
 };
 
 enum class OperatorWordEntity {
-    NONE = 0,
     TEXTIS = 300,
     TEXTAND = 301
 };
 
 enum class PropertyWordEntity {
-    NONE = 0,
     TEXTYOU = 400,
     TEXTWIN = 401,
     TEXTPUSH = 402,
