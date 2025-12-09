@@ -15,7 +15,6 @@ public:
     void addEntity(Entity* entity);
     void removeEntity(Entity* entity);
     bool isEmpty() const;
-    void clear();
     size_t hasNounEntity() const;
     size_t hasOperatorEntity() const;
     size_t hasPropertyEntity() const;
