@@ -33,43 +33,47 @@ BabaTexture& BabaTexture::getInstance() {
     return instance;
 }
 
-const Texture& BabaTexture::getTexture(const int& id,  const Keyboard::Key& key) {
+const Texture& BabaTexture::getTexture(const int& id,  const Direction& dir) {
     switch (id) {
         case 100:
-            if (key == Keyboard::Q || key == Keyboard::A) {
+            if (dir == Direction::WEST || dir == Direction::WEST) {
                 last_baba_texture = &BABA_LEFT;
                 return BABA_LEFT;
-            } else if (key == Keyboard::S) {
+            } else if (dir == Direction::SOUTH) {
                 last_baba_texture = &BABA_DOWN; 
                 return BABA_DOWN;
-            } else if (key == Keyboard::Z || key == Keyboard::W) {
+            } else if (dir == Direction::NORTH || dir == Direction::NORTH) {
                 last_baba_texture = &BABA_UP;
                 return BABA_UP;
-            } else if (key == Keyboard::D) {
+            } else if (dir == Direction::EAST) {
                 last_baba_texture = &BABA_RIGHT;
                 return BABA_RIGHT;
             }
         return *last_baba_texture;
-        case 101: return FLAG;
-        case 102: return ROCK;
-        case 103: return WALL;
-        case 104: return DOOR;
-        case 105: return KEY;
-        case 200: return BABA_TEXT;
-        case 201: return FLAG_TEXT;
-        case 202: return ROCK_TEXT;
-        case 203: return WALL_TEXT;
-        case 204: return DOOR_TEXT;
-        case 205: return KEY_TEXT;
-        case 300: return IS_TEXT;
-        case 301: return AND_TEXT;
-        case 400: return YOU_TEXT;
-        case 401: return WIN_TEXT;
-        case 402: return PUSH_TEXT;
-        case 403: return STOP_TEXT;
-        case 404: return PULL_TEXT;
-        case 405: return SHUT_TEXT;
-        case 406: return OPEN_TEXT;
+        case static_cast<int>(GameEntity::FLAG): return FLAG;
+        case static_cast<int>(GameEntity::ROCK): return ROCK;
+        case static_cast<int>(GameEntity::WALL): return WALL;
+        case static_cast<int>(GameEntity::DOOR): return DOOR;
+        case static_cast<int>(GameEntity::KEY): return KEY;
+        case static_cast<int>(NounWordEntity::TEXTBABA): return BABA_TEXT;
+        case static_cast<int>(NounWordEntity::TEXTFLAG): return FLAG_TEXT;
+        case static_cast<int>(NounWordEntity::TEXTROCK): return ROCK_TEXT;
+        case static_cast<int>(NounWordEntity::TEXTWALL): return WALL_TEXT;
+        case static_cast<int>(NounWordEntity::TEXTDOOR): return DOOR_TEXT;
+        case static_cast<int>(NounWordEntity::TEXTKEY): return KEY_TEXT;
+        case static_cast<int>(OperatorWordEntity::TEXTIS): return IS_TEXT;
+        case static_cast<int>(OperatorWordEntity::TEXTAND): return AND_TEXT;
+        case static_cast<int>(PropertyWordEntity::TEXTYOU): return YOU_TEXT;
+        case static_cast<int>(PropertyWordEntity::TEXTWIN): return WIN_TEXT;
+        case static_cast<int>(PropertyWordEntity::TEXTPUSH): return PUSH_TEXT;
+        case static_cast<int>(PropertyWordEntity::TEXTSTOP): return STOP_TEXT;
+        case static_cast<int>(PropertyWordEntity::TEXTPULL): return PULL_TEXT;
+        case static_cast<int>(PropertyWordEntity::TEXTSHUT): return SHUT_TEXT;
+        case static_cast<int>(PropertyWordEntity::TEXTOPEN): return OPEN_TEXT;
         default: return BABA_RIGHT;
     }
+}
+
+void BabaTexture::resetLastTexutre() {
+    last_baba_texture = &BABA_RIGHT;
 }

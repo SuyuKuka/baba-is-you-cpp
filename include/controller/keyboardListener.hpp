@@ -5,6 +5,7 @@
 #include <vector>
 #include "model/map/map.hpp"
 #include "model/map/position.hpp"
+#include "model/map/direction.hpp"
 using namespace std;
 using namespace sf;
 
@@ -19,11 +20,12 @@ private:
     KeyboardListener(const KeyboardListener&) = delete;
     KeyboardListener& operator=(const KeyboardListener&) = delete;
     vector<Keyboard::Key> keyPressed;
-    sf::Clock repeatClock; 
-    sf::Time initialDelay = sf::milliseconds(180); 
-    sf::Time repeatRate = sf::milliseconds(120); 
+    // sf::Clock repeatClock; 
+    // sf::Time initialDelay = sf::milliseconds(180); 
+    // sf::Time repeatRate = sf::milliseconds(120); 
     
-    sf::Keyboard::Key lastMovedKey = sf::Keyboard::Key::Unknown;
+    sf::Keyboard::Key lastKey = sf::Keyboard::Key::Unknown;
+    Direction lastDirection = Direction::EAST;
     bool firstMoveExecuted = false;
 
 public:
@@ -58,11 +60,20 @@ public:
      */
     bool isAuthorizedKey(const Keyboard::Key& key) const;
 
-    const Keyboard::Key& getLastKeyPressed() const {
-        return lastMovedKey;
-    }
+    const bool& firstInput() const;
+
+    const Keyboard::Key& getLastKeyPressed() const;
 
     void clearKeyPressed() { keyPressed.clear(); }
+
+    Direction keyToDirection(const Keyboard::Key& key);
+
+    Keyboard::Key directionToKey(const Direction& dir);
+
+    Direction& getLastDirection();
+
+    void setLastDirection(const Direction& dir);
+    void setLastKey(const Keyboard::Key& key);
 };
 
 ostream& operator<<(ostream& out, const KeyboardListener& keyboardListener);

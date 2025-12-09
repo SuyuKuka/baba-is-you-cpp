@@ -97,7 +97,7 @@ void MainView::menu() {
 }
 
 
-void MainView::render(const vector<const Cell*>& occupied, const Keyboard::Key key) {
+void MainView::render(const vector<const Cell*>& occupied, const Direction dir) {
     app.clear();
     BabaTexture& babaTexture = BabaTexture::getInstance();
     Sprite sprite;
@@ -105,7 +105,9 @@ void MainView::render(const vector<const Cell*>& occupied, const Keyboard::Key k
         for (const Entity* entity : cell -> getEntities()) {
             double px = entity -> getPosition().x * cellWidth;
             double py = entity -> getPosition().y * cellHeight;
-            sprite.setTexture(babaTexture.getTexture(entity -> getId(), key));
+            const int id = entity -> getId();
+            if (id == static_cast<int>(GameEntity::NONE)) continue;
+            sprite.setTexture(babaTexture.getTexture(id, dir));
             sprite.setScale(cellWidth / sprite.getTextureRect().width,
                 cellHeight / sprite.getTextureRect().height);
             sprite.setPosition(px,py);
@@ -138,4 +140,8 @@ AppState MainView::getCurrentState() const {
 
 void MainView::setCurrentState(AppState state) {
     currentState = state;
+}
+
+void MainView::resetLastTexture() {
+    BabaTexture::getInstance().resetLastTexutre();
 }

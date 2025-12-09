@@ -2,6 +2,7 @@
 #define ENTITY_TYPE_HPP
 
 enum class GameEntity {
+    NONE = 0,
     BABA = 100,
     FLAG = 101,
     ROCK = 102,
@@ -21,7 +22,6 @@ enum class NounWordEntity {
 };
 
 enum class OperatorWordEntity {
-    NONE = 0,
     TEXTIS = 300,
     TEXTAND = 301
 };

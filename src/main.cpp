@@ -15,6 +15,7 @@ int main() {
             view.run();
         } else if (view.getCurrentState() == AppState::Game) {
             cout << "Game" << endl;
+            view.resetLastTexture();
             gameController.run();
         }
     }  
