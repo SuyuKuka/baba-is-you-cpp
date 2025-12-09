@@ -36,11 +36,8 @@ void MainModel::update(const Position& dPos, const bool& isPulling, const Direct
 void MainModel::move(const Position& dPos, const bool& isPulling, const Direction& lastDirection) {
     bool move = true;
     bool oneWasMoved = false;
-    vector<int> stopId;
-    vector<int> winId;
-    vector<int> openId;
-    vector<int> shutId;
-    ruleProcessor->initIds(stopId, winId, openId, shutId);
+    
+    ruleProcessor->initIds();
 
     vector<Entity*> entities = ruleProcessor->isYou();
     if (entities.size() > 0) {
@@ -48,9 +45,9 @@ void MainModel::move(const Position& dPos, const bool& isPulling, const Directio
             Position pos = entity->getPosition();
             Position newPos = pos + dPos;
             if (newPos.x >= 0 && newPos.x < map->getWidth() && newPos.y >= 0 && newPos.y < map->getHeight()) {
-                if (!ruleProcessor->isStop(newPos, stopId)) {
-                    if (ruleProcessor->isOpen(newPos, dPos, openId, shutId)) applyOpen(newPos, dPos, openId, shutId);
-                    if (ruleProcessor->isNextPushable(newPos)) applyPush(pos, newPos, dPos, stopId, move);
+                if (!ruleProcessor->isStop(newPos)) {
+                    if (ruleProcessor->isOpen(newPos, dPos)) applyOpen(newPos, dPos);
+                    if (ruleProcessor->isNextPushable(newPos)) applyPush(pos, newPos, dPos, move);
                     if (move) {
                         if (isPulling) {
                             Position pullPos = pos - dPos; 
@@ -64,7 +61,7 @@ void MainModel::move(const Position& dPos, const bool& isPulling, const Directio
                         map->addCell(newPos, entity);
                         oneWasMoved = true;
                     }
-                    if (ruleProcessor->isWin(newPos, winId)) {
+                    if (ruleProcessor->isWin(newPos)) {
                         win = true;
                         undoRedoHandler.clear();
                         return;
@@ -76,10 +73,11 @@ void MainModel::move(const Position& dPos, const bool& isPulling, const Directio
     }
 }
 
-void MainModel::applyPush(const Position& pos, Position& newPos, const Position& dPos, const vector<int> stopId, bool& move) {
+void MainModel::applyPush(const Position& pos, Position& newPos, const Position& dPos, bool& move) {
+    const vector<int> stopId = ruleProcessor->getStopID();
     while (true) {
         // Zone inaccessible donc on empeche d'avancer et on reprend la position precedente
-        if (newPos.x < 0 || newPos.x >= map->getWidth() || newPos.y < 0 || newPos.y >= map->getHeight() || ruleProcessor->isStop(newPos, stopId)) {
+        if (newPos.x < 0 || newPos.x >= map->getWidth() || newPos.y < 0 || newPos.y >= map->getHeight() || ruleProcessor->isStop(newPos)) {
             move = false;
             newPos -= dPos;
             break;
@@ -119,7 +117,9 @@ void MainModel::applyTransformations(const Rule& rule) {
     }
 }
 
-void MainModel::applyOpen(Position newPos, const Position& dPos, vector<int>& openId, vector<int>& shutId) {
+void MainModel::applyOpen(Position newPos, const Position& dPos) {
+    vector<int> openId = ruleProcessor->getOpenID();
+    vector<int> shutId = ruleProcessor->getShutID();
     EntityState current;
     Cell& cell = (*map)[newPos];
     for (Entity* entity : cell.getEntities()) {
