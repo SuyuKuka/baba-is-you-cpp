@@ -16,15 +16,15 @@ private:
     vector<Entity*> entitiesNoun; // pour avoir la liste des entités qui sont deja utilisés dans les règles (jsp si utile pour le moment)
     vector<Entity*> entitiesOp;
     vector<Entity*> entitiesTarget;
+
 public:
-    RuleEngine(MainModel& game): game(game) { };
-    ~RuleEngine() = default;
+    RuleEngine(MainModel& game);
+    ~RuleEngine();
 
     void addActiveRule(const NounWordEntity noun, const OperatorWordEntity ope, const PropertyWordEntity property, const NounWordEntity transform);
     const vector<Rule>& getActiveRules() const;
     void clearActiveRules();
     void printActivesRules() const;
-
     void updateRules();
     void checkRules(Position pos, Entity* nounEntity, const bool horizontal);
     void checking(Position& posOp, Position& posTarget, Cell& cellOp, Cell& cellTarget, int& dx, int& dy, bool& is);
