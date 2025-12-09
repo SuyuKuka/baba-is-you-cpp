@@ -21,22 +21,11 @@ void KeyboardListener::handleKeyPressedAndReleased(const Event& event) {
 Position KeyboardListener::handleMove() {
     if (keyPressed.empty()) {
         firstMoveExecuted = false;
-        lastMovedKey = sf::Keyboard::Key::Unknown;
+        lastKey = sf::Keyboard::Key::Unknown;
         return Position(0, 0);
     }
 
     sf::Keyboard::Key currentKey = keyPressed.back(); 
-
-    sf::Time delay = repeatRate;
-    if (!firstMoveExecuted) {
-        delay = sf::Time::Zero;
-    } else if (lastMovedKey != currentKey || repeatClock.getElapsedTime() < initialDelay) {
-        delay = (lastMovedKey != currentKey) ? initialDelay : repeatRate;
-    }
-
-    if (repeatClock.getElapsedTime() < delay) {
-        return Position(0, 0);
-    }
 
     Position pos;
     if (currentKey == Keyboard::Up || currentKey == Keyboard::Z || currentKey == Keyboard::W) {
@@ -50,9 +39,10 @@ Position KeyboardListener::handleMove() {
     }
 
     if (pos.x != 0 || pos.y != 0) {
-        repeatClock.restart();
+        //repeatClock.restart();
         firstMoveExecuted = true;
-        lastMovedKey = currentKey;
+        lastKey = currentKey;
+        lastDirection = keyToDirection(lastKey);
         return pos;
     }
     return Position(0, 0);
@@ -82,6 +72,40 @@ bool KeyboardListener::isAuthorizedKey(const Keyboard::Key& key) const {
         || key == Keyboard::Right|| key == Keyboard::D 
         || key == Keyboard::LControl || key == Keyboard::RControl
         || key == Keyboard::R || key == Keyboard::T;
+}
+
+Direction KeyboardListener::keyToDirection(const Keyboard::Key& key) {
+    if (key == Keyboard::Up || key == Keyboard::Z || key == Keyboard::W) {
+        return Direction::NORTH;
+    } else if (key == Keyboard::Down|| key == Keyboard::S) {
+        return Direction::SOUTH;
+    } else if (key == Keyboard::Left || key == Keyboard::Q || key == Keyboard::A) {
+        return Direction::WEST;
+    } else if (key == Keyboard::Right|| key == Keyboard::D) {
+        return Direction::EAST;
+    } else {
+        return Direction::NONE;
+    }
+}
+
+Direction& KeyboardListener::getLastDirection() {
+    return lastDirection;
+}
+
+const bool& KeyboardListener::firstInput() const {
+    return firstMoveExecuted;
+}
+
+const Keyboard::Key& KeyboardListener::getLastKeyPressed() const {
+    return lastKey;
+}
+
+void KeyboardListener::setLastDirection(const Direction& dir) {
+    lastDirection = dir;
+}
+
+void KeyboardListener::setLastKey(const Keyboard::Key& key) {
+    lastKey = key;
 }
 
 

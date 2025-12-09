@@ -3,6 +3,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "model/entity/entityType.hpp"
+#include "model/map/direction.hpp"
 using namespace std;
 using namespace sf;
 
@@ -34,7 +35,6 @@ class BabaTexture {
     Texture DOOR_TEXT;
     Texture OPEN_TEXT;
     Texture SHUT_TEXT;
-    const Texture empty;
     Texture * last_baba_texture;
 
     BabaTexture();
@@ -48,10 +48,12 @@ class BabaTexture {
 
     /**
      * @param id l'id de l'entité.
-     * @param key une touche qui est par défaut D.
+     * @param dir une direction.
      * @return Une texture const correspondant à l'entité indiquée.
      */
-    const Texture& getTexture(const int& id,  const Keyboard::Key& key); 
+    const Texture& getTexture(const int& id,  const Direction& dir); 
+
+    void resetLastTexutre();
 };
 
 #endif

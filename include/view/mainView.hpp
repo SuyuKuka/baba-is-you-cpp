@@ -7,6 +7,7 @@
 #include <cmath>
 #include "model/map/cell.hpp"
 #include "model/entity/entity.hpp"
+#include "model/map/direction.hpp"
 #include "view/babaTexture.hpp"
 using namespace std;
 using namespace sf;
@@ -37,13 +38,14 @@ public:
     void handleMenuClick(int mouseX, int mouseY);
     void run();
     void menu();
-    void render(const vector<const Cell*>& occupied, Keyboard::Key key);
+    void render(const vector<const Cell*>& occupied, const Direction dir);
     bool pollEvent(Event& event);
     bool isOpen() const;
     void close();
     string getPath() const;
     AppState getCurrentState() const;
     void setCurrentState(AppState state);
+    void resetLastTexture();
 };
 
 #endif

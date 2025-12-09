@@ -15,7 +15,7 @@ public:
     virtual bool isPushable() const;
     virtual bool isPullable() const;
     virtual void setPullable(const bool pullable);
-    void setPosition(const Position& pos) { this->pos = pos; };
+    void setPosition(const Position &pos) { this->pos = pos; };
     void setId(int id) { this->id = id; };
     virtual void setPushable(bool pushable);
     bool isNounWordEntity() const;
