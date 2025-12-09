@@ -31,6 +31,4 @@ public:
     bool babaIsYou() const;
 };
 
-
-
 #endif

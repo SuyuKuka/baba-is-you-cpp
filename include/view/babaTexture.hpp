@@ -43,7 +43,6 @@ private:
     BabaTexture& operator=(const BabaTexture&) = delete;
 
 public:
-
     static BabaTexture& getInstance();
 
     /**
@@ -52,7 +51,6 @@ public:
      * @return Une texture const correspondant à l'entité indiquée.
      */
     const Texture& getTexture(const int& id,  const Direction& dir); 
-
     void resetLastTexutre();
 };
 
