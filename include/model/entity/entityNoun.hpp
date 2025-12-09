@@ -4,11 +4,9 @@
 
 class EntityNoun: public Entity {
 public:
-    EntityNoun(Position pos, int id): Entity(pos, id) { }
+    EntityNoun(Position pos, int id);
 
-    NounWordEntity getNounWordEntity() const {
-        return static_cast<NounWordEntity>(getId());
-    }
+    NounWordEntity getNounWordEntity() const;
 };
 
 #endif

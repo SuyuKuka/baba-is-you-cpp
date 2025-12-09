@@ -4,11 +4,9 @@
 
 class EntityOperator: public Entity {
 public:
-    EntityOperator(Position pos, int id): Entity(pos, id) { }
+    EntityOperator(Position pos, int id);
 
-    OperatorWordEntity getOperatorWordEntity() const {
-        return static_cast<OperatorWordEntity>(getId());
-    }
+    OperatorWordEntity getOperatorWordEntity() const;
 };
 
 #endif
