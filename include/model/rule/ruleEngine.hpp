@@ -18,8 +18,8 @@ private:
     vector<Entity*> entitiesTarget;
 
 public:
-    RuleEngine(MainModel& game): game(game) { };
-    ~RuleEngine() = default;
+    RuleEngine(MainModel& game);
+    ~RuleEngine();
 
     void addActiveRule(const NounWordEntity noun, const OperatorWordEntity ope, const PropertyWordEntity property, const NounWordEntity transform);
     const vector<Rule>& getActiveRules() const;

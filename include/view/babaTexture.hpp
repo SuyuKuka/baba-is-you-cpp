@@ -8,7 +8,7 @@ using namespace std;
 using namespace sf;
 
 class BabaTexture {
-    private:
+private:
     const string path = "resources/sprites/";
 
     Texture BABA_UP;
@@ -42,8 +42,7 @@ class BabaTexture {
     BabaTexture(const BabaTexture&) = delete;
     BabaTexture& operator=(const BabaTexture&) = delete;
 
-    public:
-
+public:
     static BabaTexture& getInstance();
 
     /**
@@ -52,7 +51,6 @@ class BabaTexture {
      * @return Une texture const correspondant à l'entité indiquée.
      */
     const Texture& getTexture(const int& id,  const Direction& dir); 
-
     void resetLastTexutre();
 };
 
