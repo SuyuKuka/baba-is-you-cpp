@@ -23,10 +23,6 @@ bool Cell::isEmpty() const {
     return entities.empty();
 }
 
-void Cell::clear() {
-    deleteEntities();
-}
-
 size_t Cell::hasNounEntity() const {
     for (size_t i = 0; i < entities.size(); i++) {
         if (entities[i]->isNounWordEntity()) {
