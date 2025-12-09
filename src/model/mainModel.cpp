@@ -159,6 +159,22 @@ void MainModel::applyPull(const Position& pullPos, const Position& newPos) {
     }
 }
 
+RuleEngine& MainModel::getRuleEngine() const { 
+    return *rules; 
+}
+
+RuleProcessor& MainModel::getRuleProcessor() const { 
+    return *ruleProcessor; 
+}
+
+Map* MainModel::getMap() const { 
+    return map; 
+}
+
+bool MainModel::isWin() const { 
+    return win; 
+}
+
 Direction MainModel::undo() {
     vector<EntityState> undoStep = undoRedoHandler.undoStep();
     for (EntityState state : undoStep) {
