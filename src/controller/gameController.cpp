@@ -1,5 +1,9 @@
 #include "controller/gameController.hpp"
 
+GameController::GameController(MainView& view, MainModel& game) : view(view), game(game) { }
+
+GameController::~GameController() = default;
+
 void GameController::run() {
     Map map = MapParser::loadMap(view.getPath());
     KeyboardListener& keyboardListener = KeyboardListener::getInstance();

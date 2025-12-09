@@ -19,6 +19,26 @@ Cell& Map::operator[](const Position& pos) {
     return map[pos.y][pos.x]; 
 }
 
+int Map::getWidth() const {
+    return width;
+}
+
+int Map::getHeight() const {
+    return height;
+}
+
+const vector<vector<Cell>>& Map::getMap() const { 
+    return map; 
+}
+
+const vector<Entity*>& Map::getNounsEntityOnMap() const { 
+    return nounsEntityOnMap; 
+}
+
+const vector<Entity*>& Map::getNounsTextOnMap() const { 
+    return nounsTextOnMap; 
+}
+
 void Map::addCell(Position pos, Entity* entity) {
     (*this)[pos].addEntity(entity);
 }

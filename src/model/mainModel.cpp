@@ -178,3 +178,19 @@ Direction MainModel::redo() {
     Direction redoDirection = undoRedoHandler.getDirection();
     return redoDirection;
 }
+
+Map* MainModel::getMap() const { 
+    return map; 
+}
+
+RuleEngine& MainModel::getRuleEngine() const { 
+    return *rules; 
+}
+
+RuleProcessor& MainModel::getRuleProcessor() const { 
+    return *ruleProcessor; 
+}
+
+bool MainModel::isWin() const { 
+    return win; 
+}

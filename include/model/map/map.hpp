@@ -20,21 +20,22 @@ private:
     vector<Entity*> nounsTextOnMap;
     vector<Entity*> nounsEntityOnMap;
     friend class MapParser;
+
 public: 
     Map(int width, int height);
     ~Map();
     Cell& operator[](const Position& pos);
 
-    int getWidth() const { return width; }
-    int getHeight() const { return height; }
-    const vector<vector<Cell>>& getMap() const { return map; }
-    const vector<Entity*>& getNounsTextOnMap() const { return nounsTextOnMap; }
+    int getWidth() const;
+    int getHeight() const;
+    const vector<vector<Cell>>& getMap() const;
+    const vector<Entity*>& getNounsEntityOnMap() const;
+    const vector<Entity*>& getNounsTextOnMap() const;
     void addCell(const Position pos, Entity* entity);
     void addNounTextOnMap(Entity* entity);
     void addNounEntityOnMap(Entity* entity);
     void removeCell(const Position pos, Entity* entity);
     void deleteCell(const Position pos, Entity* entity);
-    vector<Entity*> getNounsEntityOnMap() const { return nounsEntityOnMap; }
     void clear();
     
     /**
