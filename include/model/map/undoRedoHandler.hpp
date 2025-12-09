@@ -8,12 +8,13 @@
 using namespace std;
 
 class UndoRedoHandler {
-    private:
+private:
     stack<vector<EntityState>> undo;
     stack<vector<EntityState>> redo;
     stack<Direction> directionStack;
     stack<Direction> redoDirection;
-    public:
+    
+public:
     UndoRedoHandler();
     ~UndoRedoHandler();
     vector<EntityState> undoStep();

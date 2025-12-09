@@ -16,6 +16,7 @@ private:
     RuleProcessor* ruleProcessor;
     UndoRedoHandler undoRedoHandler;
     bool win = false;
+
 public:
     MainModel();
     ~MainModel();
@@ -30,10 +31,10 @@ public:
     Direction undo();
     Direction redo();
     void undoNext();
-    RuleEngine &getRuleEngine() const { return *rules; }
-    RuleProcessor& getRuleProcessor() const { return *ruleProcessor; }
-    Map* getMap() const { return map; }
-    bool isWin() const { return win; }
+    RuleEngine& getRuleEngine() const;
+    RuleProcessor& getRuleProcessor() const;
+    Map* getMap() const;
+    bool isWin() const;
     UndoRedoHandler getUndoRedoHandler() const;
 };
 

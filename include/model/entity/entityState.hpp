@@ -6,51 +6,25 @@
 using namespace std;
 
 class EntityState {
-    private:
-    Entity * pEntity;
+private:
+    Entity* pEntity;
     Position posBefore;
     Position posAfter;
     int idBefore;
     int idAfter;
-    public:
-    EntityState() = default;
-    EntityState(Entity * pEntity, Position position, int id) : pEntity(pEntity), posBefore(position), idBefore(id) { 
-        posAfter = Position(0,0);
-        idAfter = 0;
-    }
-    ~EntityState() = default;
 
-    void loadBeforeState() { 
-        posAfter = pEntity -> getPosition();
-        idAfter = pEntity -> getId();
-        pEntity -> setId(idBefore);
-        pEntity -> setPosition(posBefore);
-    }
+public:
+    EntityState();
+    EntityState(Entity* pEntity, Position position, int id);
+    ~EntityState();
 
-    void loadAfterState() {
-        pEntity -> setPosition(posAfter);
-        pEntity -> setId(idAfter);
-    }
-
-    Entity* getEntity() const {
-        return pEntity;
-    }
-
-    Position getPosBefore() const {
-        return posBefore;
-    }
-
-    Position getPosAfter() const {
-        return posAfter;
-    }
-
-    int getIdBefore() const {
-        return idBefore;
-    }
-
-    int getIdAfter() const {
-        return idAfter;
-    }
+    void loadBeforeState();
+    void loadAfterState();
+    Entity* getEntity() const;
+    Position getPosBefore() const;
+    Position getPosAfter() const;
+    int getIdBefore() const;
+    int getIdAfter() const;
 }; 
 
 #endif

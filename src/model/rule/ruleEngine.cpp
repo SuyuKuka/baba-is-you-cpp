@@ -1,6 +1,10 @@
 #include "model/rule/ruleEngine.hpp"
 #include "model/mainModel.hpp"
 
+RuleEngine::RuleEngine(MainModel& game): game(game) { }
+
+RuleEngine::~RuleEngine() { }
+
 void RuleEngine::addActiveRule(const NounWordEntity noun, const OperatorWordEntity ope, const PropertyWordEntity property, const NounWordEntity transform) {
     Rule rule;
     rule.subjects = noun;

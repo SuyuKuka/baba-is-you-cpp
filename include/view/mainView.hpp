@@ -31,6 +31,7 @@ private:
     vector<LevelInfo> levels;
     const double cellWidth;
     const double cellHeight;
+    
 public:
     MainView();
     ~MainView() = default;

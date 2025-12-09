@@ -122,6 +122,10 @@ bool RuleProcessor::isOpen(const Position newPos, const Position& dPos, const ve
     return false;
 }
 
+const vector<int>& RuleProcessor::getYouID() const {
+    return youId;
+}
+
 bool RuleProcessor::babaIsYou() const {
     return find(youId.begin(), youId.end(), static_cast<int> (GameEntity::BABA)) != youId.end();
 }
