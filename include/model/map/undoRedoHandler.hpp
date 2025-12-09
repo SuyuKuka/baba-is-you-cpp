@@ -13,10 +13,11 @@ private:
     stack<vector<EntityState>> redo;
     stack<Direction> directionStack;
     stack<Direction> redoDirection;
-    
+
 public:
     UndoRedoHandler();
     ~UndoRedoHandler();
+    
     vector<EntityState> undoStep();
     vector<EntityState> redoStep();
     void clear();

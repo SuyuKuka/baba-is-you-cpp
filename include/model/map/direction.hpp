@@ -6,7 +6,7 @@ enum class Direction {
     SOUTH,
     WEST,
     EAST,
-    NONE,
+    NONE
 };
 
 #endif

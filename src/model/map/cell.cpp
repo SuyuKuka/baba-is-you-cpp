@@ -5,8 +5,8 @@ const vector<Entity*>& Cell::getEntities() const {
 }
 
 void Cell::deleteEntities() {
-    for (Entity * e : entities) {
-        delete e;
+    for (Entity* entity : entities) {
+        delete entity;
     }
     entities.clear();
 }
@@ -24,7 +24,7 @@ bool Cell::isEmpty() const {
 }
 
 void Cell::clear() {
-    entities.clear();
+    deleteEntities();
 }
 
 size_t Cell::hasNounEntity() const {
