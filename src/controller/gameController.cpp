@@ -16,7 +16,6 @@ void GameController::run() {
             }
             if (canContinue()) continue;
             computeInput(keyboardListener);
-            repeatClock.restart();
         }
         update(keyboardListener, map);
     }
@@ -44,20 +43,24 @@ bool GameController::canContinue() const {
     || repeatClock.getElapsedTime() < initialDelay) {
         delay = (keyboardListener.getLastKeyPressed() != keyboardListener.getKeyPressed().back()) ? initialDelay : repeatRate;
     }
-    if (repeatClock.getElapsedTime() < delay || keyboardListener.getKeyPressed().empty()) return true;
+    if (repeatClock.getElapsedTime() < delay) return true;
     return false;
 }
 
 void GameController::computeInput(KeyboardListener& keyboardListener) {
+    if (keyboardListener.getKeyPressed().empty()) return;
     if (keyboardListener.getKeyPressed().back() == Keyboard::R) {
         keyboardListener.setLastDirection(game.undo());
         keyboardListener.setLastKey(Keyboard::R);
+        repeatClock.restart();
     } else if (keyboardListener.getKeyPressed().back() == Keyboard::T) {
         keyboardListener.setLastDirection(game.redo());
         keyboardListener.setLastKey(Keyboard::T);
+        repeatClock.restart();
     } else {
         Position pos = keyboardListener.handleMove();
         if (pos == Position(0, 0)) return;
         game.update(pos, keyboardListener.isPulling(), keyboardListener.getLastDirection());
+        repeatClock.restart();
     }
 }
