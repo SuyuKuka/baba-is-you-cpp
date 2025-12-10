@@ -183,6 +183,9 @@ Direction MainModel::redo() {
     return redoDirection;
 }
 
+bool MainModel::inBounds(const Position& pos) const {
+    return pos.x >= 0 && pos.x < map->getWidth() && pos.y >= 0 && pos.y < map->getHeight();
+
 Map* MainModel::getMap() const { 
     return map; 
 }
@@ -197,4 +200,5 @@ RuleProcessor& MainModel::getRuleProcessor() const {
 
 bool MainModel::isWin() const { 
     return win; 
+
 }

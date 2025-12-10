@@ -34,6 +34,9 @@ public:
     void applyPull(const Position& pullPos, const Position& newPos);
     Direction undo();
     Direction redo();
+    void undoNext();
+    UndoRedoHandler getUndoRedoHandler() const;
+    bool inBounds(const Position& pos) const;
     Map* getMap() const;
     RuleEngine &getRuleEngine() const;
     RuleProcessor& getRuleProcessor() const;
