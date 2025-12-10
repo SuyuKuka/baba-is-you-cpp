@@ -150,6 +150,7 @@ void MainModel::removeEntity(const Position& pos, const std::vector<int>& target
 
 void MainModel::applyPull(const Position& newPos, const Position& dPos) {
     Position pullPos = newPos - dPos; 
+    if (!inBounds(pullPos)) return;
     ruleProcessor->updatePullable(pullPos);   
     
     bool tmp = true;
@@ -185,6 +186,7 @@ Direction MainModel::redo() {
 
 bool MainModel::inBounds(const Position& pos) const {
     return pos.x >= 0 && pos.x < map->getWidth() && pos.y >= 0 && pos.y < map->getHeight();
+}
 
 Map* MainModel::getMap() const { 
     return map; 
@@ -200,5 +202,4 @@ RuleProcessor& MainModel::getRuleProcessor() const {
 
 bool MainModel::isWin() const { 
     return win; 
-
 }
