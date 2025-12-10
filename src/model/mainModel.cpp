@@ -42,7 +42,6 @@ void MainModel::move(const Position& dPos, const bool& isPulling, const Directio
     vector<Entity*> entities = ruleProcessor->isYou();
     if (entities.size() > 0) {
         checkMove(entities, dPos, isPulling, lastDirection, move, oneWasMoved);
-        if (win) return;
     }
 }
 
@@ -88,6 +87,10 @@ void MainModel::applyPush(const Position& pos, Position& newPos, const Position&
         Cell& cell = (*map)[newPos - dPos];
         for (size_t i = 0; i < cell.getEntities().size(); i++) {
             Entity* pushed = (*map)[newPos - dPos].getEntities()[i];
+            if (find(ruleProcessor->getYouID().begin(), ruleProcessor->getYouID().end(), pushed->getId()) != ruleProcessor->getYouID().end()) {
+                newPos -= dPos;
+                continue;
+            }
             if (pushed->isPushable()) {
                 applyMove(pushed, newPos - dPos, newPos, tmp);
                 newPos -= dPos;
