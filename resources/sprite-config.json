@@ -1,0 +1,24 @@
+{
+    "sprites": [
+        {"id": 101, "sprite": "FLAG.png" },
+        {"id": 102, "sprite": "ROCK.png"},
+        {"id": 103, "sprite": "WALL.png"},
+        {"id": 104, "sprite": "DOOR.png"},
+        {"id": 105, "sprite": "KEY.png"},
+        {"id": 200, "sprite": "BABA_TEXT.png"},
+        {"id": 201, "sprite": "FLAG_TEXT.png"},
+        {"id": 202, "sprite": "ROCK_TEXT.png"},
+        {"id": 203, "sprite": "WALL_TEXT.png"},
+        {"id": 204, "sprite": "DOOR_TEXT.png"},
+        {"id": 205, "sprite": "KEY_TEXT.png"},
+        {"id": 300, "sprite": "IS.png"},
+        {"id": 301, "sprite": "AND.png"},
+        {"id": 400, "sprite": "YOU.png"},
+        {"id": 401, "sprite": "WIN.png"},
+        {"id": 402, "sprite": "PUSH.png"},
+        {"id": 403, "sprite": "STOP.png"},
+        {"id": 404, "sprite": "PULL.png"},
+        {"id": 405, "sprite": "SHUT_TEXT.png"},
+        {"id": 406, "sprite": "OPEN_TEXT.png"}
+    ]
+}

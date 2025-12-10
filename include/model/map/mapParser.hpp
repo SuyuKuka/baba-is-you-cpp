@@ -2,7 +2,7 @@
 #define MAP_PARSER_HPP
 #include <iostream>
 #include <fstream>
-#include "model/map/json.hpp"
+#include "json.hpp"
 #include "model/map/position.hpp"
 #include "model/rule/ruleEngine.hpp"
 #include "model/entity/entityGame.hpp"

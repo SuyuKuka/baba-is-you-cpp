@@ -2,39 +2,27 @@
 #define _TEXTURE
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <map>
+#include <fstream>
+#include "json.hpp"
 #include "model/entity/entityType.hpp"
 #include "model/map/direction.hpp"
 using namespace std;
 using namespace sf;
+using json = nlohmann::json;
 
 class BabaTexture {
 private:
     const string path = "resources/sprites/";
+    const string texture_config = "resources/sprite-config.json";
+
+    map<int, Texture> textures;
 
     Texture BABA_UP;
     Texture BABA_RIGHT;
     Texture BABA_LEFT;
     Texture BABA_DOWN;
     Texture BABA_TEXT;
-    Texture FLAG_TEXT;
-    Texture FLAG;
-    Texture IS_TEXT;
-    Texture AND_TEXT;
-    Texture PULL_TEXT;
-    Texture PUSH_TEXT;
-    Texture ROCK_TEXT;
-    Texture ROCK;
-    Texture STOP_TEXT;
-    Texture WALL_TEXT;
-    Texture WALL;
-    Texture WIN_TEXT;
-    Texture YOU_TEXT;
-    Texture KEY;
-    Texture KEY_TEXT;
-    Texture DOOR;
-    Texture DOOR_TEXT;
-    Texture OPEN_TEXT;
-    Texture SHUT_TEXT;
     Texture * last_baba_texture;
 
     BabaTexture();
