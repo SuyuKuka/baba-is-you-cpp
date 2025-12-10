@@ -35,6 +35,7 @@ public:
     Map* getMap() const { return map; }
     bool isWin() const { return win; }
     UndoRedoHandler getUndoRedoHandler() const;
+    bool inBounds(const Position& pos) const;
 };
 
 #endif

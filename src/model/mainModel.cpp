@@ -178,3 +178,7 @@ Direction MainModel::redo() {
     Direction redoDirection = undoRedoHandler.getDirection();
     return redoDirection;
 }
+
+bool MainModel::inBounds(const Position& pos) const {
+    return pos.x >= 0 && pos.x < map->getWidth() && pos.y >= 0 && pos.y < map->getHeight();
+}
