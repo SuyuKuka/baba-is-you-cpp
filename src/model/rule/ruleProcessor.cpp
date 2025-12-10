@@ -81,6 +81,9 @@ bool RuleProcessor::isNextPushable(const Position& newPos) const {
     const Cell& cell = (*game.getMap())[newPos];
     for (size_t i = 0; i < cell.getEntities().size(); i++) {
         Entity* pushed = cell.getEntities()[i];
+        if (find(youId.begin(), youId.end(), pushed->getId()) != youId.end()) {
+            return false;
+        }
         if (pushed->isPushable()) {
             return true;
         }
