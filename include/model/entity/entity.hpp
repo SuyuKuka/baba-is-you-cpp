@@ -7,16 +7,18 @@ class Entity {
 private:
     Position pos; 
     int id;
+
 public: 
-    Entity(Position pos, int id) : pos(pos), id(id) { }
+    Entity(Position pos, int id);
     virtual ~Entity();
-    Position getPosition() const { return this->pos; };
+
+    Position getPosition() const;
     int getId() const;
     virtual bool isPushable() const;
     virtual bool isPullable() const;
     virtual void setPullable(const bool pullable);
-    void setPosition(const Position &pos) { this->pos = pos; };
-    void setId(int id) { this->id = id; };
+    void setPosition(const Position &pos);
+    void setId(int id);
     virtual void setPushable(bool pushable);
     bool isNounWordEntity() const;
     bool isOperatorWordEntity() const;

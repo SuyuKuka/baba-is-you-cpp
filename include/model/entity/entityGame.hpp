@@ -6,31 +6,15 @@ class EntityGame: public Entity {
 private:
     bool pushable;
     bool pullable;
+    
 public:
-    EntityGame(Position pos, int id): Entity(pos, id) {
-        pushable = false;
-        pullable = false;
-    }
+    EntityGame(Position pos, int id);
 
-    bool isPushable() const override {
-        return pushable;
-    }
-
-    void setPushable(bool pushable) override {
-        this->pushable = pushable;
-    }
-
-    bool isPullable() const override {
-        return pullable;
-    }
-
-    void setPullable(const bool pullable) override {
-        this->pullable = pullable;
-    }
-
-    GameEntity getGameEntity() const override {
-        return static_cast<GameEntity>(getId());
-    }
+    bool isPushable() const override;
+    void setPushable(bool pushable) override;
+    bool isPullable() const override;
+    void setPullable(const bool pullable) override;
+    GameEntity getGameEntity() const override;
 };
 
 #endif

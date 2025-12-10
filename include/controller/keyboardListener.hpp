@@ -39,9 +39,7 @@ public:
      * @brief Ajoute ou supprime une touche du vector des touches appuyées.
      */
     void handleKeyPressedAndReleased(const Event& event);
-
     Position handleMove();
-
     bool isPulling() const;
 
     /**
@@ -59,19 +57,12 @@ public:
      * @return True si la touche est une touche autorisée.
      */
     bool isAuthorizedKey(const Keyboard::Key& key) const;
-
     const bool& firstInput() const;
-
     const Keyboard::Key& getLastKeyPressed() const;
-
     void clearKeyPressed() { keyPressed.clear(); }
-
     Direction keyToDirection(const Keyboard::Key& key);
-
     Keyboard::Key directionToKey(const Direction& dir);
-
     Direction& getLastDirection();
-
     void setLastDirection(const Direction& dir);
     void setLastKey(const Keyboard::Key& key);
 };

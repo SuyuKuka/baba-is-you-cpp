@@ -1,8 +1,14 @@
 #include "model/rule/ruleProcessor.hpp"
 #include "model/mainModel.hpp"
 
-void RuleProcessor::initIds(vector<int>& stopId, vector<int>& winId, vector<int>& openId, vector<int>& shutId) const {
-    youId.clear();
+RuleProcessor::RuleProcessor(MainModel& game): game(game) { }
+
+RuleProcessor::~RuleProcessor() { 
+    clear();
+}
+
+void RuleProcessor::initIds() {
+    clear();
     for (const Rule& rule: game.getRuleEngine().getActiveRules()) {
         int gameEntity = static_cast<int>(rule.subjects) - 100;
         if (rule.properties == PropertyWordEntity::TEXTYOU) {
@@ -29,7 +35,7 @@ const vector<Entity*> RuleProcessor::isYou() const {
     return entities;
 }
 
-bool RuleProcessor::isStop(const Position& newPos, const vector<int>& stopId) const {
+bool RuleProcessor::isStop(const Position& newPos) const {
     for (Entity* entity : game.getMap()->getNounsEntityOnMap()) {
         if (find(stopId.begin(), stopId.end(), entity->getId()) != stopId.end()) {
             Position pos = entity->getPosition();
@@ -86,7 +92,7 @@ bool RuleProcessor::isNextPushable(const Position& newPos) const {
     return false;
 }
 
-bool RuleProcessor::isWin(const Position& newPos, const vector<int>& winId) const {
+bool RuleProcessor::isWin(const Position& newPos) const {
     for (Entity* entity : game.getMap()->getNounsEntityOnMap()) {
         if (find(winId.begin(), winId.end(), entity->getId()) != winId.end()) {
             Position pos = entity->getPosition();
@@ -109,7 +115,7 @@ const vector<Rule> RuleProcessor::isTransformation() {
     return transformationRules;
 }
 
-bool RuleProcessor::isOpen(const Position newPos, const Position& dPos, const vector<int>& openId, const vector<int>& shutId) const {
+bool RuleProcessor::isOpen(const Position newPos, const Position& dPos) const {
     for (const Entity* entity : (*game.getMap())[newPos].getEntities()) {
         if (find(openId.begin(), openId.end(), entity->getId()) != openId.end()) {
             for (const Entity* entity2 : (*game.getMap())[newPos + dPos].getEntities()) {
@@ -122,6 +128,34 @@ bool RuleProcessor::isOpen(const Position newPos, const Position& dPos, const ve
     return false;
 }
 
+const vector<int>& RuleProcessor::getYouID() const { 
+    return youId; 
+}
+
+const vector<int>& RuleProcessor::getStopID() const { 
+    return stopId; 
+}
+
+const vector<int>& RuleProcessor::getWinID() const { 
+    return winId; 
+}
+
+const vector<int>& RuleProcessor::getOpenID() const { 
+    return openId; 
+}
+
+const vector<int>& RuleProcessor::getShutID() const { 
+    return shutId; 
+}
+
 bool RuleProcessor::babaIsYou() const {
     return find(youId.begin(), youId.end(), static_cast<int> (GameEntity::BABA)) != youId.end();
+}
+
+void RuleProcessor::clear() {
+    youId.clear();
+    stopId.clear();
+    winId.clear();
+    openId.clear();
+    shutId.clear();
 }

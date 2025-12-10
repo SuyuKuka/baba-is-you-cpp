@@ -1,6 +1,12 @@
 #include "model/entity/entity.hpp"
 
+Entity::Entity(Position pos, int id) : pos(pos), id(id) {}
+
 Entity::~Entity() {}
+
+Position Entity::getPosition() const {
+    return pos;
+}
 
 int Entity::getId() const {
     return id;
@@ -20,6 +26,14 @@ bool Entity::isPullable() const {
 
 void Entity::setPullable(const bool pullable) {
     (void) pullable;
+}
+
+void Entity::setPosition(const Position &pos) {
+    this->pos = pos;
+}
+
+void Entity::setId(int id) {
+    this->id = id;
 }
 
 bool Entity::isNounWordEntity() const {

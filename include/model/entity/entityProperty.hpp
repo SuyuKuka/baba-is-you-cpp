@@ -4,11 +4,9 @@
 
 class EntityProperty: public Entity {
 public:
-    EntityProperty(Position pos, int id): Entity(pos, id) { }
+    EntityProperty(Position pos, int id);
     
-    PropertyWordEntity getPropertyWordEntity() const {
-        return static_cast<PropertyWordEntity>(getId());
-    }
+    PropertyWordEntity getPropertyWordEntity() const;
 };
 
 #endif
