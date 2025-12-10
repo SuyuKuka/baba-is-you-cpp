@@ -31,9 +31,11 @@ private:
     vector<LevelInfo> levels;
     const double cellWidth;
     const double cellHeight;
+
 public:
     MainView();
     ~MainView() = default;
+    
     void handleEvents(const Event& event);
     void handleMenuClick(int mouseX, int mouseY);
     void run();
