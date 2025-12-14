@@ -1,20 +1,23 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "view/mainView.hpp"
+#include "model/mainModel.hpp"
+#include "controller/gameController.hpp"
 using namespace sf;
 
-int main(int argc, char* argv[]) {
-    RenderWindow app(VideoMode(1280, 720), "BABA IS YOU");
-    while (app.isOpen()) {
-        Event event;
-        while (app.pollEvent(event)) {
-            switch (event.type) {
-                case Event::Closed:
-                    app.close(); break;
-                default : break;
-            }
+int main() {
+    MainView view;
+    MainModel game;
+    GameController gameController = GameController(view, game);
+    while (view.isOpen()) {         
+        if (view.getCurrentState() == AppState::Menu) {
+            cout << "Menu" << endl;
+            view.run();
+        } else if (view.getCurrentState() == AppState::Game) {
+            cout << "Game" << endl;
+            view.resetLastTexture();
+            gameController.run();
         }
-        app.clear();
-        app.display();
-    }
+    }  
     return EXIT_SUCCESS;
 }
