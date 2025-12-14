@@ -1,0 +1,32 @@
+#ifndef ENTITY_HPP
+#define ENTITY_HPP
+#include "model/map/position.hpp"
+#include "model/entity/entityType.hpp"
+
+class Entity {
+private:
+    Position pos; 
+    int id;
+
+public: 
+    Entity(Position pos, int id);
+    virtual ~Entity();
+
+    Position getPosition() const;
+    int getId() const;
+    virtual bool isPushable() const;
+    virtual bool isPullable() const;
+    virtual void setPullable(const bool pullable);
+    void setPosition(const Position &pos);
+    void setId(int id);
+    virtual void setPushable(bool pushable);
+    bool isNounWordEntity() const;
+    bool isOperatorWordEntity() const;
+    bool isPropertyWordEntity() const;
+    virtual GameEntity getGameEntity() const;
+    virtual NounWordEntity getNounWordEntity() const;
+    virtual OperatorWordEntity getOperatorWordEntity() const;
+    virtual PropertyWordEntity getPropertyWordEntity() const;
+};
+
+#endif
