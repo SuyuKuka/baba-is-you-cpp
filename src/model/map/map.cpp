@@ -72,5 +72,4 @@ const vector<const Cell*> Map::getOccupiedCells() const {
         }
     }
     return occupiedCells;
-    return occupiedCells;
 }
