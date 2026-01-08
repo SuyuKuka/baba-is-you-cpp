@@ -23,7 +23,7 @@ public:
     void run();
 
     /**
-     * Écoute le clavier et met à jour la carte en fonction des inputs.
+     * Met à jour mainModel et mainView
      * @param keyboardListener
      * @param map
      */
