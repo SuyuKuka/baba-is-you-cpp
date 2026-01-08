@@ -21,7 +21,7 @@ private:
     KeyboardListener& operator=(const KeyboardListener&) = delete;
     vector<Keyboard::Key> keyPressed;
     
-    sf::Keyboard::Key lastKey = sf::Keyboard::Key::Unknown;
+    Keyboard::Key lastKey = Keyboard::Key::Unknown;
     Direction lastDirection = Direction::EAST;
     bool firstMoveExecuted = false;
 
