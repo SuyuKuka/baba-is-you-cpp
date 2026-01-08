@@ -16,9 +16,31 @@ public:
     GameController(MainView& view, MainModel& game);
     ~GameController();
 
+    /**
+     * Charge les configurations de la carte.
+     * Lance l'écoute d'événements clavier.
+     */
     void run();
+
+    /**
+     * Écoute le clavier et met à jour la carte en fonction des inputs.
+     * @param keyboardListener
+     * @param map
+     */
     void update(KeyboardListener& keyboardListener, Map& map);
+
+    /**
+     * Vérifie si le délai entre les actions permet d'en faire une nouvelle.
+     * Sinon continue la boucle de jeu.
+     */
     bool canContinue() const;
+
+    /**
+     * Selon la touche choisie, décide de l'action.
+     * Undo Redo
+     * move
+     * @param keyboardListener
+     */
     void computeInput(KeyboardListener &keyboardListener);
 };
 

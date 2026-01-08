@@ -36,7 +36,15 @@ public:
      * @brief Ajoute ou supprime une touche du vector des touches appuyées.
      */
     void handleKeyPressedAndReleased(const Event& event);
+
+    /**
+     * @return une position correspondante à la dernière touche appuyée.
+     */
     Position handleMove();
+
+    /**
+     * @return true si Ctrl est appuyée.
+     */
     bool isPulling() const;
 
     /**

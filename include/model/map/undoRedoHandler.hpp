@@ -18,6 +18,10 @@ public:
     UndoRedoHandler();
     ~UndoRedoHandler();
     
+    /**
+     * Pop la pile undoStep et ajoute l'entrée dans redoStep.
+     * Fait de même pour directionStack et redoDirection
+     */
     vector<EntityState> undoStep();
     vector<EntityState> redoStep();
     void clear();
@@ -30,6 +34,11 @@ public:
     void addDirection(const Direction& lastDirection);
     Direction getDirection();
     Direction getRedoDirection();
+
+    /**
+     * Retire le haut de la pile si elle est vide.
+     * Utiliser à la fin d'un tour.
+     */
     void removeTopEmpty();
 };
 
