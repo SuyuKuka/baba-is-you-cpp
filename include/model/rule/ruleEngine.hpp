@@ -13,7 +13,7 @@ class RuleEngine {
 private:
     MainModel& game;
     vector<Rule> activeRules;
-    vector<Entity*> entitiesNoun; // pour avoir la liste des entités qui sont deja utilisés dans les règles (jsp si utile pour le moment)
+    vector<Entity*> entitiesNoun;
     vector<Entity*> entitiesOp;
     vector<Entity*> entitiesTarget;
 

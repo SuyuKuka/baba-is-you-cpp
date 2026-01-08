@@ -36,10 +36,34 @@ public:
     MainView();
     ~MainView() = default;
     
+    /**
+     * Écoute les événements du menu.
+     * @param event
+     */
     void handleEvents(const Event& event);
+
+    /**
+     * S'occupe des mouvements et actions la souris.
+     * @param mouseX
+     * @param mouseY
+     */
     void handleMenuClick(int mouseX, int mouseY);
+    
+    /**
+     * Lance le menu.
+     */
     void run();
+
+    /**
+     * Affiche le menu.
+     */
     void menu();
+
+    /**
+     * Affiche les sprites.
+     * @param occupied les cellues occupées.
+     * @param dir la direction du joueur.
+     */
     void render(const vector<const Cell*>& occupied, const Direction dir);
     bool pollEvent(Event& event);
     bool isOpen() const;
