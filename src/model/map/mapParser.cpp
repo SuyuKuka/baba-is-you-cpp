@@ -1,5 +1,10 @@
 #include "model/map/mapParser.hpp"
 
+MapParser& MapParser::getInstance() {
+    static MapParser instance;
+    return instance;
+}
+
 json MapParser::parseJSON(const string path) {
     json mapData;
     try {
@@ -17,7 +22,7 @@ json MapParser::parseJSON(const string path) {
 
 
 Map MapParser::loadMap(const string& path) {
-    json parser = MapParser::parseJSON(path);
+    json parser = parseJSON(path);
     Map map = Map(parser["width"], parser["height"]);
 
     for (json::iterator it = parser.begin(); it != parser.end(); ++it) {

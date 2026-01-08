@@ -10,7 +10,7 @@ void GameController::run() {
     while (view.getCurrentState() == AppState::Game) {
         if (reset) {
             delete map;
-            map = new Map(MapParser::loadMap(view.getPath()));
+            map = new Map(MapParser::getInstance().loadMap(view.getPath()));
             game.init(map);
             reset = false;
             view.resetLastTexture();
