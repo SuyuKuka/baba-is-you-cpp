@@ -7,6 +7,7 @@ GameController::~GameController() = default;
 void GameController::run() {
     Map* map = nullptr;
     KeyboardListener& keyboardListener = KeyboardListener::getInstance();
+    reset = true;
     while (view.getCurrentState() == AppState::Game) {
         if (reset) {
             delete map;
@@ -28,7 +29,6 @@ void GameController::run() {
             if (quit) {
                 view.setCurrentState(AppState::Menu);
                 quit = false;
-                reset = true;
                 break;
             }
         }
