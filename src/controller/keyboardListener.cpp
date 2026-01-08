@@ -26,7 +26,6 @@ Position KeyboardListener::handleMove() {
     }
 
     sf::Keyboard::Key currentKey = keyPressed.back(); 
-
     Position pos;
     if (currentKey == Keyboard::Up || currentKey == Keyboard::Z || currentKey == Keyboard::W) {
         pos.y = -1;
@@ -36,10 +35,15 @@ Position KeyboardListener::handleMove() {
         pos.x = -1;
     } else if (currentKey == Keyboard::Right || currentKey == Keyboard::D) {
         pos.x = 1;
+    } else if (currentKey == Keyboard::Escape) {
+        keyPressed.clear();
+        return Position(-10, -10);
+    } else if (currentKey == Keyboard::Enter) {
+        keyPressed.clear();
+        return Position(-20, -20);
     }
 
     if (pos.x != 0 || pos.y != 0) {
-        //repeatClock.restart();
         firstMoveExecuted = true;
         lastKey = currentKey;
         lastDirection = keyToDirection(lastKey);
@@ -71,7 +75,8 @@ bool KeyboardListener::isAuthorizedKey(const Keyboard::Key& key) const {
         || key == Keyboard::Left || key == Keyboard::Q || key == Keyboard::A 
         || key == Keyboard::Right|| key == Keyboard::D 
         || key == Keyboard::LControl || key == Keyboard::RControl
-        || key == Keyboard::R || key == Keyboard::T;
+        || key == Keyboard::R || key == Keyboard::T
+        || key == Keyboard::Escape || key == Keyboard::Enter;
 }
 
 Direction KeyboardListener::keyToDirection(const Keyboard::Key& key) {

@@ -5,11 +5,16 @@ GameController::GameController(MainView& view, MainModel& game) : view(view), ga
 GameController::~GameController() = default;
 
 void GameController::run() {
-    Map map = MapParser::loadMap(view.getPath());
+    Map* map = nullptr;
     KeyboardListener& keyboardListener = KeyboardListener::getInstance();
-    game.init(&map);
-    update(keyboardListener, map);
     while (view.getCurrentState() == AppState::Game) {
+        if (reset) {
+            delete map;
+            map = new Map(MapParser::loadMap(view.getPath()));
+            game.init(map);
+            reset = false;
+            view.resetLastTexture();
+        }
         Event event;
         if (view.pollEvent(event)) {
             if (event.type == Event::Closed) {
@@ -20,8 +25,16 @@ void GameController::run() {
             }
             if (canContinue()) continue;
             computeInput(keyboardListener);
+            if (quit) {
+                view.setCurrentState(AppState::Menu);
+                quit = false;
+                reset = true;
+                break;
+            }
         }
-        update(keyboardListener, map);
+        if (map) {
+            update(keyboardListener, *map); 
+        }
     }
 }
 
@@ -64,7 +77,10 @@ void GameController::computeInput(KeyboardListener& keyboardListener) {
     } else {
         Position pos = keyboardListener.handleMove();
         if (pos == Position(0, 0)) return;
+        if (pos == Position(-20, -20)) reset = true;
+        if (pos == Position(-10, -10)) quit = true;
         game.update(pos, keyboardListener.isPulling(), keyboardListener.getLastDirection());
         repeatClock.restart();
     }
+    return;
 }
