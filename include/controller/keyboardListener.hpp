@@ -20,9 +20,6 @@ private:
     KeyboardListener(const KeyboardListener&) = delete;
     KeyboardListener& operator=(const KeyboardListener&) = delete;
     vector<Keyboard::Key> keyPressed;
-    // sf::Clock repeatClock; 
-    // sf::Time initialDelay = sf::milliseconds(180); 
-    // sf::Time repeatRate = sf::milliseconds(120); 
     
     sf::Keyboard::Key lastKey = sf::Keyboard::Key::Unknown;
     Direction lastDirection = Direction::EAST;
