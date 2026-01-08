@@ -22,8 +22,32 @@ public:
     ~MainModel();
 
     void init(Map* map);
+
+    /**
+     * Met à jour le jeu.
+     * @param dPos position à ajouter à YOU
+     * @param isPulling
+     * @param lastDirection
+     */
     void update(const Position& dPos, const bool& isPulling, const Direction& lastDirection);
+
+    /**
+     * Essaye d'effectuer un mouvement à l'aide de checkMove
+     * @param dPos 
+     * @param isPulling
+     * @param lastDirection
+     */
     void move(const Position& dPos, const bool& isPulling, const Direction& lastDirection);
+
+    /**
+     * Vérifie si le mouvement à effectuer est possible.  
+     * @param entities les entités qui sont dans la règle YOU
+     * @param dPos 
+     * @param isPulling
+     * @param lastDirection
+     * @param move
+     * @param oneWasMoved
+     */
     void checkMove(vector<Entity*>& entities, const Position& dPos, const bool& isPulling, const Direction& lastDirection, bool& move, bool& oneWasMoved);
     void applyMove(Entity* entity, const Position& pos, const Position& newPos, bool& oneWasMoved);
     void applyPush(const Position& pos, Position& newPos, const Position& dPos, bool& move);

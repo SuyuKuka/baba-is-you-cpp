@@ -41,7 +41,7 @@ BabaTexture& BabaTexture::getInstance() {
 }
 
 const Texture& BabaTexture::getTexture(const int& id,  const Direction& dir) {
-    if (id==100) {
+    if (id == static_cast<int>(GameEntity::BABA)) {
         if (dir == Direction::WEST || dir == Direction::WEST) {
                 last_baba_texture = &BABA_LEFT;
                 return BABA_LEFT;

@@ -62,15 +62,12 @@ void Map::addNounEntityOnMap(Entity* noun) {
 
 const vector<const Cell*> Map::getOccupiedCells() const {
     occupiedCells.clear();
-    occupiedCells.clear();
     for (const vector<Cell>& vCell : map) {
         for(const Cell& cell : vCell) {
             if (!cell.getEntities().empty()) {
                 occupiedCells.push_back(&cell);
-                occupiedCells.push_back(&cell);
             }
         }
     }
-    return occupiedCells;
     return occupiedCells;
 }
