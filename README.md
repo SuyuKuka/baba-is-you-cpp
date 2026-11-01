@@ -1,11 +1,11 @@
 # Baba Is You
 
 ## About
-Baba Is You is a C++ puzzle game developed as a first-year Master's (M1 IMPAIRS) project at Université Paris Cité based on the game BABA IS YOU. Built entirely from scratch, this project demonstrates a deep understanding of advanced C++ concepts, including object-oriented programming, manual memory management (strictly without smart pointers or `auto`), operator overloading, and design patterns.
+Baba Is You is a C++ puzzle game developed as a first-year Master's (M1 IMPAIRS) project at Université Paris Cité based on the game BABA IS YOU. Built entirely from scratch in C++, utilizing manual memory management (strictly without smart pointers or auto), custom operator overloading, and an MVC design pattern.
 
 The game features a dynamic rule engine where pushing text blocks alters the physics and properties of the entities in real-time.
 
-Note: As this was originally an academic project evaluated on architectural design, the codebase emphasizes explicit memory handling (allocations/deallocations) and deep copy management. The source code and comments might contains some French.
+Note: As this was originally an academic project evaluated on architectural design, the codebase emphasizes explicit memory handling (allocations/deallocations) and deep copy management. The source code and comment might contains some French.
 
 ## Tech Stack
 - **Language:** C++ (Standard Library)
@@ -23,7 +23,7 @@ Note: As this was originally an academic project evaluated on architectural desi
 - **Undo / Redo System:** Seamless ability to revert and replay moves to enhance playability.
 - **Extended Features:** Includes additional mechanics such as the PULL action, KEY/DOOR interactions, and complex AND rules.
 
-## Projet Structure
+## Project Structure
 
 ```text
 📁 baba-is-you
